@@ -64,7 +64,7 @@ let bisection = (funcion, xInferior, xSuperior, tolerance, iterations_n) => {
       else if (fxi * fxm < 0) {
         xSuperior = xMiddle;
         fxs = fxm;
-      } else if (fxm * fxs < 0) {
+      } else {
         xInferior = xMiddle;
         fxi = fxm;
       }
