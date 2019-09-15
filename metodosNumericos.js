@@ -141,6 +141,7 @@ let fixedPoint = (funcionF, funcionG, tolerance, Xa, niter, tipoError) => {
   return Xa;
 };
 
+// TODO: imprimir tabla newton
 let newton = (funcionF, funciondF, tolerance, Xo, niter, tipoError) => {
   const ff = math.parse(funcionF).compile();
   const df = math.parse(funciondF).compile();
