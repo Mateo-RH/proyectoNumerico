@@ -121,10 +121,11 @@ let fixedPoint = (funcionF, funcionG, tolerance, Xa, niter, tipoError) => {
   let fx = ff.evaluate(scope);
   let counter = 1;
   let error = tolerance + 1;
+  var Xn;
   console.log(0, Xa, fx, 0);
   while (fx != 0 && error > tolerance && counter <= niter) {
     scope.x = Xa;
-    let Xn = fg.evaluate(scope);
+    Xn = fg.evaluate(scope);
     scope.x = Xn;
     fx = ff.evaluate(scope);
     tipoError == 'e'
@@ -152,9 +153,10 @@ let newton = (funcionF, funciondF, tolerance, Xo, niter, tipoError) => {
   let dfx = df.evaluate(scope);
   let counter = 1;
   let error = tolerance + 1;
+  var x1;
   // console.log(0, Xa, fx, 0);
   while (fx != 0 && error > tolerance && counter <= niter && dfx != 0) {
-    let x1 = Xo - fx / dfx;
+    x1 = Xo - fx / dfx;
     scope.x = x1;
     fx = ff.evaluate(scope);
     dfx = df.evaluate(scope);
@@ -173,6 +175,44 @@ let newton = (funcionF, funciondF, tolerance, Xo, niter, tipoError) => {
   // return x1;
 };
 
+// TODO: imprimir tabla secante
+let secante = (funcionF, tolerance, Xo, x1, niter, tipoError) => {
+  const ff = math.parse(funcionF).compile();
+  let scope = {
+    x: Xo
+  };
+  let fx0 = ff.evaluate(scope);
+  if (fx0 === 0) console.log(`Raiz en ${Xo}`);
+  else {
+    scope.x = x1;
+    let fx1 = ff.evaluate(scope);
+    let counter = 1;
+    let error = tolerance + 1;
+    let den = fx1 - fx0;
+    var x2;
+    // console.log(0, Xo, fx0, 0);
+    while (fx1 != 0 && error > tolerance && counter <= niter && den != 0) {
+      x2 = x1 - (fx1 * (x1 - Xo)) / den;
+      tipoError == 'e'
+        ? (error = math.abs((x2 - x1) / x2))
+        : (error = math.abs(x2 - x1));
+      Xo = x1;
+      fx0 = fx1;
+      x1 = x2;
+      scope.x = x1;
+      fx1 = ff.evaluate(scope);
+      den = fx1 - fx0;
+      // console.log(counter, x1, fx1, error);
+      counter += 1;
+    }
+    if (fx1 === 0) console.log(`Raiz en ${x1}`);
+    else if (error < tolerance)
+      console.log(`${x1} es aproximacion con tolerancia = ${tolerance}`);
+    else if (den === 0) console.log(`Hay una posible raiz multiple`);
+    else console.log(`El metodo fracaso en ${niter} iteraciones`);
+  }
+};
+
 // Cerrados
 // const funcion = 'e^(3x - 12) + x*cos(3x) - x^2 + 4';
 // incrementalSearch(funcion, -10, 1, 20);
@@ -187,5 +227,6 @@ const tolerance = math
   .parse('5*10^-5')
   .compile()
   .evaluate();
-fixedPoint(funcionf, funciong, tolerance, -0.5, 10, 'e');
+// fixedPoint(funcionf, funciong, tolerance, -0.5, 10, 'e');
 newton(funcionf, funciondf, tolerance, -0.5, 10, 'e');
+secante(funcionf, tolerance, -0.5, 1, 10, 'e');
