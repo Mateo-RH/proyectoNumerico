@@ -36,6 +36,7 @@ let incrementalSearch = (funcion, initial_x, delta_x, iterations_n) => {
   }
 };
 
+// TODO: errortype
 let bisection = (funcion, xInferior, xSuperior, tolerance, iterations_n) => {
   const code2 = math.parse(funcion).compile();
   let scope = {
@@ -213,6 +214,49 @@ let secante = (funcionF, tolerance, Xo, x1, niter, tipoError) => {
   }
 };
 
+let multipleRoots = (
+  funcionF,
+  funciondF,
+  funcionddF,
+  tolerance,
+  Xo,
+  niter,
+  tipoError
+) => {
+  const ff = math.parse(funcionF).compile();
+  const df = math.parse(funciondF).compile();
+  const ddf = math.parse(funcionddF).compile();
+  let scope = {
+    x: Xo
+  };
+  let fx = ff.evaluate(scope);
+  let dfx = df.evaluate(scope);
+  let ddfx = df.evaluate(scope);
+  let counter = 1;
+  let error = tolerance + 1;
+  var x1;
+  // console.log(0, Xa, fx, 0);
+  while (fx != 0 && error > tolerance && counter <= niter && dfx != 0) {
+    x1 = Xo - (fx * dfx) / (dfx ^ (2 - fx * ddfx));
+    scope.x = x1;
+    fx = ff.evaluate(scope);
+    dfx = df.evaluate(scope);
+    ddfx = df.evaluate(scope);
+    tipoError == 'e'
+      ? (error = math.abs((x1 - Xo) / x1))
+      : (error = math.abs(x1 - Xo));
+    Xo = x1;
+    // console.log(counter, Xn, fx, error);
+    counter += 1;
+  }
+  if (fx === 0) console.log(`Raiz en ${Xo}`);
+  else if (error < tolerance)
+    console.log(`${x1} es aproximacion con tolerancia = ${tolerance}`);
+  else if (dfx === 0) console.log(`${x1} es una posible raiz multiple`);
+  else console.log(`El metodo fracaso en ${niter} iteraciones`);
+  // return x1;
+};
+
 // Cerrados
 // const funcion = 'e^(3x - 12) + x*cos(3x) - x^2 + 4';
 // incrementalSearch(funcion, -10, 1, 20);
@@ -223,6 +267,7 @@ let secante = (funcionF, tolerance, Xo, x1, niter, tipoError) => {
 const funcionf = 'x*e^x - x^2 - 5x - 3';
 const funciong = '(x*e^x - x^2 - 3)/5';
 const funciondf = '-2x + e^x * (x + 1) - 5';
+const funcionddf = '-2 + e^x (2 + x)';
 const tolerance = math
   .parse('5*10^-5')
   .compile()
@@ -230,3 +275,4 @@ const tolerance = math
 // fixedPoint(funcionf, funciong, tolerance, -0.5, 10, 'e');
 newton(funcionf, funciondf, tolerance, -0.5, 10, 'e');
 secante(funcionf, tolerance, -0.5, 1, 10, 'e');
+multipleRoots(funcionf, funciondf, funcionddf, tolerance, -0.5, 10, 'e');
