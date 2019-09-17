@@ -12,6 +12,7 @@
       crossorigin="anonymous"
     />
   </head>
+
   <body>
     <div class="jumbotron jumbotron-fluid">
       <div class="container">
@@ -21,7 +22,7 @@
           type="button"
           class="btn btn-primary"
           data-toggle="modal"
-          data-target="#exampleModal"
+          data-target="#biseccionModal"
         >
           Biseccion
         </button>
@@ -31,16 +32,16 @@
     <!-- Modal -->
     <div
       class="modal fade"
-      id="exampleModal"
+      id="biseccionModal"
       tabindex="-1"
       role="dialog"
-      aria-labelledby="exampleModalLabel"
+      aria-labelledby="biseccionModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="biseccionModalLabel">Biseccion</h5>
             <button
               type="button"
               class="close"
@@ -53,13 +54,13 @@
           <div class="modal-body">
             <form>
               <div class="form-group">
-                <label for="exampleInputEmail1">Function</label>
+                <label for="biseccionFunction">Function</label>
                 <input
                   type="text"
                   class="form-control"
-                  id="exampleInputEmail1"
+                  id="biseccionFunction"
                   aria-describedby="emailHelp"
-                  placeholder="Enter function"
+                  placeholder="e^(3x - 12) + x*cos(3x) - x^2 + 4"
                 />
               </div>
               <div class="form-group">
@@ -67,44 +68,52 @@
                 <div class="row">
                   <div class="col">
                     <input
+                      id="biseccionInferiorX"
                       type="number"
                       class="form-control"
-                      placeholder="inferior X"
+                      placeholder="inferior X (2)"
                     />
                   </div>
                   <div class="col">
                     <input
                       type="number"
                       class="form-control"
-                      placeholder="superior X"
+                      id="biseccionSuperiorX"
+                      placeholder="superior X (3)"
                     />
                   </div>
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="exampleInputEmail1">Tolerance</label>
+                <label for="biseccionErrorType">Error Type</label>
+                <select class="form-control" id="biseccionErrorType">
+                  <option value="e">e</option>
+                  <option value="E">E</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="biseccionTolerance">Tolerance</label>
                 <input
                   type="number"
                   class="form-control"
-                  id="exampleInputEmail1"
+                  id="biseccionTolerance"
                   aria-describedby="emailHelp"
-                  placeholder="10 ^ -5"
+                  placeholder="-1"
                 />
               </div>
 
               <div class="form-group">
-                <label for="exampleInputEmail1">Iterations</label>
+                <label for="biseccionIterations">Iterations</label>
                 <input
                   type="number"
                   class="form-control"
-                  id="exampleInputEmail1"
+                  id="biseccionIterations"
                   aria-describedby="emailHelp"
-                  placeholder="5"
+                  placeholder="11"
                 />
               </div>
-
-              <button type="submit" class="btn btn-primary">Submit</button>
             </form>
           </div>
           <div class="modal-footer">
@@ -115,16 +124,19 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="biseccionLlamado()"
+            >
+              Run!
+            </button>
           </div>
         </div>
       </div>
     </div>
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
       integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
@@ -135,5 +147,8 @@
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
     ></script>
+
+    <!-- Script donde llamas los metodos (este te toca agregar funciones como la del ejemplo) -->
+    <script src="./js/llamadoMetodos.js"></script>
   </body>
 </html>

@@ -36,8 +36,14 @@ let incrementalSearch = (funcion, initial_x, delta_x, iterations_n) => {
   }
 };
 
-// TODO: errortype
-let bisection = (funcion, xInferior, xSuperior, tolerance, iterations_n) => {
+let bisection = (
+  funcion,
+  xInferior,
+  xSuperior,
+  tolerance,
+  iterations_n,
+  tipoError
+) => {
   const code2 = math.parse(funcion).compile();
   let scope = {
     x: xInferior
@@ -55,7 +61,9 @@ let bisection = (funcion, xInferior, xSuperior, tolerance, iterations_n) => {
     let error = tolerance + 1;
     while (error > tolerance && counter <= iterations_n) {
       xMiddle = (xSuperior + xInferior) / 2;
-      error = math.abs(xMiddle - xMiddleAux);
+      tipoError == 'e'
+        ? (error = math.abs((xMiddle - xMiddleAux) / xMiddle))
+        : (error = math.abs(xMiddle - xMiddleAux));
       xMiddleAux = xMiddleAux;
       scope.x = xMiddle;
       fxm = code2.evaluate(scope);
@@ -74,7 +82,14 @@ let bisection = (funcion, xInferior, xSuperior, tolerance, iterations_n) => {
   }
 };
 
-let fakeRule = (funcion, xInferior, xSuperior, tolerance, iterations_n) => {
+let fakeRule = (
+  funcion,
+  xInferior,
+  xSuperior,
+  tolerance,
+  iterations_n,
+  tipoError
+) => {
   const code2 = math.parse(funcion).compile();
   let scope = {
     x: xInferior
@@ -92,7 +107,9 @@ let fakeRule = (funcion, xInferior, xSuperior, tolerance, iterations_n) => {
     let error = tolerance + 1;
     while (error > tolerance && counter <= iterations_n) {
       xMiddle = xInferior - (fxi * (xSuperior - xInferior)) / (fxs - fxi);
-      error = math.abs(xMiddle - xMiddleAux);
+      tipoError == 'e'
+        ? (error = math.abs((xMiddle - xMiddleAux) / xMiddle))
+        : (error = math.abs(xMiddle - xMiddleAux));
       xMiddleAux = xMiddleAux;
       scope.x = xMiddle;
       fxm = code2.evaluate(scope);
@@ -214,6 +231,7 @@ let secante = (funcionF, tolerance, Xo, x1, niter, tipoError) => {
   }
 };
 
+// TODO: idk if this mondeu works and the pseudocode its like a piece of sh*t
 let multipleRoots = (
   funcionF,
   funciondF,
@@ -260,19 +278,29 @@ let multipleRoots = (
 // Cerrados
 // const funcion = 'e^(3x - 12) + x*cos(3x) - x^2 + 4';
 // incrementalSearch(funcion, -10, 1, 20);
-// bisection(funcion, 2, 3, -1, 11);
-// fakeRule(funcion, 2, 3, -1, 11);
+// bisection(funcion, 2, 3, -1, 11, 'e');
+// fakeRule(funcion, 2, 3, -1, 11, 'e');
 
 // Abiertos
-const funcionf = 'x*e^x - x^2 - 5x - 3';
-const funciong = '(x*e^x - x^2 - 3)/5';
-const funciondf = '-2x + e^x * (x + 1) - 5';
-const funcionddf = '-2 + e^x (2 + x)';
-const tolerance = math
-  .parse('5*10^-5')
-  .compile()
-  .evaluate();
+// const funcionf = 'x*e^x - x^2 - 5x - 3';
+// const funciong = '(x*e^x - x^2 - 3)/5';
+// const funciondf = '-2x + e^x * (x + 1) - 5';
+// const funcionddf = '-2 + e^x (2 + x)';
+// const tolerance = math
+//   .parse('5*10^-5')
+//   .compile()
+//   .evaluate();
 // fixedPoint(funcionf, funciong, tolerance, -0.5, 10, 'e');
-newton(funcionf, funciondf, tolerance, -0.5, 10, 'e');
-secante(funcionf, tolerance, -0.5, 1, 10, 'e');
-multipleRoots(funcionf, funciondf, funcionddf, tolerance, -0.5, 10, 'e');
+// newton(funcionf, funciondf, tolerance, -0.5, 10, 'e');
+// secante(funcionf, tolerance, -0.5, 1, 10, 'e');
+// multipleRoots(funcionf, funciondf, funcionddf, tolerance, -0.5, 10, 'e');
+
+module.exports = {
+  incrementalSearch,
+  bisection,
+  fakeRule,
+  fixedPoint,
+  newton,
+  secante,
+  multipleRoots
+};

@@ -25,8 +25,6 @@ let m = [
   [1, -3, -2, 16, 14] // 16
 ];
 
-// let m = [[1, 2, 3], [4, 1, 6], [7, 8, 1]];
-
 let gauss = matrix => {
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < i; j++) {
@@ -46,4 +44,27 @@ let gauss = matrix => {
   console.log(matrix);
 };
 
-gauss(m);
+let gaussSimple = (matrix, n) => {
+  for (let k = 0; k < n - 1; k++) {
+    for (let i = k + 1; i < n; i++) {
+      let multiplicador = matrix[i][k] / matrix[k][k];
+      for (let j = k; j < n + 1; j++) {
+        matrix[i][j] = matrix[i][j] - multiplicador * matrix[k][j];
+        matrix[i][j] = parseFloat(matrix[i][j].toFixed(2));
+      }
+    }
+  }
+  console.log(matrix);
+};
+
+let sustitucionRegresiva = (matrix, n) => {
+  let xn = matrix[n][n + 1] / matrix[n][n];
+  for (let i = n - 1; i > 1; i--) {
+    let sumatoria = 0;
+    for (let p = i + 1; p < n; p++) {
+      sumatoria = sumatoria + matrix[i][p] * xn;
+    }
+  }
+};
+
+gaussSimple(m, 4);
