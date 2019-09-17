@@ -7,6 +7,10 @@ function biseccionLlamado() {
   var biseccionIterations = document.getElementById('biseccionIterations')
     .value;
 
+  //  NO SE PREOCUPE POR ESTA PARTE, ESTO ES PARA CONSUMIR EL METODO COMO TAL
+  // PERO NO SE SI YA TERMINE LOS ENDPOINT PARA CADA METODO ADEMAS DE QUE TENGO
+  // QUE CORREGIR MUCHOS BUGS QUE TIENEN. SOLO IMPRIMA LOS VALORES QUE RECOGIO DEL FORMULARIO
+  // PD: TE HABLO DESDE EL PASADO, BESITOS Y BUENA SUERTE CON ESO :P
   var settings = {
     async: true,
     crossDomain: true,

@@ -1,5 +1,6 @@
 const math = require('mathjs');
 // FIXME: corregir decimales
+// TODO: HACER QUE RETORNEN ALGUNA MIERDA!!!!
 // ============================================== METODOS CERRADOS ==============================================//
 
 let incrementalSearch = (funcion, initial_x, delta_x, iterations_n) => {
