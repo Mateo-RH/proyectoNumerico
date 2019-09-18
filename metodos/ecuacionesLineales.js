@@ -42,6 +42,7 @@ let gauss = matrix => {
   console.log(matrix);
 };
 
+// FIXME: Precision 4to decimal
 let gaussSimple = matrix => {
   let n = matrix.length;
   console.log('Augmented matrix');
@@ -107,6 +108,7 @@ let gaussPivotevoTotal = matrix => {
   }
   console.log('Solution');
   let solution = sustitucionRegresiva(matrix);
+  solution = reordenarPivoteoTotal(solution);
   console.log(solution);
   return solution;
 };
@@ -177,6 +179,16 @@ let intercambioColumnas = (matrix, columnaNueva, columnaVieja) => {
   return matrix;
 };
 
+let reordenarPivoteoTotal = solution => {
+  let temp = solution[0];
+  solution[0] = solution[3];
+  solution[3] = temp;
+  temp = solution[1];
+  solution[1] = solution[2];
+  solution[2] = temp;
+  return solution;
+};
+
 let sustitucionRegresiva = matrix => {
   let n = matrix.length - 1;
   var x = [];
@@ -193,4 +205,4 @@ let sustitucionRegresiva = matrix => {
 
 // gaussSimple(m);
 // gaussPivotevoParcial(m2);
-// gaussPivotevoTotal(m3);
+gaussPivotevoTotal(m3);
