@@ -5,216 +5,250 @@ const app = express();
 app.post('/busquedaIncremental', function(req, res) {
   let body = req.body;
 
-  let funcion = body.funcion;
-  let xInicial = Number(body.xInicial);
-  let xDelta = Number(body.xDelta);
-  let iterations = Number(body.iterations);
+  let funcion = body.funcion || '';
+  let xInicial = Number(body.xInicial) || 0;
+  let xDelta = Number(body.xDelta) || 0;
+  let iterations = Number(body.iterations) || 0;
 
-  let raiz = metodos.bisection(
+  let intervalos = metodos.incrementalSearch(
     funcion,
-    xInferior,
-    xSuperior,
-    tolerance,
-    iterations,
-    tipoError
+    xInicial,
+    xDelta,
+    iterations
   );
 
-  res.json({
-    error: false,
-    funcion,
-    xInferior,
-    xSuperior,
-    tolerance,
-    iterations,
-    tipoError,
-    raiz
-  });
+  if (!intervalos) {
+    res.json({
+      error: true,
+      msg: 'El metodo fallo'
+    });
+  } else {
+    res.json({
+      error: false,
+      funcion,
+      xInicial,
+      xDelta,
+      iterations,
+      intervalos
+    });
+  }
 });
 
 app.post('/biseccion', function(req, res) {
   let body = req.body;
 
-  let funcion = body.funcion;
-  let xInferior = Number(body.xInferior);
-  let xSuperior = Number(body.xSuperior);
-  let tolerance = Number(body.tolerance);
-  let iterations = Number(body.iterations);
-  let tipoError = body.tipoError;
+  let funcion = body.funcion || '';
+  let xInferior = Number(body.xInferior) || 0;
+  let xSuperior = Number(body.xSuperior) || 0;
+  let tolerance = Number(body.tolerance) || 0;
+  let iterations = Number(body.iterations) || 0;
 
   let raiz = metodos.bisection(
     funcion,
     xInferior,
     xSuperior,
     tolerance,
-    iterations,
-    tipoError
+    iterations
   );
 
-  res.json({
-    error: false,
-    funcion,
-    xInferior,
-    xSuperior,
-    tolerance,
-    iterations,
-    tipoError,
-    raiz
-  });
+  if (!raiz) {
+    res.json({
+      error: true,
+      msg: 'El metodo fallo'
+    });
+  } else {
+    res.json({
+      error: false,
+      funcion,
+      xInferior,
+      xSuperior,
+      tolerance,
+      iterations,
+      raiz
+    });
+  }
 });
 
 app.post('/reglaFalsa', function(req, res) {
   let body = req.body;
 
-  let funcion = body.funcion;
-  let xInferior = Number(body.xInferior);
-  let xSuperior = Number(body.xSuperior);
-  let tolerance = Number(body.tolerance);
-  let iterations = Number(body.iterations);
-  let tipoError = body.tipoError;
+  let funcion = body.funcion || '';
+  let xInferior = Number(body.xInferior) || 0;
+  let xSuperior = Number(body.xSuperior) || 0;
+  let tolerance = Number(body.tolerance) || 0;
+  let iterations = Number(body.iterations) || '';
 
-  let raiz = metodos.bisection(
+  let raiz = metodos.fakeRule(
     funcion,
     xInferior,
     xSuperior,
     tolerance,
-    iterations,
-    tipoError
+    iterations
   );
 
-  res.json({
-    error: false,
-    funcion,
-    xInferior,
-    xSuperior,
-    tolerance,
-    iterations,
-    tipoError,
-    raiz
-  });
+  if (!raiz) {
+    res.json({
+      error: true,
+      msg: 'El metodo fallo'
+    });
+  } else {
+    res.json({
+      error: false,
+      funcion,
+      xInferior,
+      xSuperior,
+      tolerance,
+      raiz
+    });
+  }
 });
 
 app.post('/puntoFijo', function(req, res) {
   let body = req.body;
 
-  let funcion = body.funcion;
-  let xInferior = Number(body.xInferior);
-  let xSuperior = Number(body.xSuperior);
-  let tolerance = Number(body.tolerance);
-  let iterations = Number(body.iterations);
-  let tipoError = body.tipoError;
+  let funcionF = body.funcionF || '';
+  let funcionG = body.funcionG || '';
+  let tolerance = Number(body.tolerance) || 0;
+  let Xa = Number(body.Xa) || 0;
+  let niter = Number(body.niter) || 0;
+  let tipoError = body.tipoError || '';
 
-  let raiz = metodos.bisection(
-    funcion,
-    xInferior,
-    xSuperior,
+  let raiz = metodos.fixedPoint(
+    funcionF,
+    funcionG,
     tolerance,
-    iterations,
+    Xa,
+    niter,
     tipoError
   );
 
-  res.json({
-    error: false,
-    funcion,
-    xInferior,
-    xSuperior,
-    tolerance,
-    iterations,
-    tipoError,
-    raiz
-  });
+  if (!raiz) {
+    res.json({
+      error: true,
+      msg: 'El metodo fallo'
+    });
+  } else {
+    res.json({
+      error: false,
+      funcionF,
+      funcionG,
+      tolerance,
+      Xa,
+      niter,
+      tipoError,
+      raiz
+    });
+  }
 });
 
 app.post('/newton', function(req, res) {
   let body = req.body;
 
-  let funcion = body.funcion;
-  let xInferior = Number(body.xInferior);
-  let xSuperior = Number(body.xSuperior);
-  let tolerance = Number(body.tolerance);
-  let iterations = Number(body.iterations);
-  let tipoError = body.tipoError;
+  let funcionF = body.funcionF || '';
+  let funciondF = body.funciondF || '';
+  let tolerance = Number(body.tolerance) || 0;
+  let Xo = Number(body.Xo) || 0;
+  let niter = Number(body.niter) || 0;
+  let tipoError = body.tipoError || '';
 
-  let raiz = metodos.bisection(
-    funcion,
-    xInferior,
-    xSuperior,
+  let raiz = metodos.newton(
+    funcionF,
+    funciondF,
     tolerance,
-    iterations,
+    Xo,
+    niter,
     tipoError
   );
 
-  res.json({
-    error: false,
-    funcion,
-    xInferior,
-    xSuperior,
-    tolerance,
-    iterations,
-    tipoError,
-    raiz
-  });
+  if (!raiz) {
+    res.json({
+      error: true,
+      msg: 'El metodo fallo'
+    });
+  } else {
+    res.json({
+      error: false,
+      funcionF,
+      funciondF,
+      tolerance,
+      Xo,
+      niter,
+      tipoError,
+      raiz
+    });
+  }
 });
 
 app.post('/secante', function(req, res) {
   let body = req.body;
 
-  let funcion = body.funcion;
-  let xInferior = Number(body.xInferior);
-  let xSuperior = Number(body.xSuperior);
-  let tolerance = Number(body.tolerance);
-  let iterations = Number(body.iterations);
-  let tipoError = body.tipoError;
+  let funcionF = body.funcionF || '';
+  let tolerance = Number(body.tolerance) || 0;
+  let Xo = Number(body.Xo) || 0;
+  let x1 = Number(body.x1) || 0;
+  let niter = Number(body.niter) || 0;
+  let tipoError = body.tipoError || '';
 
-  let raiz = metodos.bisection(
-    funcion,
-    xInferior,
-    xSuperior,
-    tolerance,
-    iterations,
-    tipoError
-  );
+  let raiz = metodos.secante(funcionF, tolerance, Xo, x1, niter, tipoError);
 
-  res.json({
-    error: false,
-    funcion,
-    xInferior,
-    xSuperior,
-    tolerance,
-    iterations,
-    tipoError,
-    raiz
-  });
+  if (!raiz) {
+    res.json({
+      error: true,
+      msg: 'El metodo fallo'
+    });
+  } else {
+    res.json({
+      error: false,
+      funcionF,
+      tolerance,
+      Xo,
+      x1,
+      niter,
+      tipoError,
+      raiz
+    });
+  }
 });
 
 app.post('/raicesMultiples', function(req, res) {
   let body = req.body;
 
-  let funcion = body.funcion;
-  let xInferior = Number(body.xInferior);
-  let xSuperior = Number(body.xSuperior);
-  let tolerance = Number(body.tolerance);
-  let iterations = Number(body.iterations);
-  let tipoError = body.tipoError;
+  let funcionF = body.funcionF || '';
+  let funciondF = body.funciondF || '';
+  let funcionddF = body.funcionddF || '';
+  let tolerance = Number(body.tolerance) || 0;
+  let Xo = Number(body.Xo) || 0;
+  let niter = Number(body.niter) || 0;
+  let tipoError = body.tipoError || '';
 
-  let raiz = metodos.bisection(
-    funcion,
-    xInferior,
-    xSuperior,
+  let raiz = metodos.multipleRoots(
+    funcionF,
+    funciondF,
+    funcionddF,
     tolerance,
-    iterations,
+    Xo,
+    niter,
     tipoError
   );
 
-  res.json({
-    error: false,
-    funcion,
-    xInferior,
-    xSuperior,
-    tolerance,
-    iterations,
-    tipoError,
-    raiz
-  });
+  if (!raiz) {
+    res.json({
+      error: true,
+      msg: 'El metodo fallo'
+    });
+  } else {
+    res.json({
+      error: false,
+      funcionF,
+      funciondF,
+      funcionddF,
+      tolerance,
+      Xo,
+      niter,
+      tipoError,
+      raiz
+    });
+  }
 });
 
 module.exports = app;

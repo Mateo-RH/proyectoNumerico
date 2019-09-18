@@ -1,6 +1,6 @@
 const math = require('mathjs');
 // ============================================== METODOS CERRADOS ==============================================//
-
+// TODO: MANEJO ERROR DE FUNCION INCORRECTA
 let incrementalSearch = (funcion, initial_x, delta_x, iterations_n) => {
   // Construct the function, Compile it and set de variables
   const functionF = math.parse(funcion);

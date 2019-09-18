@@ -202,4 +202,4 @@ let sustitucionRegresiva = matrix => {
 
 // gaussSimple(m);
 // gaussPivotevoParcial(m2);
-gaussPivotevoTotal(m3);
+// gaussPivotevoTotal(m3);
