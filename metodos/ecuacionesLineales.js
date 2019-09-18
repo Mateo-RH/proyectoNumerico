@@ -29,14 +29,14 @@ let gauss = matrix => {
       let multiplicador = matrix[i][j];
       for (let h = 0; h < matrix[i].length; h++) {
         matrix[i][h] = matrix[i][h] - multiplicador * matrix[j][h];
-        matrix[i][h] = parseFloat(matrix[i][h].toFixed(2));
+        // matrix[i][h] = parseFloat(matrix[i][h].toFixed(2));
       }
     }
 
     let divisor = matrix[i][i];
     for (let k = 0; k < matrix[i].length; k++) {
       matrix[i][k] = matrix[i][k] / divisor;
-      matrix[i][k] = parseFloat(matrix[i][k].toFixed(2));
+      // matrix[i][k] = parseFloat(matrix[i][k].toFixed(2));
     }
   }
   console.log(matrix);
@@ -52,7 +52,7 @@ let gaussSimple = matrix => {
       let multiplicador = matrix[i][k] / matrix[k][k];
       for (let j = k; j < n + 1; j++) {
         matrix[i][j] = matrix[i][j] - multiplicador * matrix[k][j];
-        matrix[i][j] = parseFloat(matrix[i][j].toFixed(2));
+        // matrix[i][j] = parseFloat(matrix[i][j].toFixed(2));
       }
     }
     console.log(matrix);
@@ -76,7 +76,7 @@ let gaussPivotevoParcial = matrix => {
       let multiplicador = matrix[i][k] / matrix[k][k];
       for (let j = k; j < n + 1; j++) {
         matrix[i][j] = matrix[i][j] - multiplicador * matrix[k][j];
-        matrix[i][j] = parseFloat(matrix[i][j].toFixed(2));
+        // matrix[i][j] = parseFloat(matrix[i][j].toFixed(2));
       }
     }
     console.log(matrix);
@@ -100,7 +100,7 @@ let gaussPivotevoTotal = matrix => {
       let multiplicador = matrix[i][k] / matrix[k][k];
       for (let j = k; j < n + 1; j++) {
         matrix[i][j] = matrix[i][j] - multiplicador * matrix[k][j];
-        matrix[i][j] = parseFloat(matrix[i][j].toFixed(2));
+        // matrix[i][j] = parseFloat(matrix[i][j].toFixed(2));
       }
     }
     console.log(matrix);
