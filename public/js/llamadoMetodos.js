@@ -3,14 +3,9 @@ function biseccionLlamado() {
   var biseccionInferiorX = document.getElementById('biseccionInferiorX').value;
   var biseccionSuperiorX = document.getElementById('biseccionSuperiorX').value;
   var biseccionTolerance = document.getElementById('biseccionTolerance').value;
-  var biseccionErrorType = document.getElementById('biseccionErrorType').value;
   var biseccionIterations = document.getElementById('biseccionIterations')
     .value;
 
-  //  NO SE PREOCUPE POR ESTA PARTE, ESTO ES PARA CONSUMIR EL METODO COMO TAL
-  // PERO NO SE SI YA TERMINE LOS ENDPOINT PARA CADA METODO ADEMAS DE QUE TENGO
-  // QUE CORREGIR MUCHOS BUGS QUE TIENEN. SOLO IMPRIMA LOS VALORES QUE RECOGIO DEL FORMULARIO
-  // PD: TE HABLO DESDE EL PASADO, BESITOS Y BUENA SUERTE CON ESO :P
   var settings = {
     async: true,
     crossDomain: true,
@@ -34,28 +29,241 @@ function biseccionLlamado() {
       xInferior: biseccionInferiorX,
       xSuperior: biseccionSuperiorX,
       tolerance: biseccionTolerance,
-      iterations: biseccionIterations,
-      tipoError: biseccionErrorType
+      iterations: biseccionIterations
     }
   };
 
   $.ajax(settings).done(function(response) {
     console.log(response);
-    if (response.raiz) {
-      alert(`Raiz en ${response.raiz}`);
-    } else {
+    if (response.error) {
       alert('Alguno de los campos esta incorrecto');
+    } else {
+      alert(`Raiz en ${response.raiz}`);
     }
   });
+}
 
-  //   console.log(
-  //     bisection(
-  //       funcionBiseccion,
-  //       biseccionInferiorX,
-  //       biseccionSuperiorX,
-  //       biseccionTolerance,
-  //       biseccionIterations,
-  //       biseccionErrorType
-  //     )
-  //   );
+function incrementalLlamado() {
+  var funcionIncremental = document.getElementById('incrementalFunction').value;
+  var incrementalXi = document.getElementById('incrementalXi').value;
+  var incrementalDelta = document.getElementById('incrementalDelta').value;
+  var incrementalIterations = document.getElementById('incrementalIterations')
+    .value;
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: 'http://localhost:3000/busquedaIncremental',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'cache-control': 'no-cache',
+      'Postman-Token': 'df29e950-926e-4a37-8f0d-f78128bee3c3'
+    },
+    data: {
+      funcion: funcionIncremental,
+      xInicial: incrementalXi,
+      xDelta: incrementalDelta,
+      iterations: incrementalIterations
+    }
+  };
+
+  $.ajax(settings).done(function(response) {
+    console.log(response);
+    if (response.error) {
+      alert('Alguno de los campos esta incorrecto');
+    } else {
+      alert(`Intervals: ${response.intervalos}`);
+    }
+  });
+}
+
+function ruleLlamado() {
+  var funcionRule = document.getElementById('ruleFunction').value;
+  var ruleInferiorX = document.getElementById('ruleInferiorX').value;
+  var ruleSuperiorX = document.getElementById('ruleSuperiorX').value;
+  var ruleTolerance = document.getElementById('ruleTolerance').value;
+  var ruleIterations = document.getElementById('ruleIterations').value;
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: 'http://localhost:3000/reglaFalsa',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'cache-control': 'no-cache',
+      'Postman-Token': '268efbfd-664c-49ef-a9c1-0131320affcf'
+    },
+    data: {
+      funcion: funcionRule,
+      xInferior: ruleInferiorX,
+      xSuperior: ruleSuperiorX,
+      tolerance: ruleTolerance,
+      iterations: ruleIterations
+    }
+  };
+
+  $.ajax(settings).done(function(response) {
+    console.log(response);
+    if (response.error) {
+      alert('Alguno de los campos esta incorrecto');
+    } else {
+      alert(`Raiz: ${response.raiz}`);
+    }
+  });
+}
+
+function fixedLlamado() {
+  var funcionFixed = document.getElementById('fixedFunction').value;
+  var funcionG = document.getElementById('fixedFunctionG').value;
+  var fixedTolerance = document.getElementById('fixedTolerance').value;
+  var fixedErrorType = document.getElementById('fixedErrorType').value;
+  var fixedIterations = document.getElementById('fixedIterations').value;
+  var fixedXa = document.getElementById('fixedXa').value;
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: 'http://localhost:3000/puntoFijo',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'cache-control': 'no-cache',
+      'Postman-Token': '6160ffaf-b8c6-4212-9c53-1535f2e74fe2'
+    },
+    data: {
+      funcionF: funcionFixed,
+      funcionG: funcionG,
+      tolerance: fixedTolerance,
+      Xa: fixedXa,
+      niter: fixedIterations,
+      tipoError: fixedErrorType
+    }
+  };
+
+  $.ajax(settings).done(function(response) {
+    console.log(response);
+    if (response.error) {
+      alert('Alguno de los campos esta incorrecto');
+    } else {
+      alert(`Raiz: ${response.raiz}`);
+    }
+  });
+}
+
+function newtonLlamado() {
+  var funcionNewton = document.getElementById('newtonFunction').value;
+  var funcionG = document.getElementById('newtonFunctionG').value;
+  var newtonTolerance = document.getElementById('newtonTolerance').value;
+  var newtonXo = document.getElementById('newtonXo').value;
+  var newtonIterations = document.getElementById('newtonIterations').value;
+  var newtonErrorType = document.getElementById('newtonErrorType').value;
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: 'http://localhost:3000/newton',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'cache-control': 'no-cache',
+      'Postman-Token': '1269b5d2-90d8-4e36-a81a-5823168065f8'
+    },
+    data: {
+      funcionF: funcionNewton,
+      funciondF: funcionG,
+      tolerance: newtonTolerance,
+      Xo: newtonXo,
+      niter: newtonIterations,
+      tipoError: newtonErrorType
+    }
+  };
+
+  $.ajax(settings).done(function(response) {
+    console.log(response);
+    if (response.error) {
+      alert('Alguno de los campos esta incorrecto');
+    } else {
+      alert(`Raiz: ${response.raiz}`);
+    }
+  });
+}
+
+function secantLlamado() {
+  var funcionSecant = document.getElementById('secantFunction').value;
+  var secantTolerance = document.getElementById('secantTolerance').value;
+  var secantXo = document.getElementById('secantXo').value;
+  var secantX1 = document.getElementById('secantX1').value;
+  var secantIterations = document.getElementById('secantIterations').value;
+  var secantErrorType = document.getElementById('secantErrorType').value;
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: 'http://localhost:3000/secante',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'cache-control': 'no-cache',
+      'Postman-Token': '74a40222-973a-423b-b51b-6ef8189fd17a'
+    },
+    data: {
+      funcionF: funcionSecant,
+      tolerance: secantTolerance,
+      Xo: secantXo,
+      x1: secantX1,
+      niter: secantIterations,
+      tipoError: secantErrorType
+    }
+  };
+
+  $.ajax(settings).done(function(response) {
+    console.log(response);
+    if (response.error) {
+      alert('Alguno de los campos esta incorrecto');
+    } else {
+      alert(`Raiz: ${response.raiz}`);
+    }
+  });
+}
+
+function rootLlamado() {
+  var funcionRoot = document.getElementById('rootFunction').value;
+  var funcionD = document.getElementById('rootFunctionD').value;
+  var funcionDD = document.getElementById('rootFunctionD').value;
+  var rootTolerance = document.getElementById('rootTolerance').value;
+  var rootXo = document.getElementById('rootXo').value;
+  var rootIterations = document.getElementById('rootIterations').value;
+  var rootErrorType = document.getElementById('rootErrorType').value;
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: 'http://localhost:3000/raicesMultiples',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'cache-control': 'no-cache',
+      'Postman-Token': '3f98c195-bf2a-4650-9d44-158c862071e5'
+    },
+    data: {
+      funcionF: funcionRoot,
+      funciondF: funcionD,
+      funcionddF: funcionDD,
+      tolerance: rootTolerance,
+      Xo: rootXo,
+      niter: rootIterations,
+      tipoError: rootErrorType
+    }
+  };
+
+  $.ajax(settings).done(function(response) {
+    console.log(response);
+    if (response.error) {
+      alert('Alguno de los campos esta incorrecto');
+    } else {
+      alert(`Raiz: ${response.raiz}`);
+    }
+  });
 }
