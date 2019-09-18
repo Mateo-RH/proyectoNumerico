@@ -180,12 +180,9 @@ let intercambioColumnas = (matrix, columnaNueva, columnaVieja) => {
 };
 
 let reordenarPivoteoTotal = solution => {
-  let temp = solution[0];
-  solution[0] = solution[3];
+  let temp = solution[2];
+  solution[2] = solution[3];
   solution[3] = temp;
-  temp = solution[1];
-  solution[1] = solution[2];
-  solution[2] = temp;
   return solution;
 };
 
