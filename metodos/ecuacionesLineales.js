@@ -1,48 +1,26 @@
 const math = require('mathjs');
 
-// TODO: Crear algoritmo para pasar ecuacion a matrix
-
 let m = [
-  [14, 6, -2, 3, 12],
-  [3, 15, 2, -5, 32],
-  [-7, 4, -23, 2, -24],
-  [1, -3, -2, 16, 14]
+  [2, -1, 0, 3, 1],
+  [1, 0.5, 3, 8, 1],
+  [0, 13, -2, 11, 1],
+  [14, 5, -2, 3, 1]
 ];
 
 let m2 = [
-  [-7, 3, -3, 4, -12],
-  [5, -1, 14, -1, 13],
-  [1, 9, -7, 5, 31],
-  [-12, 13, -8, -4, -32]
+  [2, -1, 0, 3, 1],
+  [1, 0.5, 3, 8, 1],
+  [0, 13, -2, 11, 1],
+  [14, 5, -2, 3, 1]
 ];
 
 let m3 = [
-  [-7, 2, -3, 4, -12],
-  [5, -1, 14, -1, 13],
-  [1, 9, -7, 13, 31],
-  [-12, 13, -8, -4, -32]
+  [2, -1, 0, 3, 1],
+  [1, 0.5, 3, 8, 1],
+  [0, 13, -2, 11, 1],
+  [14, 5, -2, 3, 1]
 ];
 
-let gauss = matrix => {
-  for (let i = 0; i < matrix.length; i++) {
-    for (let j = 0; j < i; j++) {
-      let multiplicador = matrix[i][j];
-      for (let h = 0; h < matrix[i].length; h++) {
-        matrix[i][h] = matrix[i][h] - multiplicador * matrix[j][h];
-        // matrix[i][h] = parseFloat(matrix[i][h].toFixed(2));
-      }
-    }
-
-    let divisor = matrix[i][i];
-    for (let k = 0; k < matrix[i].length; k++) {
-      matrix[i][k] = matrix[i][k] / divisor;
-      // matrix[i][k] = parseFloat(matrix[i][k].toFixed(2));
-    }
-  }
-  console.log(matrix);
-};
-
-// FIXME: Precision 4to decimal
 let gaussSimple = matrix => {
   let n = matrix.length;
   console.log('Augmented matrix');
@@ -50,10 +28,10 @@ let gaussSimple = matrix => {
   for (let k = 0; k < n - 1; k++) {
     console.log('Stage', k + 1);
     for (let i = k + 1; i < n; i++) {
+      if (matrix[k][k] == 0) pivoteoSimple(matrix, k);
       let multiplicador = matrix[i][k] / matrix[k][k];
       for (let j = k; j < n + 1; j++) {
         matrix[i][j] = matrix[i][j] - multiplicador * matrix[k][j];
-        // matrix[i][j] = parseFloat(matrix[i][j].toFixed(2));
       }
     }
     console.log(matrix);
@@ -71,13 +49,11 @@ let gaussPivotevoParcial = matrix => {
 
   for (let k = 0; k < n - 1; k++) {
     console.log('Stage', k + 1);
-
     matrix = pivoteoParcial(matrix, k);
     for (let i = k + 1; i < n; i++) {
       let multiplicador = matrix[i][k] / matrix[k][k];
       for (let j = k; j < n + 1; j++) {
         matrix[i][j] = matrix[i][j] - multiplicador * matrix[k][j];
-        // matrix[i][j] = parseFloat(matrix[i][j].toFixed(2));
       }
     }
     console.log(matrix);
@@ -90,26 +66,25 @@ let gaussPivotevoParcial = matrix => {
 
 let gaussPivotevoTotal = matrix => {
   let n = matrix.length;
+  let marcas = crearMarcas(matrix);
   console.log('Augmented matrix');
   console.log(matrix);
 
   for (let k = 0; k < n - 1; k++) {
     console.log('Stage', k + 1);
-
-    matrix = pivoteoTotal(matrix, k);
+    matrix = pivoteoTotal(matrix, k, marcas);
     for (let i = k + 1; i < n; i++) {
       let multiplicador = matrix[i][k] / matrix[k][k];
       for (let j = k; j < n + 1; j++) {
         matrix[i][j] = matrix[i][j] - multiplicador * matrix[k][j];
-        // matrix[i][j] = parseFloat(matrix[i][j].toFixed(2));
       }
     }
     console.log(matrix);
   }
   console.log('Solution');
   let solution = sustitucionRegresiva(matrix);
-  solution = reordenarPivoteoTotal(solution);
   console.log(solution);
+  console.log(marcas);
   return solution;
 };
 
@@ -134,7 +109,7 @@ let pivoteoParcial = (matrix, k) => {
   }
 };
 
-let pivoteoTotal = (matrix, k) => {
+let pivoteoTotal = (matrix, k, marcas) => {
   let mayor = 0;
   let n = matrix.length;
   let filaMayor = k;
@@ -157,9 +132,20 @@ let pivoteoTotal = (matrix, k) => {
     }
     if (columnaMayor != k) {
       matrix = intercambioColumnas(matrix, columnaMayor, k);
-      // marcas = intercambioMarcas(marcas, columnaMayor, k);
+      marcas = intercambioMarcas(marcas, columnaMayor, k);
     }
     return matrix;
+  }
+};
+
+let pivoteoSimple = (matrix, k) => {
+  for (let i = k; i < matrix.length; i++) {
+    console.log('PIVOTEO SIMPLE: ', matrix[i][k]);
+    if (matrix[i][k] != 0) {
+      let temp = matrix[k];
+      matrix[k] = matrix[i];
+      matrix[i] = temp;
+    }
   }
 };
 
@@ -179,11 +165,19 @@ let intercambioColumnas = (matrix, columnaNueva, columnaVieja) => {
   return matrix;
 };
 
-let reordenarPivoteoTotal = solution => {
-  let temp = solution[2];
-  solution[2] = solution[3];
-  solution[3] = temp;
-  return solution;
+let crearMarcas = matrix => {
+  let m = [];
+  for (let i = 0; i < matrix.length; i++) {
+    m[i] = i + 1;
+  }
+  return m;
+};
+
+let intercambioMarcas = (marcas, columnaMayor, k) => {
+  let temp = marcas[columnaMayor];
+  marcas[columnaMayor] = marcas[k];
+  marcas[k] = temp;
+  return marcas;
 };
 
 let sustitucionRegresiva = matrix => {
@@ -200,6 +194,9 @@ let sustitucionRegresiva = matrix => {
   return x;
 };
 
-// gaussSimple(m);
-// gaussPivotevoParcial(m2);
-// gaussPivotevoTotal(m3);
+console.log('SIMPLE');
+gaussSimple(m);
+console.log('PARCIAL');
+gaussPivotevoParcial(m2);
+console.log('TOTAL');
+gaussPivotevoTotal(m3);

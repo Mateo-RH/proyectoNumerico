@@ -158,19 +158,19 @@ let fixedPoint = (funcionF, funcionG, tolerance, Xa, niter, tipoError) => {
   let counter = 1;
   let error = tolerance + 1;
   var Xn;
-  console.log(0, Xa, fx, 0);
   while (fx != 0 && error > tolerance && counter <= niter) {
     scope.x = Xa;
     Xn = fg.evaluate(scope);
+    console.log(counter - 1, Xa, Xn, fx, error);
     scope.x = Xn;
     fx = ff.evaluate(scope);
     tipoError == 'e'
       ? (error = math.abs((Xn - Xa) / Xn))
       : (error = math.abs(Xn - Xa));
     Xa = Xn;
-    console.log(counter, Xn, fx, error);
     counter += 1;
   }
+  console.log(counter - 1, Xa, Xn, fx, error);
   if (fx == 0) {
     console.log(`Root: ${Xa}`);
     return Xa;
@@ -194,8 +194,8 @@ let newton = (funcionF, funciondF, tolerance, Xo, niter, tipoError) => {
   let counter = 1;
   let error = tolerance + 1;
   var x1;
-  console.log(0, Xo, fx, 0);
   while (fx != 0 && error > tolerance && counter <= niter && dfx != 0) {
+    console.log(counter - 1, Xo, fx, error);
     x1 = Xo - fx / dfx;
     scope.x = x1;
     fx = ff.evaluate(scope);
@@ -204,9 +204,9 @@ let newton = (funcionF, funciondF, tolerance, Xo, niter, tipoError) => {
       ? (error = math.abs((x1 - Xo) / x1))
       : (error = math.abs(x1 - Xo));
     Xo = x1;
-    console.log(counter, Xo, fx, error);
     counter += 1;
   }
+  console.log(counter - 1, Xo, fx, error);
   if (fx === 0) {
     console.log(`Root: ${Xo}`);
     return Xo;
@@ -237,6 +237,7 @@ let secante = (funcionF, tolerance, Xo, x1, niter, tipoError) => {
     let den = fx1 - fx0;
     var x2;
     console.log(0, Xo, fx0, 0);
+    console.log(1, x1, fx1, 0);
     while (fx1 != 0 && error > tolerance && counter <= niter && den != 0) {
       x2 = x1 - (fx1 * (x1 - Xo)) / den;
       tipoError == 'e'
@@ -248,9 +249,10 @@ let secante = (funcionF, tolerance, Xo, x1, niter, tipoError) => {
       scope.x = x1;
       fx1 = ff.evaluate(scope);
       den = fx1 - fx0;
-      console.log(counter, Xo, fx0, error);
+      console.log(counter + 1, Xo, fx1, error);
       counter += 1;
     }
+
     if (fx1 === 0) {
       console.log(`Root: ${x1}`);
       return x1;
@@ -267,7 +269,6 @@ let secante = (funcionF, tolerance, Xo, x1, niter, tipoError) => {
   }
 };
 
-// TODO: idk if this mondeu works and the pseudocode its like a piece of sh*t
 let multipleRoots = (
   funcionF,
   funciondF,
@@ -285,22 +286,24 @@ let multipleRoots = (
   };
   let fx = ff.evaluate(scope);
   let dfx = df.evaluate(scope);
-  let ddfx = df.evaluate(scope);
+  let ddfx = ddf.evaluate(scope);
   let counter = 1;
   let error = tolerance + 1;
   var x1;
-  // console.log(0, Xa, fx, 0);
   while (fx != 0 && error > tolerance && counter <= niter && dfx != 0) {
-    x1 = Xo - (fx * dfx) / (dfx ^ (2 - fx * ddfx));
+    console.log(counter, Xo, fx, error);
+    let numerador = fx * dfx;
+    let denominador = fx * dfx;
+    let ecuacion = numerador / ((dfx ^ 2) - denominador);
+    x1 = Xo - ecuacion;
     scope.x = x1;
     fx = ff.evaluate(scope);
     dfx = df.evaluate(scope);
-    ddfx = df.evaluate(scope);
+    ddfx = ddf.evaluate(scope);
     tipoError == 'e'
       ? (error = math.abs((x1 - Xo) / x1))
       : (error = math.abs(x1 - Xo));
     Xo = x1;
-    // console.log(counter, Xn, fx, error);
     counter += 1;
   }
   if (fx === 0) {
@@ -319,20 +322,24 @@ let multipleRoots = (
 };
 
 // Cerrados
-// const funcion = 'e^(3x - 12) + x*cos(3x) - x^2 + 4';
-// incrementalSearch(funcion, -10, 1, 20);
-// bisection(funcion, 2, 3, 0.0005, 11);
+const funcion = 'log(sin(x)^2 + 1) - 1/2';
+const funcionD = '2*(sin(x)^2 + 1)^-1 * sin(x) * cos(x)';
+// incrementalSearch(funcion, -3, 0.5, 100);
+// bisection(funcion, 0, 1, 0.0000001, 100);
 // fakeRule(funcion, 2, 3, 0.0005, 11);
 
 // Abiertos
-// const funcionf = 'x*e^x - x^2 - 5x - 3';
-// const funciong = '(x*e^x - x^2 - 3)/5';
-// const funciondf = '-2x + e^x * (x + 1) - 5';
-// const funcionddf = '-2 + e^x (2 + x)';
-// fixedPoint(funcionf, funciong, 0.00005, -0.5, 10, 'e');
-// newton(funcionf, funciondf, 0.00005, -0.5, 10, 'e');
-// secante(funcionf, 0.00005, -0.5, 1, 10, 'e');
-// multipleRoots(funcionf, funciondf, funcionddf, 0.00005, -0.5, 10, 'e');
+const funcionf = 'log(sin(x)^2 + 1) - 1/2 - x';
+const funciong = 'log(sin(x)^2 + 1) - 1/2';
+const funciondf = 'x*e^x';
+const funcionddf = 'x*e^x + e^x';
+const h = '(e^x) - x - 1';
+const hd = '(e^x) - 1';
+const hdd = 'e^x';
+// fixedPoint(funcionf, funciong, 0.0000001, -0.5, 100, 'E');
+// newton(funcion, funcionD, 0.0000001, 0.5, 100, 'E');
+// secante(funcion, 0.0000001, 0.5, 1, 100, 'E');
+multipleRoots(h, hd, hdd, 0.0000001, 1, 5, 'E');
 
 module.exports = {
   incrementalSearch,
