@@ -26,11 +26,14 @@ let gaussSimple = matrix => {
   console.log('Augmented matrix');
   console.log(matrix);
   for (let k = 0; k < n - 1; k++) {
+    // 0,1,2 < 3 -> k diagonal
     console.log('Stage', k + 1);
     for (let i = k + 1; i < n; i++) {
+      // 1,2,3 < 4 -> i filas
       if (matrix[k][k] == 0) pivoteoSimple(matrix, k);
       let multiplicador = matrix[i][k] / matrix[k][k];
       for (let j = k; j < n + 1; j++) {
+        // 0,1,2,3,4 < 5 -> j columnas
         matrix[i][j] = matrix[i][j] - multiplicador * matrix[k][j];
       }
     }
@@ -182,10 +185,10 @@ let intercambioMarcas = (marcas, columnaMayor, k) => {
 
 let sustitucionRegresiva = matrix => {
   let n = matrix.length - 1;
-  var x = [];
+  let x = [];
   x[n] = matrix[n][n + 1] / matrix[n][n];
   for (let i = n - 1; i >= 0; i--) {
-    let sumatoria = 0;
+    var sumatoria = 0;
     for (let p = i + 1; p < n + 1; p++) {
       sumatoria = sumatoria + matrix[i][p] * x[p];
     }
@@ -196,7 +199,7 @@ let sustitucionRegresiva = matrix => {
 
 console.log('SIMPLE');
 gaussSimple(m);
-console.log('PARCIAL');
-gaussPivotevoParcial(m2);
-console.log('TOTAL');
-gaussPivotevoTotal(m3);
+// console.log('PARCIAL');
+// gaussPivotevoParcial(m2);
+// console.log('TOTAL');
+// gaussPivotevoTotal(m3);

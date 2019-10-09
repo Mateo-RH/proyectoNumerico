@@ -1,6 +1,14 @@
 const express = require('express');
-const metodos = require('../metodos/metodosNumericos');
 const app = express();
+const {
+  busquedasIncrementales,
+  biseccion,
+  reglaFalsa,
+  newton,
+  puntoFijo,
+  raicesMultiples,
+  secante
+} = require('../codigosNumericos/ecuacionesNoLineales/index');
 
 app.post('/busquedaIncremental', function(req, res) {
   let body = req.body;
@@ -10,7 +18,7 @@ app.post('/busquedaIncremental', function(req, res) {
   let xDelta = Number(body.xDelta) || 0;
   let iterations = Number(body.iterations) || 0;
 
-  let intervalos = metodos.incrementalSearch(
+  let intervalos = busquedasIncrementales(
     funcion,
     xInicial,
     xDelta,
@@ -43,13 +51,7 @@ app.post('/biseccion', function(req, res) {
   let tolerance = Number(body.tolerance) || 0;
   let iterations = Number(body.iterations) || 0;
 
-  let raiz = metodos.bisection(
-    funcion,
-    xInferior,
-    xSuperior,
-    tolerance,
-    iterations
-  );
+  let raiz = biseccion(funcion, xInferior, xSuperior, tolerance, iterations);
 
   if (!raiz) {
     res.json({
@@ -78,13 +80,7 @@ app.post('/reglaFalsa', function(req, res) {
   let tolerance = Number(body.tolerance) || 0;
   let iterations = Number(body.iterations) || '';
 
-  let raiz = metodos.fakeRule(
-    funcion,
-    xInferior,
-    xSuperior,
-    tolerance,
-    iterations
-  );
+  let raiz = reglaFalsa(funcion, xInferior, xSuperior, tolerance, iterations);
 
   if (!raiz) {
     res.json({
@@ -113,14 +109,7 @@ app.post('/puntoFijo', function(req, res) {
   let niter = Number(body.niter) || 0;
   let tipoError = body.tipoError || '';
 
-  let raiz = metodos.fixedPoint(
-    funcionF,
-    funcionG,
-    tolerance,
-    Xa,
-    niter,
-    tipoError
-  );
+  let raiz = puntoFijo(funcionF, funcionG, tolerance, Xa, niter, tipoError);
 
   if (!raiz) {
     res.json({
@@ -151,14 +140,7 @@ app.post('/newton', function(req, res) {
   let niter = Number(body.niter) || 0;
   let tipoError = body.tipoError || '';
 
-  let raiz = metodos.newton(
-    funcionF,
-    funciondF,
-    tolerance,
-    Xo,
-    niter,
-    tipoError
-  );
+  let raiz = newton(funcionF, funciondF, tolerance, Xo, niter, tipoError);
 
   if (!raiz) {
     res.json({
@@ -189,7 +171,7 @@ app.post('/secante', function(req, res) {
   let niter = Number(body.niter) || 0;
   let tipoError = body.tipoError || '';
 
-  let raiz = metodos.secante(funcionF, tolerance, Xo, x1, niter, tipoError);
+  let raiz = secante(funcionF, tolerance, Xo, x1, niter, tipoError);
 
   if (!raiz) {
     res.json({
@@ -221,7 +203,7 @@ app.post('/raicesMultiples', function(req, res) {
   let niter = Number(body.niter) || 0;
   let tipoError = body.tipoError || '';
 
-  let raiz = metodos.multipleRoots(
+  let raiz = raicesMultiples(
     funcionF,
     funciondF,
     funcionddF,

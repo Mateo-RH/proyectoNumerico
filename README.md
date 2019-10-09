@@ -6,20 +6,14 @@ Metodos numericos en JS
 npm install
 ```
 
-para probar los metodos: descomentar el metodo que quiere probar y ejecutar
+Test
 
 ```
-node metodos/metodosNumericos
+npm test
 ```
 
-para probar la app
+Ejecutar la app
 
 ```
-node server.js
-```
-
-o
-
-```
-nodemon server.js
+npm run dev
 ```
