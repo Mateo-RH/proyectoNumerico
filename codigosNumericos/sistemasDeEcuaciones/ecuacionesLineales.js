@@ -21,6 +21,16 @@ let m3 = [
   [14, 5, -2, 3, 1]
 ];
 
+let m4 = [
+  [4, 0, 0, 0, 12],
+  [3, 12, 0, 0, 23],
+  [-7, -3, -4, 0, -5],
+  [1, -2, -5, 6, 8]
+];
+
+let m5 = [[4, 3, -2, -7], [3, 12, 8, -3], [2, 3, -9, 2], [1, -2, -5, 6]];
+let b = [20, 18, 31, 12];
+
 let gaussSimple = matrix => {
   let n = matrix.length;
   console.log('Augmented matrix');
@@ -197,8 +207,56 @@ let sustitucionRegresiva = matrix => {
   return x;
 };
 
-console.log('SIMPLE');
-gaussSimple(m);
+let sustitucionProgresiva = matrix => {
+  let n = matrix.length;
+  let x = [];
+  x[0] = matrix[0][n] / matrix[0][0];
+  for (let i = 1; i < n; i++) {
+    var sumatoria = 0;
+    for (let p = 0; p < n + 1; p++) {
+      if (!isNaN(matrix[i][p] * x[p]))
+        sumatoria = sumatoria + matrix[i][p] * x[p];
+    }
+    x[i] = (matrix[i][n] - sumatoria) / matrix[i][i];
+  }
+  return x;
+};
+
+let factorizacionLU = matrix => {
+  let n = matrix.length;
+  var L = matrix.map((element, index) =>
+    element.map((ele, idx) => {
+      if (index === idx) return 1;
+      return math.abs(ele * 0);
+    })
+  );
+  for (let k = 0; k < n - 1; k++) {
+    for (let i = k + 1; i < n; i++) {
+      let multiplicador = matrix[i][k] / matrix[k][k];
+      L[i][k] = multiplicador;
+      for (let j = k; j < n; j++) {
+        matrix[i][j] = matrix[i][j] - multiplicador * matrix[k][j];
+      }
+    }
+  }
+  return {
+    L,
+    U: matrix
+  };
+};
+
+let factorizacionMatrices = (matrix, b) => {
+  let { L, U } = factorizacionLU(matrix);
+  L.map((item, index) => item.push(b[index]));
+  let z = sustitucionProgresiva(L);
+  U.map((item, index) => item.push(z[index]));
+  let x = sustitucionRegresiva(U);
+  console.log(x);
+};
+
+factorizacionMatrices(m5, b);
+// console.log('SIMPLE');
+// gaussSimple(m);
 // console.log('PARCIAL');
 // gaussPivotevoParcial(m2);
 // console.log('TOTAL');
