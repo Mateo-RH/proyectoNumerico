@@ -226,8 +226,7 @@ let factorizacionLU = matrix => {
   let n = matrix.length;
   var L = matrix.map((element, index) =>
     element.map((ele, idx) => {
-      if (index === idx) return 1;
-      return math.abs(ele * 0);
+      return (index === idx) ? 1 : math.abs(ele * 0);
     })
   );
   for (let k = 0; k < n - 1; k++) {
