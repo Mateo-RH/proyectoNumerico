@@ -245,6 +245,30 @@ let factorizacionLU = matrix => {
   };
 };
 
+let factorizacionLUPivoteo = matrix => {
+  // let marcas = matrix.map((item, index) => index);
+  let n = matrix.length;
+  var L = matrix.map((element, index) =>
+    element.map((ele, idx) => {
+      if (index === idx) return 1;
+      return math.abs(ele * 0);
+    })
+  );
+  for (let k = 0; k < n - 1; k++) {
+    for (let i = k + 1; i < n; i++) {
+      let multiplicador = matrix[i][k] / matrix[k][k];
+      L[i][k] = multiplicador;
+      for (let j = k; j < n; j++) {
+        matrix[i][j] = matrix[i][j] - multiplicador * matrix[k][j];
+      }
+    }
+  }
+  return {
+    L,
+    U: matrix
+  };
+};
+
 let factorizacionMatrices = (matrix, b) => {
   let { L, U } = factorizacionLU(matrix);
   L.map((item, index) => item.push(b[index]));
@@ -254,7 +278,19 @@ let factorizacionMatrices = (matrix, b) => {
   console.log(x);
 };
 
-factorizacionMatrices(m5, b);
+let factorizacionMatricesPivoteo = (matrix, b) => {
+  factorizacionLUPivoteo(matrix);
+  // console.log(L);
+  // console.log(U);
+  // console.log(P);
+  // L.map((item, index) => item.push(b[index]));
+  // let z = sustitucionProgresiva(L);
+  // U.map((item, index) => item.push(z[index]));
+  // let x = sustitucionRegresiva(U);
+  // console.log(x);
+};
+
+factorizacionMatricesPivoteo(m5, b);
 // console.log('SIMPLE');
 // gaussSimple(m);
 // console.log('PARCIAL');
