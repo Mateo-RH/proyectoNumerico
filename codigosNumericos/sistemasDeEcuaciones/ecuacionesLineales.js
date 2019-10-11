@@ -34,6 +34,8 @@ let b = [20, 18, 31, 12];
 let m6 = [[-7, 2, -3, 4], [5, -1, 14, -1], [1, 9, -7, 5], [-12, 13, -8, -4]];
 let b2 = [-12, 13, 31, -32];
 
+let m7 = [[36, 3, -4, 5], [5, -45, 10, -2], [6, 8, 57, 5], [2, 3, -8, -42]];
+
 let gaussSimple = matrix => {
   let n = matrix.length;
   console.log('Augmented matrix');
@@ -226,6 +228,7 @@ let factorizacionLU = matrix => {
   );
   for (let k = 0; k < n - 1; k++) {
     for (let i = k + 1; i < n; i++) {
+      if (matrix[k][k]) return false; // TEOREMA
       let multiplicador = matrix[i][k] / matrix[k][k];
       L[i][k] = multiplicador;
       for (let j = k; j < n; j++) {
@@ -271,6 +274,8 @@ let pivoteoParcialLU = (marcas, matrix, k, L) => {
 };
 
 let factorizacionLUPivoteo = matrix => {
+  // TODO: A DEBE DE SER INVERTIBLE
+  // DEBE DE SER SOLUCIONABLE CON PIVOTEO PARCIAL
   let marcas = matrix.map((item, index) => index);
   let n = matrix.length;
   var L = matrix.map((element, index) =>
@@ -312,6 +317,47 @@ let factorizacionMatricesPivoteo = (matrix, b) => {
   console.log(x);
 };
 
+let factorizacionDirectaCrout = matrix => {
+  let n = matrix.length;
+  var U = matrix.map((element, index) =>
+    element.map((ele, idx) => {
+      return index === idx ? 1 : math.abs(ele * 0);
+    })
+  );
+  var L = matrix.map((element, i) => matrix[i].map(e => 0));
+  var suma1;
+  var suma2;
+  var suma3;
+
+  for (let k = 0; k < n; k++) {
+    suma1 = 0;
+
+    for (let p = 0; p < k; p++) {
+      suma1 += L[k][p] * U[p][k];
+    }
+    L[k][k] = matrix[k][k] - suma1;
+
+    for (let i = k + 1; i < n; i++) {
+      suma2 = 0;
+      for (let p = 0; p < k; p++) {
+        suma2 += L[i][p] * U[p][k];
+      }
+      L[i][k] = (matrix[i][k] - suma2) / U[k][k];
+    }
+
+    for (let j = k + 1; j < n; j++) {
+      suma3 = 0;
+      for (let p = 0; p < k; p++) {
+        suma3 += L[k][p] * U[p][j];
+      }
+      U[k][j] = (matrix[k][j] - suma3) / L[k][k];
+    }
+  }
+
+  console.log(L);
+  console.log(U);
+};
+
 // factorizacionMatricesPivoteo(m5, b);
 // console.log('SIMPLE');
 // gaussSimple(m);
@@ -319,7 +365,8 @@ let factorizacionMatricesPivoteo = (matrix, b) => {
 // gaussPivotevoParcial(m2);
 // console.log('TOTAL');
 // gaussPivotevoTotal(m3);
-console.log('LU-SIMPLE');
-factorizacionMatrices(m5, b);
-console.log('LU-PIVOTEO');
-factorizacionMatricesPivoteo(m6, b2);
+// console.log('LU-SIMPLE');
+// factorizacionMatrices(m5, b);
+// console.log('LU-PIVOTEO');
+// factorizacionMatricesPivoteo(m6, b2);
+factorizacionDirectaCrout(m7);
