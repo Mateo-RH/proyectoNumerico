@@ -31,6 +31,9 @@ let m4 = [
 let m5 = [[4, 3, -2, -7], [3, 12, 8, -3], [2, 3, -9, 2], [1, -2, -5, 6]];
 let b = [20, 18, 31, 12];
 
+let m6 = [[-7, 2, -3, 4], [5, -1, 14, -1], [1, 9, -7, 5], [-12, 13, -8, -4]];
+let b2 = [-12, 13, 31, -32];
+
 let gaussSimple = matrix => {
   let n = matrix.length;
   console.log('Augmented matrix');
@@ -79,7 +82,7 @@ let gaussPivotevoParcial = matrix => {
 
 let gaussPivotevoTotal = matrix => {
   let n = matrix.length;
-  let marcas = crearMarcas(matrix);
+  let marcas = matrix.map((element, index) => index + 1);
   console.log('Augmented matrix');
   console.log(matrix);
 
@@ -178,14 +181,6 @@ let intercambioColumnas = (matrix, columnaNueva, columnaVieja) => {
   return matrix;
 };
 
-let crearMarcas = matrix => {
-  let m = [];
-  for (let i = 0; i < matrix.length; i++) {
-    m[i] = i + 1;
-  }
-  return m;
-};
-
 let intercambioMarcas = (marcas, columnaMayor, k) => {
   let temp = marcas[columnaMayor];
   marcas[columnaMayor] = marcas[k];
@@ -226,7 +221,7 @@ let factorizacionLU = matrix => {
   let n = matrix.length;
   var L = matrix.map((element, index) =>
     element.map((ele, idx) => {
-      return (index === idx) ? 1 : math.abs(ele * 0);
+      return index === idx ? 1 : math.abs(ele * 0);
     })
   );
   for (let k = 0; k < n - 1; k++) {
@@ -244,16 +239,45 @@ let factorizacionLU = matrix => {
   };
 };
 
+let reorganizarL = (matrix, filaMayor, filaMenor) => {
+  let columna = filaMenor - 1;
+  let temp = matrix[filaMenor][columna];
+  matrix[filaMenor][columna] = matrix[filaMayor][columna];
+  matrix[filaMayor][columna] = temp;
+  return matrix;
+};
+
+let pivoteoParcialLU = (marcas, matrix, k, L) => {
+  let n = matrix.length;
+  let mayor = math.abs(matrix[k][k]);
+  let filaMayor = k;
+  for (let s = k + 1; s < n; s++) {
+    if (math.abs(matrix[s][k]) > mayor) {
+      mayor = math.abs(matrix[s][k]);
+      filaMayor = s;
+    }
+  }
+  if (mayor == 0) {
+    console.log('The system doesnt have an unique solution');
+    return false;
+  } else {
+    if (filaMayor != k) {
+      matrix = intercambioFilas(matrix, filaMayor, k);
+      marcas = intercambioMarcas(marcas, filaMayor, k);
+      if (k > 0) L = reorganizarL(L, filaMayor, k);
+    }
+    return marcas;
+  }
+};
+
 let factorizacionLUPivoteo = matrix => {
-  // let marcas = matrix.map((item, index) => index);
+  let marcas = matrix.map((item, index) => index);
   let n = matrix.length;
   var L = matrix.map((element, index) =>
-    element.map((ele, idx) => {
-      if (index === idx) return 1;
-      return math.abs(ele * 0);
-    })
+    element.map((ele, idx) => (index === idx ? 1 : math.abs(ele * 0)))
   );
   for (let k = 0; k < n - 1; k++) {
+    marcas = pivoteoParcialLU(marcas, matrix, k, L);
     for (let i = k + 1; i < n; i++) {
       let multiplicador = matrix[i][k] / matrix[k][k];
       L[i][k] = multiplicador;
@@ -264,7 +288,8 @@ let factorizacionLUPivoteo = matrix => {
   }
   return {
     L,
-    U: matrix
+    U: matrix,
+    P: marcas
   };
 };
 
@@ -278,21 +303,23 @@ let factorizacionMatrices = (matrix, b) => {
 };
 
 let factorizacionMatricesPivoteo = (matrix, b) => {
-  factorizacionLUPivoteo(matrix);
-  // console.log(L);
-  // console.log(U);
-  // console.log(P);
-  // L.map((item, index) => item.push(b[index]));
-  // let z = sustitucionProgresiva(L);
-  // U.map((item, index) => item.push(z[index]));
-  // let x = sustitucionRegresiva(U);
-  // console.log(x);
+  let { L, U, P } = factorizacionLUPivoteo(matrix);
+  let Pb = P.map((element, item) => b[P[item]]);
+  L.map((item, index) => item.push(Pb[index]));
+  let z = sustitucionProgresiva(L);
+  U.map((item, index) => item.push(z[index]));
+  let x = sustitucionRegresiva(U);
+  console.log(x);
 };
 
-factorizacionMatricesPivoteo(m5, b);
+// factorizacionMatricesPivoteo(m5, b);
 // console.log('SIMPLE');
 // gaussSimple(m);
 // console.log('PARCIAL');
 // gaussPivotevoParcial(m2);
 // console.log('TOTAL');
 // gaussPivotevoTotal(m3);
+console.log('LU-SIMPLE');
+factorizacionMatrices(m5, b);
+console.log('LU-PIVOTEO');
+factorizacionMatricesPivoteo(m6, b2);
