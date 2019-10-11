@@ -1,4 +1,4 @@
-const busquedasIncrementales = require('./busquedasIncrementales');
+const busquedasIncrementales = require('./cerrados/busquedasIncrementales');
 const biseccion = require('./cerrados/biseccion');
 const reglaFalsa = require('./cerrados/reglaFalsa');
 const newton = require('./abiertos/newton');
