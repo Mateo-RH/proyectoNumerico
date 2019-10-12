@@ -168,8 +168,6 @@ let factorizacionLU = matrix => {
 };
 
 let factorizacionLUPivoteo = matrix => {
-  // TODO: A DEBE DE SER INVERTIBLE
-  // DEBE DE SER SOLUCIONABLE CON PIVOTEO PARCIAL
   let marcas = matrix.map((item, index) => index);
   let n = matrix.length;
   var L = matrix.map((element, index) =>

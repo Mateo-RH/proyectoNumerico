@@ -20,7 +20,8 @@ let biseccion = (funcion, xInferior, xSuperior, tolerance, iterations_n) => {
     let fxm = code2.evaluate(scope);
     let counter = 1;
     let error = tolerance + 1;
-    console.log(1, xInferior, xSuperior, xMiddle, fxm, 0);
+    var tabla = [];
+    tabla.push([1, xInferior, xSuperior, xMiddle, fxm, 0]);
     while (error > tolerance && counter <= iterations_n && fxm != 0) {
       if (fxi * fxm < 0) {
         xSuperior = xMiddle;
@@ -35,9 +36,9 @@ let biseccion = (funcion, xInferior, xSuperior, tolerance, iterations_n) => {
       fxm = code2.evaluate(scope);
       error = math.abs(xMiddle - Xaux);
       counter += 1;
-      console.log(counter, xInferior, xSuperior, xMiddle, fxm, error);
+      tabla.push([counter, xInferior, xSuperior, xMiddle, fxm, error]);
     }
-
+    console.table(tabla);
     if (fxm == 0) {
       console.log('Root:', xMiddle);
       return xMiddle;

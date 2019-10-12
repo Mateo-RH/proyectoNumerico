@@ -3,6 +3,7 @@ const math = require('mathjs');
 let m7 = [[3, -2, -2, -1], [-2, 8, -2, -2], [-2, -2, 4, 2], [-1, -2, 2, 3]];
 let m8 = [[36, 3, -4, 5], [5, -45, 10, -2], [6, 8, 57, 5], [2, 3, -8, -42]];
 
+// TODO: FALTA CHOLESKY
 let factorizacionDirectaCrout = matrix => {
   let n = matrix.length;
   var L = matrix.map((element, i) => matrix[i].map(e => 0));
@@ -34,6 +35,11 @@ let factorizacionDirectaCrout = matrix => {
       }
       U[k][j] = (matrix[k][j] - suma3) / L[k][k];
     }
+    console.log('Etapa', k + 1);
+    console.log('L');
+    console.table(L);
+    console.log('U');
+    console.table(U);
   }
 
   console.log('L');
@@ -68,6 +74,11 @@ let factorizacionDirectaDoolittle = matrix => {
       for (let p = 0; p < k; p++) suma3 += L[k][p] * U[p][j];
       L[j][k] = (matrix[j][k] - suma3) / U[k][k];
     }
+    console.log('Etapa', k + 1);
+    console.log('L');
+    console.table(L);
+    console.log('U');
+    console.table(U);
   }
 
   console.log('L');
