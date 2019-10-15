@@ -1,5 +1,7 @@
 const math = require('mathjs');
 
+// TODO: sustituciones normales y complex pueden ser solo complex
+
 let intercambioFilas = (matrix, filaNueva, filaVieja) => {
   let temp = matrix[filaVieja];
   matrix[filaVieja] = matrix[filaNueva];
@@ -144,6 +146,35 @@ let sustitucionProgresiva = matrix => {
   return x;
 };
 
+let sustitucionRegresivaComplex = matrix => {
+  let n = matrix.length - 1;
+  let x = [];
+  x[n] = math.divide(matrix[n][n + 1], matrix[n][n]);
+  for (let i = n - 1; i >= 0; i--) {
+    var sumatoria = 0;
+    for (let p = i + 1; p < n + 1; p++) {
+      sumatoria = math.add(sumatoria, math.multiply(matrix[i][p], x[p]));
+    }
+    x[i] = math.divide(math.subtract(matrix[i][n + 1], sumatoria), matrix[i][i]);
+  }
+  return x;
+};
+
+let sustitucionProgresivaComplex = matrix => {
+  let n = matrix.length;
+  let x = [];
+  x[0] = math.divide(matrix[0][n], matrix[0][0]);
+  for (let i = 1; i < n; i++) {
+    var sumatoria = 0;
+    for (let p = 0; p < n + 1; p++) {
+      if (!isNaN(matrix[i][p] * x[p]))
+        sumatoria = math.add(sumatoria, math.multiply(matrix[i][p], x[p]));
+    }
+    x[i] = math.divide(math.subtract(matrix[i][n], sumatoria), matrix[i][i]);
+  }
+  return x;
+};
+
 let factorizacionLU = matrix => {
   let n = matrix.length;
   var L = matrix.map((element, index) =>
@@ -202,5 +233,7 @@ module.exports = {
   sustitucionRegresiva,
   sustitucionProgresiva,
   factorizacionLU,
-  factorizacionLUPivoteo
+  factorizacionLUPivoteo,
+  sustitucionProgresivaComplex,
+  sustitucionRegresivaComplex
 };
