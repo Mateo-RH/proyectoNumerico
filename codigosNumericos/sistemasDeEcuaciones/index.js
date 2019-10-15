@@ -61,7 +61,6 @@ let m7 = [[36, 3, -4, 5], [5, -45, 10, -2], [6, 8, 57, 5], [2, 3, -8, -42]];
 // console.log('CHOLESKY');
 // factorizacionCholesky(m5, b);
 
-
 module.exports = {
   gaussSimple,
   gaussPivotevoParcial,

@@ -155,7 +155,10 @@ let sustitucionRegresivaComplex = matrix => {
     for (let p = i + 1; p < n + 1; p++) {
       sumatoria = math.add(sumatoria, math.multiply(matrix[i][p], x[p]));
     }
-    x[i] = math.divide(math.subtract(matrix[i][n + 1], sumatoria), matrix[i][i]);
+    x[i] = math.divide(
+      math.subtract(matrix[i][n + 1], sumatoria),
+      matrix[i][i]
+    );
   }
   return x;
 };
