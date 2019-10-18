@@ -29,7 +29,7 @@ let factorizacionDirectaCholesky = matrix => {
     for (let j = k + 1; j < n; j++) {
       var suma3 = 0;
       for (let p = 0; p < k; p++) {
-        suma1 = math.add(suma3, math.multiply(L[k][p], U[p][j]));
+        suma3 = math.add(suma3, math.multiply(L[k][p], U[p][j]));
       }
       U[k][j] = math.divide(matrix[k][j] - suma3, L[k][k]);
     }

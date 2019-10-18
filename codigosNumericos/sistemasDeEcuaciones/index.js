@@ -44,6 +44,8 @@ let b2 = [-12, 13, 31, -32];
 
 let m7 = [[36, 3, -4, 5], [5, -45, 10, -2], [6, 8, 57, 5], [2, 3, -8, -42]];
 
+let mm = [[8, 3, 5], [-2, 7, 3], [4, -5, 18]];
+
 // console.log('SIMPLE');
 // gaussSimple(m);
 // console.log('PARCIAL');
@@ -58,8 +60,8 @@ let m7 = [[36, 3, -4, 5], [5, -45, 10, -2], [6, 8, 57, 5], [2, 3, -8, -42]];
 // factorizacionCrout(m5, b);
 // console.log('DOOLITTLE');
 // factorizacionDoolittle(m5, b);
-// console.log('CHOLESKY');
-// factorizacionCholesky(m5, b);
+console.log('CHOLESKY');
+factorizacionCholesky(mm, b);
 
 module.exports = {
   gaussSimple,
