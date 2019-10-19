@@ -60,8 +60,8 @@ let mm = [[8, 3, 5], [-2, 7, 3], [4, -5, 18]];
 // factorizacionCrout(m5, b);
 // console.log('DOOLITTLE');
 // factorizacionDoolittle(m5, b);
-console.log('CHOLESKY');
-factorizacionCholesky(mm, b);
+// console.log('CHOLESKY');
+// factorizacionCholesky(mm, b);
 
 module.exports = {
   gaussSimple,

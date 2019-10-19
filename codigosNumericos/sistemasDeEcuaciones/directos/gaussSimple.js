@@ -3,11 +3,11 @@ const { pivoteoSimple, sustitucionRegresiva } = require('./auxiliares');
 // Recibe matriz ampliada
 let gaussSimple = matrix => {
   let n = matrix.length;
-  console.log('Augmented matrix');
-  console.log(matrix);
+  // console.log('Augmented matrix');
+  // console.log(matrix);
   for (let k = 0; k < n - 1; k++) {
     // 0,1,2 < 3 -> k diagonal
-    console.log('Stage', k + 1);
+    // console.log('Stage', k + 1);
     for (let i = k + 1; i < n; i++) {
       // 1,2,3 < 4 -> i filas
       if (matrix[k][k] == 0) pivoteoSimple(matrix, k);
@@ -17,11 +17,11 @@ let gaussSimple = matrix => {
         matrix[i][j] = matrix[i][j] - multiplicador * matrix[k][j];
       }
     }
-    console.log(matrix);
+    // console.log(matrix);
   }
-  console.log('Solution');
+  // console.log('Solution');
   let solution = sustitucionRegresiva(matrix);
-  console.log(solution);
+  // console.log(solution);
   return solution;
 };
 

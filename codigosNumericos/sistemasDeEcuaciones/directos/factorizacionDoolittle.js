@@ -34,11 +34,6 @@ let factorizacionDirectaDoolittle = matrix => {
     console.table(U);
   }
 
-  console.log('L');
-  console.table(L);
-  console.log('U');
-  console.table(U);
-
   return { L, U };
 };
 
@@ -48,7 +43,7 @@ let factorizacionDoolittle = (matrix, b) => {
   let z = sustitucionProgresiva(L);
   U.map((item, index) => item.push(z[index]));
   let x = sustitucionRegresiva(U);
-  console.log(x);
+  return x;
 };
 
 module.exports = factorizacionDoolittle;
