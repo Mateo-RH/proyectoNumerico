@@ -5,7 +5,7 @@ const {
   crearPuntos
 } = require('./auxiliares');
 
-const newton = puntos => {
+const matrizNewton = puntos => {
   let matrix = puntos.map((punto, index) => {
     let fila = new Array(puntos.length).fill(0);
     fila[0] = punto.x;
@@ -31,8 +31,7 @@ const ecuacionNewton = matrix => {
   for (let i = 0; i <= n; i++) {
     var producto = '';
     for (let j = 0; j < i; j++) {
-      var signo = matrix[j][0] < 0 ? '+' : '-';
-      producto += `(x${signo}${matrix[j][0]})`;
+      producto += `(x-${matrix[j][0]})`;
     }
     ecuacion += correccionSignos(`+${componentes[i]}${producto}`);
   }
@@ -41,19 +40,20 @@ const ecuacionNewton = matrix => {
   return ecuacion;
 };
 
-const funcion = '(e^x)-6x';
-const puntosX = [2, 2.2, 2.4, 2.6, 2.8];
+const newton = (funcion, puntosX, punto) => {
+  let puntos = crearPuntos(funcion, puntosX);
+  let matrix = matrizNewton(puntos);
+  let ecuacion = ecuacionNewton(matrix);
+  ecuacion = simplificaExpr(ecuacion);
+  console.log('Ecuacion simplificada');
+  console.log(ecuacion);
 
-let puntos = crearPuntos(funcion, puntosX);
-let matrix = newton(puntos);
-let ecuacion = ecuacionNewton(matrix);
-ecuacion = simplificaExpr(ecuacion);
-console.log('Ecuacion simplificada');
-console.log(ecuacion);
+  let px = math.parse(ecuacion).compile();
+  let scope = { x: punto };
+  let solucion = px.evaluate(scope);
 
-let px = math.parse(ecuacion).compile();
-let scope = { x: 2.5 };
-let solucion = px.evaluate(scope);
+  console.log('Solucion');
+  console.log(solucion);
+};
 
-console.log('Solucion');
-console.log(solucion);
+module.exports = { newton };

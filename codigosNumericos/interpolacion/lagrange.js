@@ -31,14 +31,15 @@ const ecuacionLagrange = puntos => {
   return ecuacion;
 };
 
-const funcion = '(e^x)-6x';
-const puntosX = [2, -2.2, 2.4, 2.6, 2.8];
+const lagrange = (funcion, puntosX, punto) => {
+  let puntos = crearPuntos(funcion, puntosX);
+  let ecuacion = ecuacionLagrange(puntos);
+  let px = math.parse(ecuacion).compile();
+  let scope = { x: punto };
+  let solucion = px.evaluate(scope);
 
-let puntos = crearPuntos(funcion, puntosX);
-let ecuacion = ecuacionLagrange(puntos);
-let px = math.parse(ecuacion).compile();
-let scope = { x: 2.5 };
-let solucion = px.evaluate(scope);
+  console.log('Solucion');
+  console.log(solucion);
+};
 
-console.log('Solucion');
-console.log(solucion);
+module.exports = { lagrange };
