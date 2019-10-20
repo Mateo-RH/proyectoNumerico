@@ -1,17 +1,9 @@
 const math = require('mathjs');
-
-const crearPuntos = (funcion, puntosX) => {
-  const fx = math.parse(funcion).compile();
-  let puntos = [];
-  for (let i = 0; i < puntosX.length; i++) {
-    var scope = { x: puntosX[i] };
-    var punto = { x: scope.x, y: fx.evaluate(scope) };
-    puntos.push(punto);
-  }
-  console.log('puntos');
-  console.table(puntos);
-  return puntos;
-};
+const {
+  simplificaExpr,
+  correccionSignos,
+  crearPuntos
+} = require('./auxiliares');
 
 const newton = puntos => {
   let matrix = puntos.map((punto, index) => {
@@ -42,21 +34,26 @@ const ecuacionNewton = matrix => {
       var signo = matrix[j][0] < 0 ? '+' : '-';
       producto += `(x${signo}${matrix[j][0]})`;
     }
-    ecuacion += `+(${componentes[i]}${producto})`;
+    ecuacion += correccionSignos(`+${componentes[i]}${producto}`);
   }
-  console.log('ecuacion', ecuacion);
+  console.log('Ecuacion');
+  console.log(ecuacion);
   return ecuacion;
 };
 
 const funcion = '(e^x)-6x';
-const puntosX = [2, 2.2, 2.4, 2.6, 2.8, 3];
+const puntosX = [2, 2.2, 2.4, 2.6, 2.8];
 
 let puntos = crearPuntos(funcion, puntosX);
 let matrix = newton(puntos);
 let ecuacion = ecuacionNewton(matrix);
+ecuacion = simplificaExpr(ecuacion);
+console.log('Ecuacion simplificada');
+console.log(ecuacion);
+
 let px = math.parse(ecuacion).compile();
 let scope = { x: 2.5 };
 let solucion = px.evaluate(scope);
 
-console.log(ecuacion);
+console.log('Solucion');
 console.log(solucion);

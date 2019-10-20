@@ -1,5 +1,6 @@
 const math = require('mathjs');
 const { gaussSimple } = require('../sistemasDeEcuaciones/index');
+const { crearPuntos, correccionSignos } = require('./auxiliares');
 
 // Metodo para crear matriz vandermonde
 const vandermonde = puntos => {
@@ -20,24 +21,10 @@ const ecuacionVandermonde = matrix => {
   let ecuacion = '';
   let n = componentes.length - 1;
   for (let i = 0; i <= n; i++) {
-    ecuacion += `+(${componentes[i]}x^${n - i})`;
+    ecuacion += correccionSignos(`+${componentes[i]}x^${n - i}`);
   }
   console.log('ecuacion', ecuacion);
   return ecuacion;
-};
-
-// Metodo para crear una matriz inicial a partir de un vector de puntos x
-const crearPuntos = (funcion, puntosX) => {
-  const fx = math.parse(funcion).compile();
-  let puntos = [];
-  for (let i = 0; i < puntosX.length; i++) {
-    var scope = { x: puntosX[i] };
-    var punto = { x: scope.x, y: fx.evaluate(scope) };
-    puntos.push(punto);
-  }
-  console.log('puntos');
-  console.table(puntos);
-  return puntos;
 };
 
 const funcion = '(e^x)-6x';
