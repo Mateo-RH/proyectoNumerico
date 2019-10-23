@@ -8,13 +8,14 @@ const matrizLagrange = puntos => {
     puntosY.push(punto.y);
     return punto.x;
   });
+  let n = puntosX.length;
 
   let matrix = [];
   let ecuacion = '';
-  for (let i = 0; i < puntosX.length; i++) {
+  for (let i = 0; i < n; i++) {
     var num = '';
     var den = 1;
-    for (let j = 0; j < puntosX.length; j++) {
+    for (let j = 0; j < n; j++) {
       if (j != i) {
         num += correccionSignos(`(x - ${puntosX[j]})`);
         den *= puntosX[i] - puntosX[j];
@@ -22,7 +23,8 @@ const matrizLagrange = puntos => {
     }
     num = `${num}(${puntosY[i]})`;
     ecuacion += `+((${num})/${den.toFixed(5)})(${puntosY[i].toFixed(5)})`;
-    num = simplificaExprLagrange(num, den);
+    num = simplificaExprLagrange(num, den, n);
+    if (!num) return false;
     matrix.push(num);
   }
 
@@ -33,13 +35,21 @@ const matrizLagrange = puntos => {
   return matrix;
 };
 
-const simplificaExprLagrange = (expr, den) => {
+const simplificaExprLagrange = (expr, den, cantidadPuntos) => {
+  if (expr[0] == '+') expr = expr.substring(1);
   expr = algebra.parse(expr);
-  let constante = expr.constants[0].numer / (expr.constants[0].denom * den);
-  let variables = expr.terms.map(
-    termino =>
-      termino.coefficients[0].numer / (termino.coefficients[0].denom * den)
-  );
+  let maximoExponente = cantidadPuntos - 1;
+  let constante = !!expr.constants[0]
+    ? expr.constants[0].numer / (expr.constants[0].denom * den)
+    : 0;
+  let variables = new Array(maximoExponente).fill(0);
+  expr.terms.forEach(termino => {
+    var indice = maximoExponente - termino.variables[0].degree;
+    variables[indice] =
+      termino.coefficients[0].numer / (termino.coefficients[0].denom * den);
+  });
+  // iterates over each element from 0 to the length of the array (unlike map, which only iterates over properties that are actually on the array)
+  if (variables.includes(Infinity)) return false;
   variables.push(constante);
   return variables;
 };
@@ -49,7 +59,9 @@ const ecuacionLagrange = matrix => {
   let n = matrix.length;
   for (let i = 0; i < n; i++) {
     var componente = 0;
-    for (let j = 0; j < n; j++) componente += matrix[j][i];
+    for (let j = 0; j < n; j++) {
+      componente += matrix[j][i];
+    }
     ecuacion += `+${componente}x^${n - 1 - i} `;
   }
   ecuacion = correccionSignos(ecuacion);
@@ -61,6 +73,7 @@ const ecuacionLagrange = matrix => {
 const lagrange = (funcion, puntosX, punto) => {
   let puntos = crearPuntos(funcion, puntosX);
   let matrix = matrizLagrange(puntos);
+  if (!matrix) console.log('GG, infinito');
   let ecuacion = ecuacionLagrange(matrix);
   let px = math.parse(ecuacion).compile();
   let scope = { x: punto };

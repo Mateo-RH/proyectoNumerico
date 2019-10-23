@@ -1,6 +1,10 @@
 const math = require('mathjs');
 const { gaussPivotevoTotal } = require('../sistemasDeEcuaciones/index');
-const { crearPuntos, correccionSignos } = require('./auxiliares');
+const {
+  crearPuntos,
+  correccionSignos,
+  simplificaExpr
+} = require('./auxiliares');
 
 // Metodo para crear matriz vandermonde
 const matrizVandermonde = puntos => {
@@ -18,16 +22,23 @@ const matrizVandermonde = puntos => {
 // Metodo resuelve matrix por gauss(el de tu preferencia) y nos devuelve la ecuacion vandermonde(?)
 const ecuacionVandermonde = matrix => {
   let componentes = gaussPivotevoTotal(matrix);
+  if (componentes.includes(NaN)) return false;
   let ecuacion = '';
+  console.log('componentes', componentes);
   let n = componentes.length - 1;
   for (let i = 0; i <= n; i++) {
-    ecuacion += correccionSignos(`+${componentes[i]}x^${n - i}`);
+    ecuacion +=
+      componentes[i] != 0
+        ? correccionSignos(`+${componentes[i]}x^${n - i}`)
+        : '';
+    // ecuacion += correccionSignos(`+${componentes[i]}x^${n - i}`);
   }
   console.log('Ecuacion');
   console.log(ecuacion);
   return ecuacion;
 };
 
+// TODO: SIMPLIFICA VANDERMONDE Y EL PUTO LAGRANGE
 const vandermonde = (funcion, puntosX, punto) => {
   let puntos = crearPuntos(funcion, puntosX);
   let matrix = matrizVandermonde(puntos);

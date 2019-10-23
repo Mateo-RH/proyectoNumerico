@@ -25,6 +25,7 @@ const correccionSignos = ecuacion => {
 };
 
 const simplificaExpr = expr => {
+  if (expr[0] == '+') expr = expr.substring(1);
   expr = algebra.parse(expr);
   let constante = expr.constants[0].numer / expr.constants[0].denom;
   let numTemp = '';
