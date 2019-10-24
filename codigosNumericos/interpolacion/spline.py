@@ -14,7 +14,7 @@ def createInequality():
     for i in range(0,len(xn)-1):
         if(i < len(xn)):
             inequality.append(((xn[i],fxn[i]),(xn[i+1],fxn[i+1])))
-    print(inequality)
+    # print(inequality)
     
 createInequality() 
     
@@ -37,8 +37,6 @@ def quadratic():
         j += 2
     k = j
     z = 0
-    for i in superMatrix:
-        print(i)
     for i in range(0,len(inequality)-1):
         superMatrix[k][z] = 2*inequality[i][1][0]
         superMatrix[k][z+1] = 1
@@ -47,7 +45,8 @@ def quadratic():
         superMatrix[k][n] = 0
         k += 1
         z += 3
-        print (superMatrix)
+    for i in superMatrix:
+        print(i)
     # superMatrix[k][0] = 1
     # totalPivoting.a = superMatrix
     # totalPivoting.n = len(superMatrix)
