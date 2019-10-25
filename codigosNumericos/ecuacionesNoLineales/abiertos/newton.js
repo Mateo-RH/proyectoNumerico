@@ -10,10 +10,10 @@ let newton = (funcionF, funciondF, tolerance, Xo, niter, tipoError) => {
   let dfx = df.evaluate(scope);
   let counter = 1;
   let error = tolerance + 1;
-  var x1;
+  var tabla = [];
+  tabla.push({ n: 0, Xo, 'f(x)': fx, error: 0 });
   while (fx != 0 && error > tolerance && counter <= niter && dfx != 0) {
-    console.log(counter - 1, Xo, fx, error);
-    x1 = Xo - fx / dfx;
+    var x1 = Xo - fx / dfx;
     scope.x = x1;
     fx = ff.evaluate(scope);
     dfx = df.evaluate(scope);
@@ -22,8 +22,9 @@ let newton = (funcionF, funciondF, tolerance, Xo, niter, tipoError) => {
       : (error = math.abs(x1 - Xo));
     Xo = x1;
     counter += 1;
+    tabla.push({ n: counter - 1, Xo, 'f(x)': fx, error });
   }
-  console.log(counter - 1, Xo, fx, error);
+  console.table(tabla);
   if (fx === 0) {
     console.log(`Root: ${Xo}`);
     return Xo;

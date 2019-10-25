@@ -20,8 +20,16 @@ let biseccion = (funcion, xInferior, xSuperior, tolerance, iterations_n) => {
     let fxm = code2.evaluate(scope);
     let counter = 1;
     let error = tolerance + 1;
-    var tabla = [];
-    tabla.push([1, xInferior, xSuperior, xMiddle, fxm, 0]);
+    var tabla = [
+      {
+        n: 1,
+        xInf: xInferior,
+        xSup: xSuperior,
+        xMid: xMiddle,
+        'f(xMid)': fxm,
+        error: 0
+      }
+    ];
     while (error > tolerance && counter <= iterations_n && fxm != 0) {
       if (fxi * fxm < 0) {
         xSuperior = xMiddle;
@@ -30,13 +38,20 @@ let biseccion = (funcion, xInferior, xSuperior, tolerance, iterations_n) => {
         xInferior = xMiddle;
         fxi = fxm;
       }
-      let Xaux = xMiddle;
+      var Xaux = xMiddle;
       xMiddle = (xSuperior + xInferior) / 2;
       scope.x = xMiddle;
       fxm = code2.evaluate(scope);
       error = math.abs(xMiddle - Xaux);
       counter += 1;
-      tabla.push([counter, xInferior, xSuperior, xMiddle, fxm, error]);
+      tabla.push({
+        n: counter,
+        xInf: xInferior,
+        xSup: xSuperior,
+        xMid: xMiddle,
+        'f(xMid)': fxm,
+        error
+      });
     }
     console.table(tabla);
     if (fxm == 0) {

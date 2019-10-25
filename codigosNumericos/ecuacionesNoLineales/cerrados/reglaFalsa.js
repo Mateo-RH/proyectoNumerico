@@ -8,6 +8,7 @@ let reglaFalsa = (funcion, xInferior, xSuperior, tolerance, iterations_n) => {
   let fxi = code2.evaluate(scope);
   scope.x = xSuperior;
   let fxs = code2.evaluate(scope);
+
   if (fxi === 0) {
     console.log(`Root: ${xInferior}`);
     return xInferior;
@@ -20,15 +21,17 @@ let reglaFalsa = (funcion, xInferior, xSuperior, tolerance, iterations_n) => {
     let fxm = code2.evaluate(scope);
     let counter = 1;
     let error = tolerance + 1;
-    var tabla = [];
-    tabla.push({
-      n: 1,
-      xInf: xInferior,
-      xSup: xSuperior,
-      xMid: xMiddle,
-      'f(xMid)': fxm,
-      error: 0
-    });
+    var tabla = [
+      {
+        n: 1,
+        xInf: xInferior,
+        xSup: xSuperior,
+        xMid: xMiddle,
+        'f(xMid)': fxm,
+        error: 0
+      }
+    ];
+
     while (error > tolerance && counter <= iterations_n && fxm != 0) {
       if (fxi * fxm < 0) {
         xSuperior = xMiddle;
@@ -37,12 +40,14 @@ let reglaFalsa = (funcion, xInferior, xSuperior, tolerance, iterations_n) => {
         xInferior = xMiddle;
         fxi = fxm;
       }
-      let Xaux = xMiddle;
+
+      var Xaux = xMiddle;
       xMiddle = xInferior - (fxi * (xSuperior - xInferior)) / (fxs - fxi);
       scope.x = xMiddle;
       fxm = code2.evaluate(scope);
       error = math.abs(xMiddle - Xaux);
       counter += 1;
+
       tabla.push({
         n: counter,
         xInf: xInferior,
@@ -52,7 +57,8 @@ let reglaFalsa = (funcion, xInferior, xSuperior, tolerance, iterations_n) => {
         error: error
       });
     }
-    console.table(tabla, ['n', 'xInf', 'xSup', 'xMid', 'f(xMid)', 'error']);
+
+    console.table(tabla);
     if (fxm == 0) {
       console.log('Root:', xMiddle);
       return xMiddle;
