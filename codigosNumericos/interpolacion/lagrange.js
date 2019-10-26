@@ -28,10 +28,10 @@ const matrizLagrange = puntos => {
     matrix.push(num);
   }
 
-  console.log('Ecuacion');
+  console.log('Polynomial');
   console.log(ecuacion);
-  console.log('Matrix Coeficientes simplificados');
-  console.table(matrix);
+  // console.log('Matrix Coeficientes simplificados');
+  // console.table(matrix);
   return matrix;
 };
 
@@ -65,13 +65,21 @@ const ecuacionLagrange = matrix => {
     ecuacion += `+${componente}x^${n - 1 - i} `;
   }
   ecuacion = correccionSignos(ecuacion);
-  console.log('Ecuacion Simplificada');
+  console.log('Simplified polynomial');
   console.log(ecuacion);
   return ecuacion;
 };
 
 const lagrange = (funcion, puntosX, punto) => {
-  let puntos = crearPuntos(funcion, puntosX);
+  // let puntos = crearPuntos(funcion, puntosX);
+  let puntos = [
+    { x: -1, y: 15.5 },
+    { x: 0, y: 3 },
+    { x: 3, y: 8 },
+    { x: 4, y: 1 }
+  ];
+  console.log('Points');
+  console.table(puntos);
   let matrix = matrizLagrange(puntos);
   if (!matrix) console.log('GG, infinito');
   let ecuacion = ecuacionLagrange(matrix);
@@ -79,8 +87,8 @@ const lagrange = (funcion, puntosX, punto) => {
   let scope = { x: punto };
   let solucion = px.evaluate(scope);
 
-  console.log('Solucion');
-  console.log(solucion);
+  // console.log('Solucion');
+  // console.log(solucion);
 };
 
 module.exports = { lagrange };

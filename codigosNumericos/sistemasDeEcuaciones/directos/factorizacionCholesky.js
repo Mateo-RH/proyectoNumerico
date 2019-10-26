@@ -1,8 +1,5 @@
 const math = require('mathjs');
-const {
-  sustitucionProgresivaComplex,
-  sustitucionRegresivaComplex
-} = require('./auxiliares');
+const { sustitucionProgresiva, sustitucionRegresiva } = require('./auxiliares');
 
 let factorizacionDirectaCholesky = matrix => {
   let n = matrix.length;
@@ -33,17 +30,7 @@ let factorizacionDirectaCholesky = matrix => {
       }
       U[k][j] = math.divide(matrix[k][j] - suma3, L[k][k]);
     }
-    console.log('Etapa', k + 1);
-    console.log('L');
-    console.table(L);
-    console.log('U');
-    console.table(U);
   }
-
-  console.log('L');
-  console.table(L);
-  console.log('U');
-  console.table(U);
 
   return { L, U };
 };
@@ -51,10 +38,9 @@ let factorizacionDirectaCholesky = matrix => {
 let factorizacionCholesky = (matrix, b) => {
   let { L, U } = factorizacionDirectaCholesky(matrix);
   L.map((item, index) => item.push(b[index]));
-  let z = sustitucionProgresivaComplex(L);
+  let z = sustitucionProgresiva(L);
   U.map((item, index) => item.push(z[index]));
-  let x = sustitucionRegresivaComplex(U);
-  console.log(x);
+  let x = sustitucionRegresiva(U);
 };
 
 module.exports = factorizacionCholesky;

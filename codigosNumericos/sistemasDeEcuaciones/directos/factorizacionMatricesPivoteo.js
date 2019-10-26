@@ -11,7 +11,6 @@ let factorizacionMatricesPivoteo = (matrix, b) => {
   let z = sustitucionProgresiva(L);
   U.map((item, index) => item.push(z[index]));
   let x = sustitucionRegresiva(U);
-  console.log(x);
 };
 
 module.exports = factorizacionMatricesPivoteo;

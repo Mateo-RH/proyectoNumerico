@@ -6,45 +6,20 @@ const factorizacionMatricesPivoteo = require('./directos/factorizacionMatricesPi
 const factorizacionCrout = require('./directos/factorizacionCrout');
 const factorizacionDoolittle = require('./directos/factorizacionDoolittle');
 const factorizacionCholesky = require('./directos/factorizacionCholesky');
+const jacobi = require('./iterativos/jacobi');
+const gaussSeidel = require('./iterativos/gaussSeidel');
 
-// Testeando un roce
-let m = [
-  [2, -1, 0, 3, 1],
-  [1, 0.5, 3, 8, 1],
-  [0, 13, -2, 11, 1],
-  [14, 5, -2, 3, 1]
+let m = [[4, -1, 0, 3], [1, 15.5, 3, 8], [0, -1.3, -4, 1.1], [14, 5, -2, 30]];
+let b = [1, 1, 1, 1];
+let x0 = [0, 0, 0, 0];
+let tol = 0.0000001;
+let nMax = 100;
+let tabla = [
+  { x: -1, y: 15.5 },
+  { x: 0, y: 3 },
+  { x: 3, y: 8 },
+  { x: 4, y: 1 }
 ];
-
-let m2 = [
-  [2, -1, 0, 3, 1],
-  [1, 0.5, 3, 8, 1],
-  [0, 13, -2, 11, 1],
-  [14, 5, -2, 3, 1]
-];
-
-let m3 = [
-  [2, -1, 0, 3, 1],
-  [1, 0.5, 3, 8, 1],
-  [0, 13, -2, 11, 1],
-  [14, 5, -2, 3, 1]
-];
-
-let m4 = [
-  [4, 0, 0, 0, 12],
-  [3, 12, 0, 0, 23],
-  [-7, -3, -4, 0, -5],
-  [1, -2, -5, 6, 8]
-];
-
-let m5 = [[4, 3, -2, -7], [3, 12, 8, -3], [2, 3, -9, 2], [1, -2, -5, 6]];
-let b = [20, 18, 31, 12];
-
-let m6 = [[-7, 2, -3, 4], [5, -1, 14, -1], [1, 9, -7, 5], [-12, 13, -8, -4]];
-let b2 = [-12, 13, 31, -32];
-
-let m7 = [[36, 3, -4, 5], [5, -45, 10, -2], [6, 8, 57, 5], [2, 3, -8, -42]];
-
-let mm = [[8, 3, 5], [-2, 7, 3], [4, -5, 18]];
 
 // console.log('SIMPLE');
 // gaussSimple(m);
@@ -53,15 +28,21 @@ let mm = [[8, 3, 5], [-2, 7, 3], [4, -5, 18]];
 // console.log('TOTAL');
 // gaussPivotevoTotal(m3);
 // console.log('LU-SIMPLE');
-// factorizacionMatrices(m5, b);
+// factorizacionMatrices(m, b);
 // console.log('LU-PIVOTEO');
-// factorizacionMatricesPivoteo(m6, b2);
+// factorizacionMatricesPivoteo(m, b);
 // console.log('CROUT');
-// factorizacionCrout(m5, b);
+// factorizacionCrout(m, b);
 // console.log('DOOLITTLE');
-// factorizacionDoolittle(m5, b);
+// factorizacionDoolittle(m, b);
 // console.log('CHOLESKY');
-// factorizacionCholesky(mm, b);
+// factorizacionCholesky(m, b);
+// console.log('JACOBI');
+// jacobi(tol, x0, nMax, m, b, 2);
+// console.log('GAUSS-SEIDEL');
+// gaussSeidel(tol, x0, nMax, m, b, 2);
+// console.log('SOR');
+// gaussSeidel(tol, x0, nMax, m, b, 2, 1.5);
 
 module.exports = {
   gaussSimple,

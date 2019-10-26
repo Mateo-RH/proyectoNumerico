@@ -27,11 +27,6 @@ let factorizacionDirectaDoolittle = matrix => {
       for (let p = 0; p < k; p++) suma3 += L[k][p] * U[p][j];
       U[k][j] = matrix[k][j] - suma3;
     }
-    console.log('Etapa', k + 1);
-    console.log('L');
-    console.table(L);
-    console.log('U');
-    console.table(U);
   }
 
   return { L, U };

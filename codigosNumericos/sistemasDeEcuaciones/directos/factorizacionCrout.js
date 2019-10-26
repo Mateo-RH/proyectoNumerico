@@ -3,7 +3,7 @@ const { sustitucionProgresiva, sustitucionRegresiva } = require('./auxiliares');
 
 let factorizacionDirectaCrout = matrix => {
   let n = matrix.length;
-  var L = matrix.map((element, i) => matrix[i].map(e => 0));
+  var L = matrix.map((e, i) => matrix[i].map(e => 0));
   var U = matrix.map((element, index) =>
     element.map((ele, idx) => {
       return index === idx ? 1 : math.abs(ele * 0);
@@ -32,17 +32,7 @@ let factorizacionDirectaCrout = matrix => {
       }
       U[k][j] = (matrix[k][j] - suma3) / L[k][k];
     }
-    console.log('Etapa', k + 1);
-    console.log('L');
-    console.table(L);
-    console.log('U');
-    console.table(U);
   }
-
-  console.log('L');
-  console.table(L);
-  console.log('U');
-  console.table(U);
 
   return { L, U };
 };
@@ -53,7 +43,6 @@ let factorizacionCrout = (matrix, b) => {
   let z = sustitucionProgresiva(L);
   U.map((item, index) => item.push(z[index]));
   let x = sustitucionRegresiva(U);
-  console.log(x);
 };
 
 module.exports = factorizacionCrout;

@@ -6,7 +6,6 @@ const {
   simplificaExpr
 } = require('./auxiliares');
 
-// Metodo para crear matriz vandermonde
 const matrizVandermonde = puntos => {
   let matrix = puntos.map((punto, index) => {
     let fila = [];
@@ -19,35 +18,40 @@ const matrizVandermonde = puntos => {
   return matrix;
 };
 
-// Metodo resuelve matrix por gauss(el de tu preferencia) y nos devuelve la ecuacion vandermonde(?)
 const ecuacionVandermonde = matrix => {
   let componentes = gaussPivotevoTotal(matrix);
   if (componentes.includes(NaN)) return false;
   let ecuacion = '';
-  console.log('componentes', componentes);
+  console.log('Components', componentes);
   let n = componentes.length - 1;
   for (let i = 0; i <= n; i++) {
     ecuacion +=
       componentes[i] != 0
         ? correccionSignos(`+${componentes[i]}x^${n - i}`)
         : '';
-    // ecuacion += correccionSignos(`+${componentes[i]}x^${n - i}`);
   }
-  console.log('Ecuacion');
+  console.log('Polynomial');
   console.log(ecuacion);
   return ecuacion;
 };
 
-// TODO: SIMPLIFICA VANDERMONDE Y EL PUTO LAGRANGE
 const vandermonde = (funcion, puntosX, punto) => {
-  let puntos = crearPuntos(funcion, puntosX);
+  // let puntos = crearPuntos(funcion, puntosX);
+  let puntos = [
+    { x: -1, y: 15.5 },
+    { x: 0, y: 3 },
+    { x: 3, y: 8 },
+    { x: 4, y: 1 }
+  ];
+  console.log('Points');
+  console.table(puntos);
   let matrix = matrizVandermonde(puntos);
   let ecuacion = ecuacionVandermonde(matrix);
   let px = math.parse(ecuacion).compile();
   let scope = { x: punto };
   let solucion = px.evaluate(scope);
 
-  console.log(solucion);
+  // console.log(solucion);
 };
 
 module.exports = { vandermonde };

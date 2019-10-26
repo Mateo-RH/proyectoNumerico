@@ -20,6 +20,7 @@ const matrizNewton = puntos => {
     }
   }
 
+  console.log('Matrix');
   console.table(matrix);
   return matrix;
 };
@@ -35,25 +36,33 @@ const ecuacionNewton = matrix => {
     }
     ecuacion += correccionSignos(`+${componentes[i]}${producto}`);
   }
-  console.log('Ecuacion');
+  console.log('Polynomial');
   console.log(ecuacion);
   return ecuacion;
 };
 
 const newton = (funcion, puntosX, punto) => {
-  let puntos = crearPuntos(funcion, puntosX);
+  // let puntos = crearPuntos(funcion, puntosX);
+  let puntos = [
+    { x: -1, y: 15.5 },
+    { x: 0, y: 3 },
+    { x: 3, y: 8 },
+    { x: 4, y: 1 }
+  ];
+  console.log('Points');
+  console.table(puntos);
   let matrix = matrizNewton(puntos);
   let ecuacion = ecuacionNewton(matrix);
   ecuacion = simplificaExpr(ecuacion);
-  console.log('Ecuacion simplificada');
+  console.log('Simplified polynomial');
   console.log(ecuacion);
 
   let px = math.parse(ecuacion).compile();
   let scope = { x: punto };
   let solucion = px.evaluate(scope);
 
-  console.log('Solucion');
-  console.log(solucion);
+  // console.log('Solucion');
+  // console.log(solucion);
 };
 
 module.exports = { newton };

@@ -10,10 +10,11 @@ let puntoFijo = (funcionF, funcionG, tolerance, Xa, niter, tipoError) => {
   let counter = 1;
   let error = tolerance + 1;
   var Xn;
+  var table = [];
   while (fx != 0 && error > tolerance && counter <= niter) {
     scope.x = Xa;
     Xn = fg.evaluate(scope);
-    console.log(counter - 1, Xa, Xn, fx, error);
+    table.push({ n: counter - 1, Xo: Xa, Xn, 'f(x)': fx, error });
     scope.x = Xn;
     fx = ff.evaluate(scope);
     tipoError == 'e'
@@ -22,7 +23,8 @@ let puntoFijo = (funcionF, funcionG, tolerance, Xa, niter, tipoError) => {
     Xa = Xn;
     counter += 1;
   }
-  console.log(counter - 1, Xa, Xn, fx, error);
+  table.push({ n: counter - 1, Xo: Xa, Xn, 'f(x)': fx, error });
+  console.table(table);
   if (fx == 0) {
     console.log(`Root: ${Xa}`);
     return Xa;

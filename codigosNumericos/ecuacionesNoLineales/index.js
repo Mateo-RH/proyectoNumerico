@@ -13,7 +13,7 @@ const funcion = 'log(sin(x)^2 + 1) - 1/2';
 // reglaFalsa(funcion, 2, 3, 0.0005, 11);
 
 // Abiertos
-const funcionD = '2*(sin(x)^2 + 1)^-1 * sin(x) * cos(x)';
+// const funcionD = '2*(sin(x)^2 + 1)^-1 * sin(x) * cos(x)';
 // const funcionf = 'log(sin(x)^2 + 1) - 1/2 - x';
 // const funciong = 'log(sin(x)^2 + 1) - 1/2';
 // const funciondf = 'x*e^x';
@@ -21,8 +21,8 @@ const funcionD = '2*(sin(x)^2 + 1)^-1 * sin(x) * cos(x)';
 // const h = '(e^x) - x - 1';
 // const hd = '(e^x) - 1';
 // const hdd = 'e^x';
-// fixedPoint(funcionf, funciong, 0.0000001, -0.5, 100, 'E');
-newton(funcion, funcionD, 0.0000001, 0.5, 100, 'E');
+// puntoFijo(funcionf, funciong, 0.0000001, -0.5, 100, 'E');
+// newton(funcion, funcionD, 0.0000001, 0.5, 100, 'E');
 // secante(funcion, 0.0000001, 0.5, 1, 100, 'E');
 // multipleRoots(h, hd, hdd, 0.0000001, 1, 100, 'E');
 // multipleRoots2(h, hd, hdd, 0.0000001, 1, 100, 'E');

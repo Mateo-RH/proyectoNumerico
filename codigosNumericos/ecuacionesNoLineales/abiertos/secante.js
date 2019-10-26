@@ -14,8 +14,8 @@ let secante = (funcionF, tolerance, Xo, x1, niter, tipoError) => {
     let error = tolerance + 1;
     let den = fx1 - fx0;
     var x2;
-    console.log(0, Xo, fx0, 0);
-    console.log(1, x1, fx1, 0);
+    var table = [{ n: 0, X: Xo, 'f(x)': fx0, error: 0 }];
+    table.push({ n: 1, X: x1, 'f(x)': fx1, error: 0 });
     while (fx1 != 0 && error > tolerance && counter <= niter && den != 0) {
       x2 = x1 - (fx1 * (x1 - Xo)) / den;
       tipoError == 'e'
@@ -27,10 +27,11 @@ let secante = (funcionF, tolerance, Xo, x1, niter, tipoError) => {
       scope.x = x1;
       fx1 = ff.evaluate(scope);
       den = fx1 - fx0;
-      console.log(counter + 1, Xo, fx1, error);
+      // console.log(counter + 1, Xo, fx1, error);
+      table.push({ n: counter + 1, X: Xo, 'f(x)': fx1, error });
       counter += 1;
     }
-
+    console.table(table);
     if (fx1 === 0) {
       console.log(`Root: ${x1}`);
       return x1;

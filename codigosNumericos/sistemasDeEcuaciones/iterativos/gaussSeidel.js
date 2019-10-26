@@ -1,38 +1,5 @@
 const math = require('mathjs');
-
-// TODO: SOLUCION POR ECUACION, CORREGIR (NO TOCAR EN EL QUIZ)
-// ====================INICIO==================================
-let gaussSeidel = (tolerancia, vector0, niter, matrix, b) => {
-  var dispercion = tolerancia + 1;
-  var counter = 1;
-  while (dispercion > tolerancia && counter <= niter) {
-    var x1 = calcularNuevogaussSeidel(vector0, matrix, b);
-    dispercion = math.max(math.abs(math.subtract(x1, vector0)));
-    vector0 = x1;
-    counter++;
-  }
-  console.log(x1);
-  if (dispercion < tolerancia) {
-    console.log(`${x1} es aproximacion con una tolerancia = ${tolerancia}`);
-  } else {
-    console.log(`fracaso en ${niter} iteraciones`);
-  }
-};
-
-let calcularNuevogaussSeidel = (vector0, matrix, b) => {
-  let n = vector0.length;
-  let vector1 = vector0;
-  for (let i = 0; i < n; i++) {
-    var suma = 0;
-    for (let j = 0; j < n; j++) {
-      if (j != i) suma += matrix[i][j] * vector1[j];
-    }
-    vector1[i] = (b[i] - suma) / matrix[i][i];
-  }
-  return vector1;
-};
-
-// ===================FIN====================================
+const { norma1, norma2, normaUniforme } = require('./normas');
 
 let getLDU = matrix => {
   let L = matrix.map((fila, filIdx) =>
@@ -56,7 +23,7 @@ let getLDU = matrix => {
 // w = 1, gauss seidel
 // 0<w<1, subrelajacion (para converger subsistemas que no convergen por gauss seidel)
 // 1<w<2, sobre-relajacion(aceleran convergencia en gauss seidel convergente lento)
-let matrixSeidel = (tolerancia, x0, niter, matrix, b, w = 1) => {
+let gaussSeidel = (tolerancia, x0, niter, matrix, b, norma, w = 1) => {
   let { L, D, U } = getLDU(matrix);
 
   let temp = math.subtract(D, math.multiply(L, w));
@@ -70,26 +37,22 @@ let matrixSeidel = (tolerancia, x0, niter, matrix, b, w = 1) => {
 
   while (err > tolerancia && counter < niter) {
     var x1 = math.add(math.multiply(T, x0), C);
-    err = norma(x1, x0);
+    if (norma == 1) err = norma1(math.subtract(x1, x0));
+    else if (norma == 2) err = norma2(math.subtract(x1, x0));
+    else err = normaUniforme(math.subtract(x1, x0));
     x0 = x1;
     counter++;
-    tabla.push({ xn: x1, err });
+    var t2 = x0.map(item => item);
+    t2.push({ err });
+    tabla.push(t2);
   }
+  console.table(tabla);
 
-  console.table(tabla, ['xn', 'err']);
   if (err < tolerancia) {
-    console.log(`${x1} es aproximacion con una tolerancia = ${tolerancia}`);
+    console.log(`${x1} Its an aproximation with tolerance = ${tolerancia}`);
   } else {
-    console.log(`fracaso en ${niter} iteraciones`);
+    console.log(`fails in ${niter} iterations`);
   }
 };
 
-let norma = (x1, x0) => {
-  return math.max(math.abs(math.subtract(x1, x0)));
-};
-
-let m = [[5, 3, 1], [3, 4, -1], [1, -1, 4]];
-
-let b = [24, 30, -24];
-
-matrixSeidel(0.00000001, [0, 0, 0], 30, m, b);
+module.exports = gaussSeidel;

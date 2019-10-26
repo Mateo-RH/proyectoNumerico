@@ -1,7 +1,5 @@
 const math = require('mathjs');
 
-// TODO: sustituciones normales y complex pueden ser solo complex
-
 let intercambioFilas = (matrix, filaNueva, filaVieja) => {
   let temp = matrix[filaVieja];
   matrix[filaVieja] = matrix[filaNueva];
@@ -120,35 +118,6 @@ let pivoteoParcialLU = (marcas, matrix, k, L) => {
 let sustitucionRegresiva = matrix => {
   let n = matrix.length - 1;
   let x = [];
-  x[n] = matrix[n][n + 1] / matrix[n][n];
-  for (let i = n - 1; i >= 0; i--) {
-    var sumatoria = 0;
-    for (let p = i + 1; p < n + 1; p++) {
-      sumatoria = sumatoria + matrix[i][p] * x[p];
-    }
-    x[i] = (matrix[i][n + 1] - sumatoria) / matrix[i][i];
-  }
-  return x;
-};
-
-let sustitucionProgresiva = matrix => {
-  let n = matrix.length;
-  let x = [];
-  x[0] = matrix[0][n] / matrix[0][0];
-  for (let i = 1; i < n; i++) {
-    var sumatoria = 0;
-    for (let p = 0; p < n + 1; p++) {
-      if (!isNaN(matrix[i][p] * x[p]))
-        sumatoria = sumatoria + matrix[i][p] * x[p];
-    }
-    x[i] = (matrix[i][n] - sumatoria) / matrix[i][i];
-  }
-  return x;
-};
-
-let sustitucionRegresivaComplex = matrix => {
-  let n = matrix.length - 1;
-  let x = [];
   x[n] = math.divide(matrix[n][n + 1], matrix[n][n]);
   for (let i = n - 1; i >= 0; i--) {
     var sumatoria = 0;
@@ -163,7 +132,7 @@ let sustitucionRegresivaComplex = matrix => {
   return x;
 };
 
-let sustitucionProgresivaComplex = matrix => {
+let sustitucionProgresiva = matrix => {
   let n = matrix.length;
   let x = [];
   x[0] = math.divide(matrix[0][n], matrix[0][0]);
@@ -188,7 +157,7 @@ let factorizacionLU = matrix => {
   for (let k = 0; k < n - 1; k++) {
     for (let i = k + 1; i < n; i++) {
       if (matrix[k][k] === 0) return false; // TEOREMA
-      let multiplicador = matrix[i][k] / matrix[k][k];
+      var multiplicador = matrix[i][k] / matrix[k][k];
       L[i][k] = multiplicador;
       for (let j = k; j < n; j++) {
         matrix[i][j] = matrix[i][j] - multiplicador * matrix[k][j];
@@ -210,7 +179,7 @@ let factorizacionLUPivoteo = matrix => {
   for (let k = 0; k < n - 1; k++) {
     marcas = pivoteoParcialLU(marcas, matrix, k, L);
     for (let i = k + 1; i < n; i++) {
-      let multiplicador = matrix[i][k] / matrix[k][k];
+      var multiplicador = matrix[i][k] / matrix[k][k];
       L[i][k] = multiplicador;
       for (let j = k; j < n; j++) {
         matrix[i][j] = matrix[i][j] - multiplicador * matrix[k][j];
@@ -236,7 +205,5 @@ module.exports = {
   sustitucionRegresiva,
   sustitucionProgresiva,
   factorizacionLU,
-  factorizacionLUPivoteo,
-  sustitucionProgresivaComplex,
-  sustitucionRegresivaComplex
+  factorizacionLUPivoteo
 };

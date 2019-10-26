@@ -18,6 +18,7 @@ const splineCuadratico = puntos => {
       matrix.push(fila);
     }
   });
+  console.table(matrix);
 
   // DPX
   let matrix2 = [];
@@ -32,7 +33,9 @@ const splineCuadratico = puntos => {
   });
 
   // MERGE
+  console.table(matrix);
   matrix2.forEach(fila => matrix.push(fila));
+  console.table(matrix);
 
   // TEMPORA
   var machete = new Array(3 * numeroPolinomios).fill(0);
@@ -41,8 +44,8 @@ const splineCuadratico = puntos => {
   matrix.push(machete);
 
   console.table(matrix);
-  let resp = gaussPivotevoTotal(matrix);
-  console.table(resp);
+  // let resp = gaussPivotevoTotal(matrix);
+  // console.table(resp);
 };
 
 const polinomioPx = (fila, posicion, punto) => {
@@ -63,10 +66,10 @@ const polinomioPxD = (fila, posicion, punto) => {
 };
 
 const puntos = [
-  { x: -1, y: 0 },
-  { x: 1, y: 2 },
-  { x: 3, y: -1 },
-  { x: 4, y: 7 }
+  { x: -1, y: 15.5 },
+  { x: 0, y: 3 },
+  { x: 3, y: 8 },
+  { x: 4, y: 1 }
 ];
 
 splineCuadratico(puntos);
