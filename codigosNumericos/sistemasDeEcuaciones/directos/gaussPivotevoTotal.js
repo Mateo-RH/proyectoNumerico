@@ -16,9 +16,9 @@ let gaussPivotevoTotal = matrix => {
     }
   }
   let solution = sustitucionRegresiva(matrix);
-  let solucionDistribuida = solution.map((elemento, idx) => {
-    return solution[marcas[idx] - 1];
-  });
+  let solucionDistribuida = solution.map(
+    (elemento, idx) => solution[marcas[idx] - 1]
+  );
   return solucionDistribuida;
 };
 
