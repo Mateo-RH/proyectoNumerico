@@ -1,6 +1,7 @@
-const { gaussPivotevoTotal } = require('../sistemasDeEcuaciones/index');
+const { gaussSimple } = require('../sistemasDeEcuaciones/index');
+const { correccionSignos } = require('./auxiliares');
 
-const splineCuadratico = puntos => {
+const splineCuadraticoMatrix = puntos => {
   let matrix = [];
   let numeroPolinomios = puntos.length - 1;
   let posicion = 0;
@@ -20,28 +21,37 @@ const splineCuadratico = puntos => {
   });
 
   // DPX
-  let matrix2 = [];
+  let matrixD = [];
   posicion = 0;
   puntos.forEach((punto, i) => {
     if (i > 0 && i < numeroPolinomios) {
       fila = new Array(3 * numeroPolinomios).fill(0);
       fila = polinomioPxD(fila, posicion, punto);
-      matrix2.push(fila);
+      matrixD.push(fila);
       posicion += 3;
     }
   });
+  matrixD.forEach(fila => matrix.push(fila));
 
-  // MERGE
-  matrix2.forEach(fila => matrix.push(fila));
+  frontera(matrix, numeroPolinomios);
 
-  var frontera = new Array(3 * numeroPolinomios).fill(0);
-  frontera[0] = 1;
-  frontera.push(0);
-  matrix.push(frontera);
-
+  console.log('Matrix');
   console.table(matrix);
-  let resp = gaussPivotevoTotal(matrix);
-  console.table(resp);
+  return matrix;
+};
+
+const splineCuadraticoPolinomios = componentes => {
+  let polinomios = [];
+  for (let i = 0; i < componentes.length; i += 3) {
+    var polinomio = `${componentes[i]}x^2 +${componentes[i + 1]}x +${
+      componentes[i + 2]
+    }`;
+    polinomio = correccionSignos(polinomio);
+    polinomios.push(polinomio);
+  }
+  console.log('Polynomials');
+  console.table(polinomios);
+  return polinomios;
 };
 
 const polinomioPx = (fila, posicion, punto) => {
@@ -61,12 +71,26 @@ const polinomioPxD = (fila, posicion, punto) => {
   return fila;
 };
 
+const frontera = (matrix, numeroPolinomios) => {
+  let frontera = new Array(3 * numeroPolinomios).fill(0);
+  frontera[0] = 2;
+  frontera.push(0);
+  matrix.push(frontera);
+};
+
+const splineCuadratico = puntos => {
+  console.log('Points');
+  console.table(puntos);
+  let matrix = splineCuadraticoMatrix(puntos);
+  let componentes = gaussSimple(matrix);
+  let polinomios = splineCuadraticoPolinomios(componentes);
+};
+
 const puntos = [
-  { x: 1, y: 4.31 },
-  { x: 3, y: 1.5 },
-  { x: 4, y: 3.2 },
-  { x: 5, y: 2.6 },
-  { x: 7, y: 1.8 }
+  { x: -1, y: 15.5 },
+  { x: 0, y: 3 },
+  { x: 3, y: 8 },
+  { x: 4, y: 1 }
 ];
 
 splineCuadratico(puntos);

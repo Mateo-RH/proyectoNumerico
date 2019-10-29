@@ -33,7 +33,6 @@ let reorganizarL = (matrix, filaMayor, filaMenor) => {
 
 let pivoteoSimple = (matrix, k) => {
   for (let i = k; i < matrix.length; i++) {
-    console.log('PIVOTEO SIMPLE: ', matrix[i][k]);
     if (matrix[i][k] != 0) {
       let temp = matrix[k];
       matrix[k] = matrix[i];

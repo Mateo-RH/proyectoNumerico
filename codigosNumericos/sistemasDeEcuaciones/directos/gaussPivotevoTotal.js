@@ -1,6 +1,7 @@
 const { pivoteoTotal, sustitucionRegresiva } = require('./auxiliares');
 
 // Matriz aumentada
+// TODO: splines no funcionan con esto
 let gaussPivotevoTotal = matrix => {
   let n = matrix.length;
   let marcas = matrix.map((element, index) => index + 1);
