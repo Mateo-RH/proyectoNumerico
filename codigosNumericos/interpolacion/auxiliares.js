@@ -1,20 +1,6 @@
 const math = require('mathjs');
 const algebra = require('algebra.js');
 
-// Metodo para crear una matriz inicial a partir de un vector de puntos x
-const crearPuntos = (funcion, puntosX) => {
-  const fx = math.parse(funcion).compile();
-  let puntos = [];
-  for (let i = 0; i < puntosX.length; i++) {
-    var scope = { x: puntosX[i] };
-    var punto = { x: scope.x, y: fx.evaluate(scope) };
-    puntos.push(punto);
-  }
-  console.log('puntos');
-  console.table(puntos);
-  return puntos;
-};
-
 const correccionSignos = ecuacion => {
   ecuacion = ecuacion.split(' ').join('');
   ecuacion = ecuacion.split('++').join('+');
@@ -42,4 +28,4 @@ const simplificaExpr = expr => {
   return correccionSignos(numTemp);
 };
 
-module.exports = { correccionSignos, simplificaExpr, crearPuntos };
+module.exports = { correccionSignos, simplificaExpr };

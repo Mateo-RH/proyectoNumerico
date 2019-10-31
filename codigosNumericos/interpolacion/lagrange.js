@@ -1,5 +1,5 @@
 const math = require('mathjs');
-const { correccionSignos, crearPuntos } = require('./auxiliares');
+const { correccionSignos } = require('./auxiliares');
 const algebra = require('algebra.js');
 
 const matrizLagrange = puntos => {
@@ -70,8 +70,57 @@ const ecuacionLagrange = matrix => {
   return ecuacion;
 };
 
-const lagrange = (funcion, puntosX, punto) => {
-  // let puntos = crearPuntos(funcion, puntosX);
+// TEST
+const matrizLagrange2 = puntos => {
+  let puntosY = [];
+  let puntosX = puntos.map(punto => {
+    puntosY.push(punto.y);
+    return punto.x;
+  });
+  let n = puntosX.length;
+
+  let matrix = [];
+  let ecuacion = '';
+  for (let i = 0; i < n; i++) {
+    var num = '';
+    var den = 1;
+    for (let j = 0; j < n; j++) {
+      if (j != i) {
+        num += correccionSignos(`(x - ${puntosX[j]})`);
+        den *= puntosX[i] - puntosX[j];
+      }
+    }
+    ecuacion += `+((${num})/${den.toFixed(5)})(${puntosY[i].toFixed(5)})`;
+    num = simplificaExprLagrange2(num, den, n);
+    if (!num) return false;
+    matrix.push(num);
+  }
+
+  console.log('Polynomial');
+  console.log(ecuacion);
+  console.log('Matrix Coeficientes simplificados');
+  console.table(matrix);
+  return matrix;
+};
+
+const simplificaExprLagrange2 = (expr, den, cantidadPuntos) => {
+  console.log(expr);
+  console.log(den);
+  if (expr[0] == '+') expr = expr.substring(1);
+  expr = algebra.parse(expr);
+  let maximoExponente = cantidadPuntos - 1;
+  let variables = new Array(maximoExponente).fill(0);
+  expr.terms.forEach(termino => {
+    var indice = maximoExponente - termino.variables[0].degree;
+    variables[indice] =
+      termino.coefficients[0].numer / (termino.coefficients[0].denom * den);
+  });
+  console.log(variables);
+  if (variables.includes(Infinity)) return false;
+  return variables;
+};
+
+const lagrange = (puntosX, punto) => {
   let puntos = [
     { x: -1, y: 15.5 },
     { x: 0, y: 3 },
@@ -80,15 +129,17 @@ const lagrange = (funcion, puntosX, punto) => {
   ];
   console.log('Points');
   console.table(puntos);
-  let matrix = matrizLagrange(puntos);
+  let matrix = matrizLagrange2(puntos);
   if (!matrix) console.log('GG, infinito');
   let ecuacion = ecuacionLagrange(matrix);
-  let px = math.parse(ecuacion).compile();
-  let scope = { x: punto };
-  let solucion = px.evaluate(scope);
+  // let px = math.parse(ecuacion).compile();
+  // let scope = { x: punto };
+  // let solucion = px.evaluate(scope);
 
   // console.log('Solucion');
   // console.log(solucion);
 };
+
+lagrange(1, 1, 1);
 
 module.exports = { lagrange };
