@@ -1,26 +1,21 @@
-var ctx = document.getElementById('myChart');
+window.d3 = d3;
 
-let chart = new Chart(ctx, {
-  type: 'line',
-  data: {
-    datasets: [
-      {
-        label: 'First dataset',
-        data: [0, 20, 40, 50]
-      }
-    ],
-    labels: ['January', 'February', 'March', 'April']
+const root = document.querySelector('#root');
+
+functionPlot({
+  target: root,
+  yAxis: { domain: [-1, 9] },
+  tip: {
+    renderer: function() {}
   },
-  options: {
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            suggestedMin: 50,
-            suggestedMax: 100
-          }
-        }
-      ]
+  grid: true,
+  data: [
+    {
+      fn: 'x^2',
+      derivative: {
+        fn: '2 * x',
+        updateOnMouseMove: true
+      }
     }
-  }
+  ]
 });
