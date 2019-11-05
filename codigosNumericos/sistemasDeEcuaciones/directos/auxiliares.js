@@ -1,5 +1,10 @@
 const math = require('mathjs');
 
+let ampliarMatriz = (matrix, vector) => {
+  matrix.forEach((fila, idx) => fila.push(vector[idx]));
+  return matrix;
+};
+
 let intercambioFilas = (matrix, filaNueva, filaVieja) => {
   let temp = matrix[filaVieja];
   matrix[filaVieja] = matrix[filaNueva];
@@ -148,6 +153,7 @@ let sustitucionProgresiva = matrix => {
 
 let factorizacionLU = matrix => {
   let n = matrix.length;
+  let stages = [];
   var L = matrix.map((element, index) =>
     element.map((ele, idx) => {
       return index === idx ? 1 : math.abs(ele * 0);
@@ -162,16 +168,19 @@ let factorizacionLU = matrix => {
         matrix[i][j] = matrix[i][j] - multiplicador * matrix[k][j];
       }
     }
+    stages.push({ U: matrix, L });
   }
   return {
     L,
-    U: matrix
+    U: matrix,
+    stages
   };
 };
 
 let factorizacionLUPivoteo = matrix => {
   let marcas = matrix.map((item, index) => index);
   let n = matrix.length;
+  let stages = [];
   var L = matrix.map((element, index) =>
     element.map((ele, idx) => (index === idx ? 1 : math.abs(ele * 0)))
   );
@@ -184,15 +193,18 @@ let factorizacionLUPivoteo = matrix => {
         matrix[i][j] = matrix[i][j] - multiplicador * matrix[k][j];
       }
     }
+    stages.push({ U: matrix, L });
   }
   return {
     L,
     U: matrix,
-    P: marcas
+    P: marcas,
+    stages
   };
 };
 
 module.exports = {
+  ampliarMatriz,
   intercambioFilas,
   intercambioColumnas,
   intercambioMarcas,

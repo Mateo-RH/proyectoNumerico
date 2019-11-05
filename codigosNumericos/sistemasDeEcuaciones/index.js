@@ -10,7 +10,11 @@ const jacobi = require('./iterativos/jacobi');
 const gaussSeidel = require('./iterativos/gaussSeidel');
 
 let m = [[4, -1, 0, 3], [1, 15.5, 3, 8], [0, -1.3, -4, 1.1], [14, 5, -2, 30]];
+let m1 = [[4, -1, 0], [1, 15.5, 3], [0, -1.3, -4]];
+let m2 = [[4, -1, 0], [1, 15.5, 3], [0, -1.3, -4]];
 let b = [1, 1, 1, 1];
+let b1 = [1, 1, 1];
+let b2 = [1, 1, 1];
 let x0 = [0, 0, 0, 0];
 let tol = 0.0000001;
 let nMax = 100;
@@ -21,24 +25,18 @@ let tabla = [
   { x: 4, y: 1 }
 ];
 
-// console.log('SIMPLE');
-// gaussSimple(m);
-// console.log('PARCIAL');
-// gaussPivotevoParcial(m2);
-// console.log('TOTAL');
-// gaussPivotevoTotal(m3);
-// console.log('LU-SIMPLE');
-// factorizacionMatrices(m, b);
-// console.log('LU-PIVOTEO');
-// factorizacionMatricesPivoteo(m, b);
-// console.log('CROUT');
-// factorizacionCrout(m, b);
-// console.log('DOOLITTLE');
-// factorizacionDoolittle(m, b);
-// console.log('CHOLESKY');
-// factorizacionCholesky(m, b);
-// console.log('JACOBI');
-// jacobi(tol, x0, nMax, m, b, 2);
+// TODO: GAUSSTOTAL ESTA DANDO LIDIA SOLO EN EL FRONT IMPRIME EN DESORDEN
+// let resp = gaussSimple(m, b);
+let resp1 = gaussPivotevoParcial(m1, b1);
+let resp2 = gaussPivotevoTotal(m2, b2);
+// let resp = factorizacionMatrices(m, b);
+// let resp = factorizacionMatricesPivoteo(m, b);
+// let resp = factorizacionCrout(m, b);
+// let resp = factorizacionDoolittle(m, b);
+// let resp = factorizacionCholesky(m, b);
+// let resp = jacobi(tol, x0, nMax, m, b, 2);
+console.log(resp1);
+console.log(resp2);
 // console.log('GAUSS-SEIDEL');
 // gaussSeidel(tol, x0, nMax, m, b, 2);
 // console.log('SOR');
@@ -52,5 +50,7 @@ module.exports = {
   factorizacionMatricesPivoteo,
   factorizacionCrout,
   factorizacionDoolittle,
-  factorizacionCholesky
+  factorizacionCholesky,
+  jacobi,
+  gaussSeidel
 };

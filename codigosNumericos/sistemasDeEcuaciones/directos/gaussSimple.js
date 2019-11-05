@@ -1,28 +1,32 @@
-const { pivoteoSimple, sustitucionRegresiva } = require('./auxiliares');
+const {
+  pivoteoSimple,
+  sustitucionRegresiva,
+  ampliarMatriz
+} = require('./auxiliares');
 
-// Recibe matriz ampliada
-let gaussSimple = matrix => {
+let gaussSimple = (matrix, vector) => {
+  matrix = ampliarMatriz(matrix, vector);
+  let augmentedMatrix = matrix.map(item => item.slice());
+  let stages = [];
   let n = matrix.length;
-  // console.log('Augmented matrix');
-  // console.log(matrix);
+  let error = false;
+
   for (let k = 0; k < n - 1; k++) {
-    // 0,1,2 < 3 -> k diagonal
-    // console.log('Stage', k + 1);
     for (let i = k + 1; i < n; i++) {
-      // 1,2,3 < 4 -> i filas
       if (matrix[k][k] == 0) pivoteoSimple(matrix, k);
       let multiplicador = matrix[i][k] / matrix[k][k];
       for (let j = k; j < n + 1; j++) {
-        // 0,1,2,3,4 < 5 -> j columnas
         matrix[i][j] = matrix[i][j] - multiplicador * matrix[k][j];
       }
     }
-    // console.log(matrix);
+    // crea copia de la matrix para que no pase la referencia
+    var stageMatrix = matrix.map(item => item.slice());
+    stages.push(stageMatrix);
   }
-  // console.log('Solution');
   let solution = sustitucionRegresiva(matrix);
-  // console.log(solution);
-  return solution;
+  if (solution.includes(null)) error = true;
+
+  return { error, augmentedMatrix, stages, solution };
 };
 
 module.exports = gaussSimple;

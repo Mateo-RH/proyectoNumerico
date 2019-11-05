@@ -3,6 +3,7 @@ const { sustitucionProgresiva, sustitucionRegresiva } = require('./auxiliares');
 
 let factorizacionDirectaCholesky = matrix => {
   let n = matrix.length;
+  let stages = [];
   var U = matrix.map((element, i) => matrix[i].map(e => 0));
   var L = matrix.map((element, i) => matrix[i].map(e => 0));
 
@@ -30,17 +31,20 @@ let factorizacionDirectaCholesky = matrix => {
       }
       U[k][j] = math.divide(matrix[k][j] - suma3, L[k][k]);
     }
+    stages.push(U, L);
   }
 
-  return { L, U };
+  return { L, U, stages };
 };
 
 let factorizacionCholesky = (matrix, b) => {
-  let { L, U } = factorizacionDirectaCholesky(matrix);
+  let error = false;
+  let { L, U, stages } = factorizacionDirectaCholesky(matrix);
   L.map((item, index) => item.push(b[index]));
   let z = sustitucionProgresiva(L);
   U.map((item, index) => item.push(z[index]));
   let x = sustitucionRegresiva(U);
+  return { error, L, U, stages, solution: x };
 };
 
 module.exports = factorizacionCholesky;

@@ -3,6 +3,7 @@ const { sustitucionProgresiva, sustitucionRegresiva } = require('./auxiliares');
 
 let factorizacionDirectaDoolittle = matrix => {
   let n = matrix.length;
+  let stages = [];
   var U = matrix.map((element, i) => matrix[i].map(e => 0));
   var L = matrix.map((element, index) =>
     element.map((ele, idx) => {
@@ -27,18 +28,20 @@ let factorizacionDirectaDoolittle = matrix => {
       for (let p = 0; p < k; p++) suma3 += L[k][p] * U[p][j];
       U[k][j] = matrix[k][j] - suma3;
     }
+    stages.push({ U, L });
   }
 
-  return { L, U };
+  return { L, U, stages };
 };
 
 let factorizacionDoolittle = (matrix, b) => {
-  let { L, U } = factorizacionDirectaDoolittle(matrix);
+  let error = false;
+  let { L, U, stages } = factorizacionDirectaDoolittle(matrix);
   L.map((item, index) => item.push(b[index]));
   let z = sustitucionProgresiva(L);
   U.map((item, index) => item.push(z[index]));
   let x = sustitucionRegresiva(U);
-  return x;
+  return { error, L, U, stages, solution: x };
 };
 
 module.exports = factorizacionDoolittle;

@@ -1,11 +1,25 @@
-// create needed constants
+// matrix
 const mheader = document.querySelector('#m-header');
 const mbody = document.querySelector('#m-body');
 var elementosId = [];
+// vector
+const vbody = document.querySelector('#v-body');
+var velementosId = [];
 
 $(document).ready(function() {
   crearTabla();
+  crearVector();
 });
+
+function aumentar() {
+  aumentarMatriz();
+  aumentarVector();
+}
+
+function reducir() {
+  reducirMatriz();
+  reducirVector();
+}
 
 // HTML matrix
 function crearTabla() {
@@ -15,14 +29,13 @@ function crearTabla() {
   var filasH = '<th scope="col">#</th>';
   var filasB = '';
   elementosId = [];
-
   matriz.forEach((fila, i) => {
     var filasId = [];
     filasH += `<th scope="col">${i}</th>`;
     filasB += `<tr>\n
       <th scope="row">${i}</th>\n`;
     fila.forEach((columna, j) => {
-      filasB += `<td><input type="number" class="form-control" id="elemento${i}-${j}" value="${columna}"></td>\n`;
+      filasB += `<td><input type="number" class="form-control w-100" id="elemento${i}-${j}" value="${columna}"></td>\n`;
       filasId.push(`elemento${i}-${j}`);
     });
     elementosId.push(filasId);
@@ -76,4 +89,312 @@ function obtenerMatriz() {
     ? JSON.parse(localStorage.getItem('matriz'))
     : [[1, 1], [1, 1]];
   return matriz;
+}
+
+// HTML vector
+
+function crearVector() {
+  var vector = obtenerVector();
+  vbody.innerHTML = '';
+
+  var filasB = '';
+  velementosId = [];
+
+  vector.forEach((fila, i) => {
+    filasB += `<td><input type="number" class="form-control" id="elemento${i}" value="${fila}"></td>\n`;
+    velementosId.push(`elemento${i}`);
+    filasB += `</tr>`;
+  });
+  vbody.innerHTML = filasB;
+}
+
+// LocalStorage logic vector
+function aumentarVector() {
+  guardarVector();
+  var vector = obtenerVector();
+  vector.push('1');
+  localStorage.setItem('vector', JSON.stringify(vector));
+  crearVector();
+}
+
+function reducirVector() {
+  guardarVector();
+  var vector = obtenerVector();
+  vector.pop();
+  localStorage.setItem('vector', JSON.stringify(vector));
+  crearVector();
+}
+
+function guardarVector() {
+  var vector = velementosId.map(elemento => {
+    var val = document.querySelector(`#${elemento}`).value;
+    return val;
+  });
+  localStorage.setItem('vector', JSON.stringify(vector));
+}
+
+function obtenerVector() {
+  var vector = !!localStorage.getItem('vector')
+    ? JSON.parse(localStorage.getItem('vector'))
+    : [1, 1];
+  return vector;
+}
+
+// LLAMADO A METODOS
+const gaussSimpleModal = document.querySelector('#gaussSimpleModal-m');
+const gaussParcialModal = document.querySelector('#gaussParcialModal-m');
+const gaussTotalModal = document.querySelector('#gaussTotalModal-m');
+const luSimpleModal = document.querySelector('#luSimpleModal-m');
+const luPivoteoModal = document.querySelector('#luPivoteoModal-m');
+const croutModal = document.querySelector('#croutModal-m');
+const doolittleModal = document.querySelector('#doolittleModal-m');
+const choleskyModal = document.querySelector('#choleskyModal-m');
+
+function gaussSimpleReq() {
+  guardarVector();
+  guardarMatriz();
+  var vector = obtenerVector().join(',');
+  var matrix = obtenerMatriz().map(filas => filas.join(','));
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: 'http://localhost:3000/sistemasDeEcuaciones/gaussSimple',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: {
+      matrix: matrix,
+      vector: vector
+    }
+  };
+
+  $.ajax(settings).done(function(response) {
+    // var matrizAumentada = response.metodo.augmentedMatrix;
+    // crearRespGauss(matrizAumentada, gaussSimpleModal);
+    console.log(response.metodo);
+  });
+}
+
+function gaussParcialReq() {
+  guardarVector();
+  guardarMatriz();
+  var vector = obtenerVector().join(',');
+  var matrix = obtenerMatriz().map(filas => filas.join(','));
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: 'http://localhost:3000/sistemasDeEcuaciones/gaussPivoteoParcial',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: {
+      matrix: matrix,
+      vector: vector
+    }
+  };
+
+  $.ajax(settings).done(function(response) {
+    // var matrizAumentada = response.metodo.augmentedMatrix;
+    // crearRespGauss(matrizAumentada, gaussSimpleModal);
+    console.log(response.metodo);
+  });
+}
+
+function gaussTotalReq() {
+  guardarVector();
+  guardarMatriz();
+  var vector = obtenerVector().join(',');
+  var matrix = obtenerMatriz().map(filas => filas.join(','));
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: 'http://localhost:3000/sistemasDeEcuaciones/gaussPivoteoTotal',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: {
+      matrix: matrix,
+      vector: vector
+    }
+  };
+
+  $.ajax(settings).done(function(response) {
+    // var matrizAumentada = response.metodo.augmentedMatrix;
+    // crearRespGauss(matrizAumentada, gaussSimpleModal);
+    console.log(response.metodo);
+  });
+}
+
+function luSimpleReq() {
+  guardarVector();
+  guardarMatriz();
+  var vector = obtenerVector().join(',');
+  var matrix = obtenerMatriz().map(filas => filas.join(','));
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: 'http://localhost:3000/sistemasDeEcuaciones/factorizacionMatrices',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: {
+      matrix: matrix,
+      vector: vector
+    }
+  };
+
+  $.ajax(settings).done(function(response) {
+    // var matrizAumentada = response.metodo.augmentedMatrix;
+    // crearRespGauss(matrizAumentada, gaussSimpleModal);
+    console.log(response.metodo);
+  });
+}
+
+function luPivoteoReq() {
+  guardarVector();
+  guardarMatriz();
+  var vector = obtenerVector().join(',');
+  var matrix = obtenerMatriz().map(filas => filas.join(','));
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url:
+      'http://localhost:3000/sistemasDeEcuaciones/factorizacionMatricesPivoteo',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: {
+      matrix: matrix,
+      vector: vector
+    }
+  };
+
+  $.ajax(settings).done(function(response) {
+    // var matrizAumentada = response.metodo.augmentedMatrix;
+    // crearRespGauss(matrizAumentada, gaussSimpleModal);
+    console.log(response.metodo);
+  });
+}
+
+function croutReq() {
+  guardarVector();
+  guardarMatriz();
+  var vector = obtenerVector().join(',');
+  var matrix = obtenerMatriz().map(filas => filas.join(','));
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: 'http://localhost:3000/sistemasDeEcuaciones/factorizacionCrout',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: {
+      matrix: matrix,
+      vector: vector
+    }
+  };
+
+  $.ajax(settings).done(function(response) {
+    // var matrizAumentada = response.metodo.augmentedMatrix;
+    // crearRespGauss(matrizAumentada, gaussSimpleModal);
+    console.log(response.metodo);
+  });
+}
+
+function doolittleReq() {
+  guardarVector();
+  guardarMatriz();
+  var vector = obtenerVector().join(',');
+  var matrix = obtenerMatriz().map(filas => filas.join(','));
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: 'http://localhost:3000/sistemasDeEcuaciones/factorizacionDoolittle',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: {
+      matrix: matrix,
+      vector: vector
+    }
+  };
+
+  $.ajax(settings).done(function(response) {
+    // var matrizAumentada = response.metodo.augmentedMatrix;
+    // crearRespGauss(matrizAumentada, gaussSimpleModal);
+    console.log(response.metodo);
+  });
+}
+
+function choleskyReq() {
+  guardarVector();
+  guardarMatriz();
+  var vector = obtenerVector().join(',');
+  var matrix = obtenerMatriz().map(filas => filas.join(','));
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: 'http://localhost:3000/sistemasDeEcuaciones/factorizacionCholesky',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: {
+      matrix: matrix,
+      vector: vector
+    }
+  };
+
+  $.ajax(settings).done(function(response) {
+    // var matrizAumentada = response.metodo.augmentedMatrix;
+    // crearRespGauss(matrizAumentada, gaussSimpleModal);
+    console.log(response.metodo);
+  });
+}
+
+function crearMatrizHtml(matrizAumentada) {
+  var filasH = '<th scope="col">#</th><th scope="col">1</th>';
+  var filasB = '';
+  matrizAumentada.forEach((fila, i) => {
+    filasH += `<th scope="col">${i}</th>`;
+    filasB += `<tr>\n
+        <th scope="row">${i}</th>\n`;
+    fila.forEach(columna => {
+      filasB += `<td><input type="number" class="form-control w-100" value="${columna}"></td>\n`;
+    });
+    filasB += `</tr>`;
+  });
+  return { filasH, filasB };
+}
+
+function crearRespGauss(matrizAumentada, htmlTag) {
+  var { filasH, filasB } = crearMatrizHtml(matrizAumentada);
+  htmlTag.innerHTML = `<h5>Augmented matrix</h5>
+     <table class="table table-bordered">
+      <thead>
+        <tr>
+          ${filasH}
+        </tr>
+      </thead>
+      <tbody>
+        ${filasB}
+      </tbody>
+    </table>
+    <hr />
+    <h5>Stages</h5>`;
 }

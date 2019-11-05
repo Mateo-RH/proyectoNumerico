@@ -1,8 +1,13 @@
 const math = require('mathjs');
-const { sustitucionProgresiva, sustitucionRegresiva } = require('./auxiliares');
+const {
+  sustitucionProgresiva,
+  sustitucionRegresiva,
+  ampliarMatriz
+} = require('./auxiliares');
 
 let factorizacionDirectaCrout = matrix => {
   let n = matrix.length;
+  let stages = [];
   var L = matrix.map((e, i) => matrix[i].map(e => 0));
   var U = matrix.map((element, index) =>
     element.map((ele, idx) => {
@@ -32,17 +37,20 @@ let factorizacionDirectaCrout = matrix => {
       }
       U[k][j] = (matrix[k][j] - suma3) / L[k][k];
     }
+    stages.push({ U, L });
   }
 
-  return { L, U };
+  return { L, U, stages };
 };
 
 let factorizacionCrout = (matrix, b) => {
-  let { L, U } = factorizacionDirectaCrout(matrix);
+  let error = false;
+  let { L, U, stages } = factorizacionDirectaCrout(matrix);
   L.map((item, index) => item.push(b[index]));
   let z = sustitucionProgresiva(L);
   U.map((item, index) => item.push(z[index]));
   let x = sustitucionRegresiva(U);
+  return { error, L, U, stages, solution: x };
 };
 
 module.exports = factorizacionCrout;

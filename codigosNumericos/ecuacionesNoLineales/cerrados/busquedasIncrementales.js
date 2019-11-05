@@ -1,7 +1,5 @@
 const math = require('mathjs');
 
-// TODO: MANEJO ERROR DE FUNCION INCORRECTA
-
 let busquedasIncrementales = (funcion, initial_x, delta_x, iterations_n) => {
   const functionF = math.parse(funcion);
   const code2 = functionF.compile();
