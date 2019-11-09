@@ -141,7 +141,9 @@ function obtenerVector() {
 }
 
 // LLAMADO A METODOS
-const gaussSimpleModal = document.querySelector('#gaussSimpleModal-m');
+const gaussSimpleStages = document.querySelector('#gaussSimple-stages');
+const gaussSimpleStolution = document.querySelector('#gaussSimple-solution');
+
 const gaussParcialModal = document.querySelector('#gaussParcialModal-m');
 const gaussTotalModal = document.querySelector('#gaussTotalModal-m');
 const luSimpleModal = document.querySelector('#luSimpleModal-m');
@@ -367,19 +369,24 @@ function choleskyReq() {
   });
 }
 
+// TODO: Generar matriz html
 function crearMatrizHtml(matrizAumentada) {
-  var filasH = '<th scope="col">#</th><th scope="col">1</th>';
-  var filasB = '';
+  var thead = '<th scope="col">#</th><th scope="col">1</th>';
+  var tbody = '';
   matrizAumentada.forEach((fila, i) => {
-    filasH += `<th scope="col">${i}</th>`;
-    filasB += `<tr>\n
+    thead += `<th scope="col">${i}</th>`;
+    tbody += `<tr>\n
         <th scope="row">${i}</th>\n`;
     fila.forEach(columna => {
-      filasB += `<td><input type="number" class="form-control w-100" value="${columna}"></td>\n`;
+      tbody += `<td><input type="number" class="form-control w-100" value="${columna}"></td>\n`;
     });
-    filasB += `</tr>`;
+    tbody += `</tr>`;
   });
-  return { filasH, filasB };
+  var table = `<table class="table table-bordered table-responsive-md table-striped text-center ">
+  <thead>${thead}</thead>
+  <tbody>${tbody}</tbody>
+</table>`;
+  return table;
 }
 
 function crearRespGauss(matrizAumentada, htmlTag) {

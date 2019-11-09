@@ -5,17 +5,23 @@ const {
 } = require('./auxiliares');
 
 // Matriz aumentada
-// TODO: splines no funcionan con esto
+// TODO: las marcas estan fallando
 let gaussPivotevoTotal = (matrix, vector) => {
   matrix = ampliarMatriz(matrix, vector);
   let augmentedMatrix = matrix.map(item => item.slice());
   let stages = [];
   let n = matrix.length;
-  let marcas = matrix.map((element, index) => index + 1);
+  let marcas = matrix.map((element, index) => index);
   let error = false;
 
   for (let k = 0; k < n - 1; k++) {
+    console.log('Antes');
+    console.table(matrix);
+    console.log(marcas);
     matrix = pivoteoTotal(matrix, k, marcas);
+    console.log('Despues');
+    console.table(matrix);
+    console.log(marcas);
     for (let i = k + 1; i < n; i++) {
       if (matrix[i][k] == 0 && matrix[k][k] == 0) error = true;
       var multiplicador = matrix[i][k] / matrix[k][k];
@@ -27,8 +33,10 @@ let gaussPivotevoTotal = (matrix, vector) => {
     stages.push(stageMatrix);
   }
   let solution = sustitucionRegresiva(matrix);
+  console.log(solution, marcas);
+  console.table(matrix);
   let solucionDistribuida = solution.map(
-    (elemento, idx) => solution[marcas[idx] - 1]
+    (elemento, idx) => solution[marcas[idx]]
   );
   if (solucionDistribuida.includes(null)) error = true;
   return { error, augmentedMatrix, stages, solution: solucionDistribuida };

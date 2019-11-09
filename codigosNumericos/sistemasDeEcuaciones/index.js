@@ -9,12 +9,12 @@ const factorizacionCholesky = require('./directos/factorizacionCholesky');
 const jacobi = require('./iterativos/jacobi');
 const gaussSeidel = require('./iterativos/gaussSeidel');
 
-let m = [[4, -1, 0, 3], [1, 15.5, 3, 8], [0, -1.3, -4, 1.1], [14, 5, -2, 30]];
+let m = [[1, 12, 13], [14, 15, 16], [1, 1, 1]];
+let m2 = [[1, 12, 13], [14, 15, 16], [1, 1, 1]];
 let m1 = [[4, -1, 0], [1, 15.5, 3], [0, -1.3, -4]];
-let m2 = [[4, -1, 0], [1, 15.5, 3], [0, -1.3, -4]];
-let b = [1, 1, 1, 1];
+let b = [1, 2, 1];
+let b2 = [1, 2, 1];
 let b1 = [1, 1, 1];
-let b2 = [1, 1, 1];
 let x0 = [0, 0, 0, 0];
 let tol = 0.0000001;
 let nMax = 100;
@@ -27,18 +27,17 @@ let tabla = [
 
 // TODO: GAUSSTOTAL ESTA DANDO LIDIA SOLO EN EL FRONT IMPRIME EN DESORDEN
 // let resp = gaussSimple(m, b);
-let resp1 = gaussPivotevoParcial(m1, b1);
-let resp2 = gaussPivotevoTotal(m2, b2);
+// let resp = gaussPivotevoParcial(m, b);
+// let resp2 = gaussPivotevoTotal(m2, b2);
 // let resp = factorizacionMatrices(m, b);
 // let resp = factorizacionMatricesPivoteo(m, b);
 // let resp = factorizacionCrout(m, b);
 // let resp = factorizacionDoolittle(m, b);
 // let resp = factorizacionCholesky(m, b);
 // let resp = jacobi(tol, x0, nMax, m, b, 2);
-console.log(resp1);
-console.log(resp2);
-// console.log('GAUSS-SEIDEL');
-// gaussSeidel(tol, x0, nMax, m, b, 2);
+console.log('GAUSS-SEIDEL');
+gaussSeidel(tol, x0, nMax, m, b, 2);
+console.log(resp);
 // console.log('SOR');
 // gaussSeidel(tol, x0, nMax, m, b, 2, 1.5);
 
