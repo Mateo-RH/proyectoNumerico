@@ -143,14 +143,20 @@ function obtenerVector() {
 // LLAMADO A METODOS
 const gaussSimpleStages = document.querySelector('#gaussSimple-stages');
 const gaussSimpleStolution = document.querySelector('#gaussSimple-solution');
-
-const gaussParcialModal = document.querySelector('#gaussParcialModal-m');
-const gaussTotalModal = document.querySelector('#gaussTotalModal-m');
-const luSimpleModal = document.querySelector('#luSimpleModal-m');
-const luPivoteoModal = document.querySelector('#luPivoteoModal-m');
-const croutModal = document.querySelector('#croutModal-m');
-const doolittleModal = document.querySelector('#doolittleModal-m');
-const choleskyModal = document.querySelector('#choleskyModal-m');
+const gaussParcialStages = document.querySelector('#gaussParcial-stages');
+const gaussParcialStolution = document.querySelector('#gaussParcial-solution');
+const gaussTotalStages = document.querySelector('#gaussTotal-stages');
+const gaussTotalStolution = document.querySelector('#gaussTotal-solution');
+const luSimpleStages = document.querySelector('#luSimple-stages');
+const luSimpleStolution = document.querySelector('#luSimple-solution');
+const luPivoteoStages = document.querySelector('#luPivoteo-stages');
+const luPivoteoStolution = document.querySelector('#luPivoteo-solution');
+const croutStages = document.querySelector('#crout-stages');
+const croutStolution = document.querySelector('#crout-solution');
+const doolittleStages = document.querySelector('#doolittle-stages');
+const doolittleStolution = document.querySelector('#doolittle-solution');
+const choleskyStages = document.querySelector('#cholesky-stages');
+const choleskyStolution = document.querySelector('#cholesky-solution');
 
 function gaussSimpleReq() {
   guardarVector();
@@ -173,9 +179,25 @@ function gaussSimpleReq() {
   };
 
   $.ajax(settings).done(function(response) {
-    // var matrizAumentada = response.metodo.augmentedMatrix;
-    // crearRespGauss(matrizAumentada, gaussSimpleModal);
-    console.log(response.metodo);
+    var stages = response.metodo.stages;
+    var solution = response.metodo.solution;
+
+    var stageHtml = '';
+    var solutionHtml =
+      '<h5 class="text-primary">Solution</h5><ul class="list-group">';
+
+    stages.forEach((stage, idx) => {
+      stageHtml += `<h5 class="text-primary">Stage ${idx +
+        1}</h5>${crearMatrizHtml(stage)}<hr />`;
+    });
+    solution.forEach((element, idx) => {
+      solutionHtml += `<li class="list-group-item">X${idx +
+        1} = ${element}</li>`;
+    });
+    solutionHtml += '</ul>';
+
+    gaussSimpleStages.innerHTML = stageHtml;
+    gaussSimpleStolution.innerHTML = solutionHtml;
   });
 }
 
@@ -200,9 +222,25 @@ function gaussParcialReq() {
   };
 
   $.ajax(settings).done(function(response) {
-    // var matrizAumentada = response.metodo.augmentedMatrix;
-    // crearRespGauss(matrizAumentada, gaussSimpleModal);
-    console.log(response.metodo);
+    var stages = response.metodo.stages;
+    var solution = response.metodo.solution;
+
+    var stageHtml = '';
+    var solutionHtml =
+      '<h5 class="text-primary">Solution</h5><ul class="list-group">';
+
+    stages.forEach((stage, idx) => {
+      stageHtml += `<h5 class="text-primary">Stage ${idx +
+        1}</h5>${crearMatrizHtml(stage)}<hr />`;
+    });
+    solution.forEach((element, idx) => {
+      solutionHtml += `<li class="list-group-item">X${idx +
+        1} = ${element}</li>`;
+    });
+    solutionHtml += '</ul>';
+
+    gaussParcialStages.innerHTML = stageHtml;
+    gaussParcialStolution.innerHTML = solutionHtml;
   });
 }
 
@@ -227,9 +265,25 @@ function gaussTotalReq() {
   };
 
   $.ajax(settings).done(function(response) {
-    // var matrizAumentada = response.metodo.augmentedMatrix;
-    // crearRespGauss(matrizAumentada, gaussSimpleModal);
-    console.log(response.metodo);
+    var stages = response.metodo.stages;
+    var solution = response.metodo.solution;
+
+    var stageHtml = '';
+    var solutionHtml =
+      '<h5 class="text-primary">Solution</h5><ul class="list-group">';
+
+    stages.forEach((stage, idx) => {
+      stageHtml += `<h5 class="text-primary">Stage ${idx +
+        1}</h5>${crearMatrizHtml(stage)}<hr />`;
+    });
+    solution.forEach((element, idx) => {
+      solutionHtml += `<li class="list-group-item">X${idx +
+        1} = ${element}</li>`;
+    });
+    solutionHtml += '</ul>';
+
+    gaussTotalStages.innerHTML = stageHtml;
+    gaussTotalStolution.innerHTML = solutionHtml;
   });
 }
 
@@ -254,9 +308,28 @@ function luSimpleReq() {
   };
 
   $.ajax(settings).done(function(response) {
-    // var matrizAumentada = response.metodo.augmentedMatrix;
-    // crearRespGauss(matrizAumentada, gaussSimpleModal);
-    console.log(response.metodo);
+    console.log(response);
+    var stages = response.metodo.stages;
+    var solution = response.metodo.solution;
+
+    var stageHtml = '';
+    var solutionHtml =
+      '<h5 class="text-primary">Solution</h5><ul class="list-group">';
+
+    stages.forEach((stage, idx) => {
+      stageHtml += `<h5 class="text-primary">Stage ${idx +
+        1}</h5><h5>Matrix U</h5>${crearMatrizHtml(
+        stage.U
+      )}<h5>Matrix L</h5>${crearMatrizHtml(stage.L)}<hr />`;
+    });
+    solution.forEach((element, idx) => {
+      solutionHtml += `<li class="list-group-item">X${idx +
+        1} = ${element}</li>`;
+    });
+    solutionHtml += '</ul>';
+
+    luSimpleStages.innerHTML = stageHtml;
+    luSimpleStolution.innerHTML = solutionHtml;
   });
 }
 
@@ -282,9 +355,27 @@ function luPivoteoReq() {
   };
 
   $.ajax(settings).done(function(response) {
-    // var matrizAumentada = response.metodo.augmentedMatrix;
-    // crearRespGauss(matrizAumentada, gaussSimpleModal);
-    console.log(response.metodo);
+    var stages = response.metodo.stages;
+    var solution = response.metodo.solution;
+
+    var stageHtml = '';
+    var solutionHtml =
+      '<h5 class="text-primary">Solution</h5><ul class="list-group">';
+
+    stages.forEach((stage, idx) => {
+      stageHtml += `<h5 class="text-primary">Stage ${idx +
+        1}</h5><h5>Matrix U</h5>${crearMatrizHtml(
+        stage.U
+      )}<h5>Matrix L</h5>${crearMatrizHtml(stage.L)}<hr />`;
+    });
+    solution.forEach((element, idx) => {
+      solutionHtml += `<li class="list-group-item">X${idx +
+        1} = ${element}</li>`;
+    });
+    solutionHtml += '</ul>';
+
+    luPivoteoStages.innerHTML = stageHtml;
+    luPivoteoStolution.innerHTML = solutionHtml;
   });
 }
 
@@ -309,9 +400,28 @@ function croutReq() {
   };
 
   $.ajax(settings).done(function(response) {
-    // var matrizAumentada = response.metodo.augmentedMatrix;
-    // crearRespGauss(matrizAumentada, gaussSimpleModal);
-    console.log(response.metodo);
+    var stages = response.metodo.stages;
+    var solution = response.metodo.solution;
+    console.log(response);
+
+    var stageHtml = '';
+    var solutionHtml =
+      '<h5 class="text-primary">Solution</h5><ul class="list-group">';
+
+    stages.forEach((stage, idx) => {
+      stageHtml += `<h5 class="text-primary">Stage ${idx +
+        1}</h5><h5>Matrix U</h5>${crearMatrizHtml(
+        stage.U
+      )}<h5>Matrix L</h5>${crearMatrizHtml(stage.L)}<hr />`;
+    });
+    solution.forEach((element, idx) => {
+      solutionHtml += `<li class="list-group-item">X${idx +
+        1} = ${element}</li>`;
+    });
+    solutionHtml += '</ul>';
+
+    croutStages.innerHTML = stageHtml;
+    croutStolution.innerHTML = solutionHtml;
   });
 }
 
@@ -336,9 +446,27 @@ function doolittleReq() {
   };
 
   $.ajax(settings).done(function(response) {
-    // var matrizAumentada = response.metodo.augmentedMatrix;
-    // crearRespGauss(matrizAumentada, gaussSimpleModal);
-    console.log(response.metodo);
+    var stages = response.metodo.stages;
+    var solution = response.metodo.solution;
+
+    var stageHtml = '';
+    var solutionHtml =
+      '<h5 class="text-primary">Solution</h5><ul class="list-group">';
+
+    stages.forEach((stage, idx) => {
+      stageHtml += `<h5 class="text-primary">Stage ${idx +
+        1}</h5><h5>Matrix U</h5>${crearMatrizHtml(
+        stage.U
+      )}<h5>Matrix L</h5>${crearMatrizHtml(stage.L)}<hr />`;
+    });
+    solution.forEach((element, idx) => {
+      solutionHtml += `<li class="list-group-item">X${idx +
+        1} = ${element}</li>`;
+    });
+    solutionHtml += '</ul>';
+
+    doolittleStages.innerHTML = stageHtml;
+    doolittleStolution.innerHTML = solutionHtml;
   });
 }
 
@@ -363,13 +491,28 @@ function choleskyReq() {
   };
 
   $.ajax(settings).done(function(response) {
-    // var matrizAumentada = response.metodo.augmentedMatrix;
-    // crearRespGauss(matrizAumentada, gaussSimpleModal);
-    console.log(response.metodo);
+    var stages = response.metodo.stages;
+    var solution = response.metodo.solution;
+
+    var stageHtml = '';
+    var solutionHtml =
+      '<h5 class="text-primary">Solution</h5><ul class="list-group">';
+
+    stages.forEach((stage, idx) => {
+      stageHtml += `<h5 class="text-primary">Stage ${idx +
+        1}</h5>${crearMatrizHtml(stage)}<hr />`;
+    });
+    solution.forEach((element, idx) => {
+      solutionHtml += `<li class="list-group-item">X${idx +
+        1} = ${element}</li>`;
+    });
+    solutionHtml += '</ul>';
+
+    choleskyStages.innerHTML = stageHtml;
+    choleskyStolution.innerHTML = solutionHtml;
   });
 }
 
-// TODO: Generar matriz html
 function crearMatrizHtml(matrizAumentada) {
   var thead = '<th scope="col">#</th><th scope="col">1</th>';
   var tbody = '';
@@ -378,7 +521,7 @@ function crearMatrizHtml(matrizAumentada) {
     tbody += `<tr>\n
         <th scope="row">${i}</th>\n`;
     fila.forEach(columna => {
-      tbody += `<td><input type="number" class="form-control w-100" value="${columna}"></td>\n`;
+      tbody += `<td>${columna.toFixed(4)}</td>\n`;
     });
     tbody += `</tr>`;
   });
@@ -387,21 +530,4 @@ function crearMatrizHtml(matrizAumentada) {
   <tbody>${tbody}</tbody>
 </table>`;
   return table;
-}
-
-function crearRespGauss(matrizAumentada, htmlTag) {
-  var { filasH, filasB } = crearMatrizHtml(matrizAumentada);
-  htmlTag.innerHTML = `<h5>Augmented matrix</h5>
-     <table class="table table-bordered">
-      <thead>
-        <tr>
-          ${filasH}
-        </tr>
-      </thead>
-      <tbody>
-        ${filasB}
-      </tbody>
-    </table>
-    <hr />
-    <h5>Stages</h5>`;
 }

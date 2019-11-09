@@ -35,9 +35,9 @@ let tabla = [
 // let resp = factorizacionDoolittle(m, b);
 // let resp = factorizacionCholesky(m, b);
 // let resp = jacobi(tol, x0, nMax, m, b, 2);
-console.log('GAUSS-SEIDEL');
-gaussSeidel(tol, x0, nMax, m, b, 2);
-console.log(resp);
+// console.log('GAUSS-SEIDEL');
+// gaussSeidel(tol, x0, nMax, m, b, 2);
+// console.log(resp);
 // console.log('SOR');
 // gaussSeidel(tol, x0, nMax, m, b, 2, 1.5);
 
