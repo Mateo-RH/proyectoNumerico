@@ -19,3 +19,7 @@ functionPlot({
     }
   ]
 });
+
+function test() {
+  console.log('Test');
+}
