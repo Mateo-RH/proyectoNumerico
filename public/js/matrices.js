@@ -5,10 +5,10 @@ var elementosId = [];
 // vector
 const vbody = document.querySelector('#v-body');
 // Iterativos
-const inputTolerance = document.querySelector('#inputTolerance');
-const niter = document.querySelector('#niter');
-const norma = document.querySelector('#norma');
-const inputInitialVector = document.querySelector('#inputInitialVector');
+const i_tolerance = document.querySelector('#inputTolerance');
+const i_niter = document.querySelector('#niter');
+const i_norma = document.querySelector('#norma');
+const i_initialVector = document.querySelector('#inputInitialVector');
 var velementosId = [];
 
 $(document).ready(function() {
@@ -537,35 +537,30 @@ function jacobiReq() {
   guardarMatriz();
   var vector = obtenerVector().join(',');
   var matrix = obtenerMatriz().map(filas => filas.join(','));
-  var tolerance = inputTolerance.value;
-  var vector0 = inputInitialVector.value;
 
-  // if (!tolerance || !vector0 || !niter.value || !norma.value) {
-  //   // TODO: Detener ejecucion
-  // TODO: VECTOR 0 NECESITA MISMA LONGITUD
-  //   return alert('Please complete all the fields!');
-  // }
-  var settings = {
-    async: true,
-    crossDomain: true,
-    url: 'http://localhost:3000/sistemasDeEcuaciones/jacobi',
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    data: {
-      tolerance,
-      vector0,
-      niter: niter.value,
-      matrix: matrix,
-      vectorB: vector,
-      norma: norma.value
-    }
-  };
+  validarIterativos();
 
-  $.ajax(settings).done(function(response) {
-    console.log(response);
-  });
+  // var settings = {
+  //   async: true,
+  //   crossDomain: true,
+  //   url: 'http://localhost:3000/sistemasDeEcuaciones/jacobi',
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/x-www-form-urlencoded'
+  //   },
+  //   data: {
+  //     tolerance,
+  //     vector0,
+  //     niter: niter.value,
+  //     matrix: matrix,
+  //     vectorB: vector,
+  //     norma: norma.value
+  //   }
+  // };
+
+  // $.ajax(settings).done(function(response) {
+  //   console.log(response);
+  // });
 }
 
 function crearMatrizHtml(matrizAumentada) {
@@ -607,4 +602,28 @@ function crearMatrizHtmlCholesky(matrizAumentada) {
   <tbody>${tbody}</tbody>
 </table>`;
   return table;
+}
+
+function validarIterativos() {
+  var tolerance = i_tolerance.value;
+  var niter = i_niter.value;
+  var initialVector = i_initialVector.value.split(',').filter(function(item) {
+    return item != '';
+  });
+  var vectorLenght = obtenerVector().length;
+
+  if (!tolerance || !niter) {
+    alert('Please complete all the fields!');
+    return false;
+  }
+  if (initialVector.length != vectorLenght) {
+    alert('Initial vector length must be the same as b');
+    return false;
+  }
+  if (initialVector.some(isNaN)) {
+    alert('Only numerical values on initial vector');
+    return false;
+  }
+
+  return true;
 }
