@@ -161,7 +161,7 @@ let factorizacionLU = matrix => {
   );
   for (let k = 0; k < n - 1; k++) {
     for (let i = k + 1; i < n; i++) {
-      if (matrix[k][k] === 0) return false; // TEOREMA
+      if (matrix[k][k] === 0) return { L: false }; // TEOREMA
       var multiplicador = matrix[i][k] / matrix[k][k];
       L[i][k] = multiplicador;
       for (let j = k; j < n; j++) {
@@ -187,6 +187,7 @@ let factorizacionLUPivoteo = matrix => {
   for (let k = 0; k < n - 1; k++) {
     marcas = pivoteoParcialLU(marcas, matrix, k, L);
     for (let i = k + 1; i < n; i++) {
+      if (matrix[k][k] === 0) return { L: false };
       var multiplicador = matrix[i][k] / matrix[k][k];
       L[i][k] = multiplicador;
       for (let j = k; j < n; j++) {

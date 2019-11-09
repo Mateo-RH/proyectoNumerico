@@ -31,7 +31,7 @@ let factorizacionDirectaCholesky = matrix => {
       }
       U[k][j] = math.divide(matrix[k][j] - suma3, L[k][k]);
     }
-    stages.push(U, L);
+    stages.push({ U, L });
   }
 
   return { L, U, stages };

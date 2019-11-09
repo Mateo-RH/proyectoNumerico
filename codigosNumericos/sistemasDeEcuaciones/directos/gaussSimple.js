@@ -24,7 +24,7 @@ let gaussSimple = (matrix, vector) => {
     stages.push(stageMatrix);
   }
   let solution = sustitucionRegresiva(matrix);
-  if (solution.includes(null)) error = true;
+  if (solution.includes(NaN)) error = true;
 
   return { error, augmentedMatrix, stages, solution };
 };

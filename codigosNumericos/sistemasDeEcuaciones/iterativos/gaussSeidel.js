@@ -46,13 +46,9 @@ let gaussSeidel = (tolerancia, x0, niter, matrix, b, norma, w = 1) => {
     t2.push({ err });
     tabla.push(t2);
   }
-  console.table(tabla);
 
-  if (err < tolerancia) {
-    console.log(`${x1} Its an aproximation with tolerance = ${tolerancia}`);
-  } else {
-    console.log(`fails in ${niter} iterations`);
-  }
+  let error = err < tolerancia ? false : true;
+  return { error, aproximacion: x1, iteraciones: tabla, niter };
 };
 
 module.exports = gaussSeidel;

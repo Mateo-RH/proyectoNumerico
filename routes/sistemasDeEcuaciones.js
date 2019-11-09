@@ -176,4 +176,85 @@ app.post('/sistemasDeEcuaciones/factorizacionCholesky', function(req, res) {
   }
 });
 
+app.post('/sistemasDeEcuaciones/jacobi', function(req, res) {
+  let body = req.body;
+  let tolerance = body.tolerance;
+  let niter = body.niter;
+  let norma = body.norma;
+  let vector0 = body.vector0.split(',').map(item => parseInt(item));
+  let vectorB = body.vectorB.split(',').map(item => parseInt(item));
+  let matrix = body['matrix[]'].map(fila => {
+    let filaMatrix = fila.split(',').map(item => parseInt(item));
+    return filaMatrix;
+  });
+  let metodo = jacobi(tolerance, vector0, niter, matrix, vectorB, norma);
+
+  if (metodo.error) {
+    res.json({
+      metodo
+    });
+  } else {
+    res.json({
+      metodo
+    });
+  }
+});
+
+app.post('/sistemasDeEcuaciones/gaussSeidel', function(req, res) {
+  let body = req.body;
+  let tolerance = body.tolerance;
+  let niter = body.niter;
+  let norma = body.norma;
+  let vector0 = body.vector0.split(',').map(item => parseInt(item));
+  let vectorB = body.vectorB.split(',').map(item => parseInt(item));
+  let matrix = body['matrix[]'].map(fila => {
+    let filaMatrix = fila.split(',').map(item => parseInt(item));
+    return filaMatrix;
+  });
+  let metodo = gaussSeidel(tolerance, vector0, niter, matrix, vectorB, norma);
+
+  if (metodo.error) {
+    res.json({
+      metodo
+    });
+  } else {
+    res.json({
+      metodo
+    });
+  }
+});
+
+app.post('/sistemasDeEcuaciones/SOR', function(req, res) {
+  let body = req.body;
+  let tolerance = body.tolerance;
+  let niter = body.niter;
+  let w = body.w;
+  let norma = body.norma;
+  let vector0 = body.vector0.split(',').map(item => parseInt(item));
+  let vectorB = body.vectorB.split(',').map(item => parseInt(item));
+  let matrix = body['matrix[]'].map(fila => {
+    let filaMatrix = fila.split(',').map(item => parseInt(item));
+    return filaMatrix;
+  });
+  let metodo = gaussSeidel(
+    tolerance,
+    vector0,
+    niter,
+    matrix,
+    vectorB,
+    norma,
+    w
+  );
+
+  if (metodo.error) {
+    res.json({
+      metodo
+    });
+  } else {
+    res.json({
+      metodo
+    });
+  }
+});
+
 module.exports = app;

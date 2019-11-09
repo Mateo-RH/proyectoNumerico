@@ -33,12 +33,10 @@ let gaussPivotevoTotal = (matrix, vector) => {
     stages.push(stageMatrix);
   }
   let solution = sustitucionRegresiva(matrix);
-  console.log(solution, marcas);
-  console.table(matrix);
   let solucionDistribuida = solution.map(
     (elemento, idx) => solution[marcas[idx]]
   );
-  if (solucionDistribuida.includes(null)) error = true;
+  if (solution.includes(NaN)) error = true;
   return { error, augmentedMatrix, stages, solution: solucionDistribuida };
 };
 

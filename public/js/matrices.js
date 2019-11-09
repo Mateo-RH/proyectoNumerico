@@ -4,6 +4,11 @@ const mbody = document.querySelector('#m-body');
 var elementosId = [];
 // vector
 const vbody = document.querySelector('#v-body');
+// Iterativos
+const inputTolerance = document.querySelector('#inputTolerance');
+const niter = document.querySelector('#niter');
+const norma = document.querySelector('#norma');
+const inputInitialVector = document.querySelector('#inputInitialVector');
 var velementosId = [];
 
 $(document).ready(function() {
@@ -179,6 +184,7 @@ function gaussSimpleReq() {
   };
 
   $.ajax(settings).done(function(response) {
+    console.log(response);
     var stages = response.metodo.stages;
     var solution = response.metodo.solution;
 
@@ -222,6 +228,7 @@ function gaussParcialReq() {
   };
 
   $.ajax(settings).done(function(response) {
+    console.log(response);
     var stages = response.metodo.stages;
     var solution = response.metodo.solution;
 
@@ -265,6 +272,7 @@ function gaussTotalReq() {
   };
 
   $.ajax(settings).done(function(response) {
+    console.log(response);
     var stages = response.metodo.stages;
     var solution = response.metodo.solution;
 
@@ -308,6 +316,7 @@ function luSimpleReq() {
   };
 
   $.ajax(settings).done(function(response) {
+    console.log(response);
     console.log(response);
     var stages = response.metodo.stages;
     var solution = response.metodo.solution;
@@ -355,6 +364,7 @@ function luPivoteoReq() {
   };
 
   $.ajax(settings).done(function(response) {
+    console.log(response);
     var stages = response.metodo.stages;
     var solution = response.metodo.solution;
 
@@ -400,6 +410,7 @@ function croutReq() {
   };
 
   $.ajax(settings).done(function(response) {
+    console.log(response);
     var stages = response.metodo.stages;
     var solution = response.metodo.solution;
     console.log(response);
@@ -446,6 +457,7 @@ function doolittleReq() {
   };
 
   $.ajax(settings).done(function(response) {
+    console.log(response);
     var stages = response.metodo.stages;
     var solution = response.metodo.solution;
 
@@ -491,6 +503,7 @@ function choleskyReq() {
   };
 
   $.ajax(settings).done(function(response) {
+    console.log(response);
     var stages = response.metodo.stages;
     var solution = response.metodo.solution;
 
@@ -500,9 +513,15 @@ function choleskyReq() {
 
     stages.forEach((stage, idx) => {
       stageHtml += `<h5 class="text-primary">Stage ${idx +
-        1}</h5>${crearMatrizHtml(stage)}<hr />`;
+        1}</h5><h5>Matrix U</h5>${crearMatrizHtmlCholesky(
+        stage.U
+      )}<h5>Matrix L</h5>${crearMatrizHtmlCholesky(stage.L)}<hr />`;
     });
     solution.forEach((element, idx) => {
+      element = !!element.mathjs
+        ? `${element.re.toFixed(2)} + (${element.im.toFixed(2)})i`
+        : element.toFixed(4);
+
       solutionHtml += `<li class="list-group-item">X${idx +
         1} = ${element}</li>`;
     });
@@ -510,6 +529,42 @@ function choleskyReq() {
 
     choleskyStages.innerHTML = stageHtml;
     choleskyStolution.innerHTML = solutionHtml;
+  });
+}
+
+function jacobiReq() {
+  guardarVector();
+  guardarMatriz();
+  var vector = obtenerVector().join(',');
+  var matrix = obtenerMatriz().map(filas => filas.join(','));
+  var tolerance = inputTolerance.value;
+  var vector0 = inputInitialVector.value;
+
+  // if (!tolerance || !vector0 || !niter.value || !norma.value) {
+  //   // TODO: Detener ejecucion
+  // TODO: VECTOR 0 NECESITA MISMA LONGITUD
+  //   return alert('Please complete all the fields!');
+  // }
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: 'http://localhost:3000/sistemasDeEcuaciones/jacobi',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: {
+      tolerance,
+      vector0,
+      niter: niter.value,
+      matrix: matrix,
+      vectorB: vector,
+      norma: norma.value
+    }
+  };
+
+  $.ajax(settings).done(function(response) {
+    console.log(response);
   });
 }
 
@@ -522,6 +577,28 @@ function crearMatrizHtml(matrizAumentada) {
         <th scope="row">${i}</th>\n`;
     fila.forEach(columna => {
       tbody += `<td>${columna.toFixed(4)}</td>\n`;
+    });
+    tbody += `</tr>`;
+  });
+  var table = `<table class="table table-bordered table-responsive-md table-striped text-center ">
+  <thead>${thead}</thead>
+  <tbody>${tbody}</tbody>
+</table>`;
+  return table;
+}
+
+function crearMatrizHtmlCholesky(matrizAumentada) {
+  var thead = '<th scope="col">#</th><th scope="col">1</th>';
+  var tbody = '';
+  matrizAumentada.forEach((fila, i) => {
+    thead += `<th scope="col">${i}</th>`;
+    tbody += `<tr>\n
+        <th scope="row">${i}</th>\n`;
+    fila.forEach(columna => {
+      columna = !!columna.mathjs
+        ? `${columna.re.toFixed(2)} + (${columna.im.toFixed(2)})i`
+        : columna.toFixed(4);
+      tbody += `<td>${columna}</td>\n`;
     });
     tbody += `</tr>`;
   });

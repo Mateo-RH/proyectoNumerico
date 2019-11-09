@@ -17,9 +17,9 @@ let jacobi = (tolerancia, vector0, niter, matrix, b, norma) => {
     temp.push({ err: dispercion });
     tabla.push(temp);
   }
-  console.log(tabla);
   // x1 es aproximacion con tolerancia o fracaso en niter
   let error = dispercion < tolerancia ? false : true;
+  return { error, aproximacion: x1, iteraciones: tabla, niter };
 };
 
 let calcularNuevoJacobi = (vector0, matrix, b) => {
