@@ -533,34 +533,39 @@ function choleskyReq() {
 }
 
 function jacobiReq() {
+  // TODO: Interar sistema de manejo de errores para todos
+  if (validarIterativos()) $('#jacobiModal').modal();
+  else return;
+
   guardarVector();
   guardarMatriz();
   var vector = obtenerVector().join(',');
   var matrix = obtenerMatriz().map(filas => filas.join(','));
+  var tolerance = i_tolerance.value;
+  var niter = i_niter.value;
+  var initialVector = obtenerVectorInicial().join(',');
 
-  validarIterativos();
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: 'http://localhost:3000/sistemasDeEcuaciones/jacobi',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: {
+      tolerance,
+      vector0: initialVector,
+      niter: niter.value,
+      matrix: matrix,
+      vectorB: vector,
+      norma: norma.value
+    }
+  };
 
-  // var settings = {
-  //   async: true,
-  //   crossDomain: true,
-  //   url: 'http://localhost:3000/sistemasDeEcuaciones/jacobi',
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/x-www-form-urlencoded'
-  //   },
-  //   data: {
-  //     tolerance,
-  //     vector0,
-  //     niter: niter.value,
-  //     matrix: matrix,
-  //     vectorB: vector,
-  //     norma: norma.value
-  //   }
-  // };
-
-  // $.ajax(settings).done(function(response) {
-  //   console.log(response);
-  // });
+  $.ajax(settings).done(function(response) {
+    console.log(response);
+  });
 }
 
 function crearMatrizHtml(matrizAumentada) {
@@ -604,12 +609,17 @@ function crearMatrizHtmlCholesky(matrizAumentada) {
   return table;
 }
 
-function validarIterativos() {
-  var tolerance = i_tolerance.value;
-  var niter = i_niter.value;
+function obtenerVectorInicial() {
   var initialVector = i_initialVector.value.split(',').filter(function(item) {
     return item != '';
   });
+  return initialVector;
+}
+
+function validarIterativos() {
+  var tolerance = i_tolerance.value;
+  var niter = i_niter.value;
+  var initialVector = obtenerVectorInicial();
   var vectorLenght = obtenerVector().length;
 
   if (!tolerance || !niter) {

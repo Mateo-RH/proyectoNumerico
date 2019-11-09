@@ -34,7 +34,7 @@ let tabla = [
 // let resp = factorizacionCrout(m, b);
 // let resp = factorizacionDoolittle(m, b);
 // let resp = factorizacionCholesky(m, b);
-// let resp = jacobi(tol, x0, nMax, m1, b1, 2);
+let resp = jacobi(tol, x0, nMax, m1, b1, 2);
 // let resp = gaussSeidel(tol, x0, nMax, m1, b1, 2);
 // console.log(resp);
 // console.log('SOR');
