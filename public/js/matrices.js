@@ -9,6 +9,7 @@ const i_tolerance = document.querySelector('#inputTolerance');
 const i_niter = document.querySelector('#niter');
 const i_norma = document.querySelector('#norma');
 const i_initialVector = document.querySelector('#inputInitialVector');
+const i_w = document.querySelector('#w');
 var velementosId = [];
 
 $(document).ready(function() {
@@ -162,6 +163,8 @@ const doolittleStages = document.querySelector('#doolittle-stages');
 const doolittleStolution = document.querySelector('#doolittle-solution');
 const choleskyStages = document.querySelector('#cholesky-stages');
 const choleskyStolution = document.querySelector('#cholesky-solution');
+const jacobiStages = document.querySelector('#jacobi-stages');
+const jacobiSolution = document.querySelector('#jacobi-solution');
 
 function gaussSimpleReq() {
   guardarVector();
@@ -228,7 +231,6 @@ function gaussParcialReq() {
   };
 
   $.ajax(settings).done(function(response) {
-    console.log(response);
     var stages = response.metodo.stages;
     var solution = response.metodo.solution;
 
@@ -410,10 +412,8 @@ function croutReq() {
   };
 
   $.ajax(settings).done(function(response) {
-    console.log(response);
     var stages = response.metodo.stages;
     var solution = response.metodo.solution;
-    console.log(response);
 
     var stageHtml = '';
     var solutionHtml =
@@ -503,7 +503,6 @@ function choleskyReq() {
   };
 
   $.ajax(settings).done(function(response) {
-    console.log(response);
     var stages = response.metodo.stages;
     var solution = response.metodo.solution;
 
@@ -556,15 +555,32 @@ function jacobiReq() {
     data: {
       tolerance,
       vector0: initialVector,
-      niter: niter.value,
+      niter,
       matrix: matrix,
       vectorB: vector,
-      norma: norma.value
+      norma: i_norma.value
     }
   };
 
   $.ajax(settings).done(function(response) {
-    console.log(response);
+    var iteraciones = response.metodo.iteraciones;
+    var aproximacion = response.metodo.aproximacion;
+
+    var iterHtml = '';
+    var aproxHtml =
+      '<h5 class="text-primary">Aproximacion</h5><ul class="list-group">';
+
+    iteraciones.forEach((iteracion, idx) => {
+      iterHtml += `<h5 class="text-primary">Iteracion ${idx +
+        1}</h5>${crearMatrizHtml(iteracion)}<hr />`;
+    });
+    aproximacion.forEach((element, idx) => {
+      aproxHtml += `<li class="list-group-item">X${idx + 1} = ${element}</li>`;
+    });
+    aproxHtml += '</ul>';
+
+    jacobiStages.innerHTML = iterHtml;
+    jacobiSolution.innerHTML = aproxHtml;
   });
 }
 
