@@ -165,6 +165,10 @@ const choleskyStages = document.querySelector('#cholesky-stages');
 const choleskyStolution = document.querySelector('#cholesky-solution');
 const jacobiStages = document.querySelector('#jacobi-stages');
 const jacobiSolution = document.querySelector('#jacobi-solution');
+const gaussSeidelStages = document.querySelector('#gaussSeidel-stages');
+const gaussSeidelSolution = document.querySelector('#gaussSeidel-solution');
+const SORStages = document.querySelector('#SOR-stages');
+const SORSolution = document.querySelector('#SOR-solution');
 
 function gaussSimpleReq() {
   guardarVector();
@@ -563,17 +567,14 @@ function jacobiReq() {
   };
 
   $.ajax(settings).done(function(response) {
+    console.log(response);
     var iteraciones = response.metodo.iteraciones;
     var aproximacion = response.metodo.aproximacion;
 
     var iterHtml = '';
     var aproxHtml =
-      '<h5 class="text-primary">Aproximacion</h5><ul class="list-group">';
-
-    iteraciones.forEach((iteracion, idx) => {
-      iterHtml += `<h5 class="text-primary">Iteracion ${idx +
-        1}</h5>${crearMatrizHtml(iteracion)}<hr />`;
-    });
+      '<h5 class="text-primary">Aproximation</h5><ul class="list-group">';
+    iterHtml += crearMatrizHtmlIterativos(iteraciones);
     aproximacion.forEach((element, idx) => {
       aproxHtml += `<li class="list-group-item">X${idx + 1} = ${element}</li>`;
     });
@@ -583,12 +584,114 @@ function jacobiReq() {
     jacobiSolution.innerHTML = aproxHtml;
   });
 }
+function gaussSeidelReq() {
+  if (validarIterativos()) $('#gaussSeidelModal').modal();
+  else return;
+
+  guardarVector();
+  guardarMatriz();
+  var vector = obtenerVector().join(',');
+  var matrix = obtenerMatriz().map(filas => filas.join(','));
+  var tolerance = i_tolerance.value;
+  var niter = i_niter.value;
+  var initialVector = obtenerVectorInicial().join(',');
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: 'http://localhost:3000/sistemasDeEcuaciones/gaussSeidel',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: {
+      tolerance,
+      vector0: initialVector,
+      niter,
+      matrix: matrix,
+      vectorB: vector,
+      norma: i_norma.value
+    }
+  };
+
+  $.ajax(settings).done(function(response) {
+    var iteraciones = response.metodo.iteraciones;
+    var aproximacion = response.metodo.aproximacion;
+
+    var iterHtml = '';
+    var aproxHtml =
+      '<h5 class="text-primary">Aproximation</h5><ul class="list-group">';
+    iterHtml += crearMatrizHtmlIterativos(iteraciones);
+    aproximacion.forEach((element, idx) => {
+      aproxHtml += `<li class="list-group-item">X${idx + 1} = ${element}</li>`;
+    });
+    aproxHtml += '</ul>';
+
+    gaussSeidelStages.innerHTML = iterHtml;
+    gaussSeidelSolution.innerHTML = aproxHtml;
+  });
+}
+function SORReq() {
+  var w = i_w.value;
+  if (!w) {
+    alert('Please complete all the fields');
+    return;
+  }
+  if (validarIterativos()) $('#SORModal').modal();
+  else return;
+
+  guardarVector();
+  guardarMatriz();
+  var vector = obtenerVector().join(',');
+  var matrix = obtenerMatriz().map(filas => filas.join(','));
+  var tolerance = i_tolerance.value;
+  var niter = i_niter.value;
+  var initialVector = obtenerVectorInicial().join(',');
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: 'http://localhost:3000/sistemasDeEcuaciones/SOR',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: {
+      tolerance,
+      vector0: initialVector,
+      niter,
+      w,
+      matrix: matrix,
+      vectorB: vector,
+      norma: i_norma.value
+    }
+  };
+
+  $.ajax(settings).done(function(response) {
+    console.log(response);
+    var iteraciones = response.metodo.iteraciones;
+    var aproximacion = response.metodo.aproximacion;
+
+    var iterHtml = '';
+    var aproxHtml =
+      '<h5 class="text-primary">Aproximation</h5><ul class="list-group">';
+    iterHtml += crearMatrizHtmlIterativos(iteraciones);
+    aproximacion.forEach((element, idx) => {
+      aproxHtml += `<li class="list-group-item">X${idx + 1} = ${element}</li>`;
+    });
+    aproxHtml += '</ul>';
+
+    SORStages.innerHTML = iterHtml;
+    SORSolution.innerHTML = aproxHtml;
+  });
+}
 
 function crearMatrizHtml(matrizAumentada) {
-  var thead = '<th scope="col">#</th><th scope="col">1</th>';
+  var thead = '<th scope="col">#</th><th scope="col">0</th>';
   var tbody = '';
   matrizAumentada.forEach((fila, i) => {
-    thead += `<th scope="col">${i}</th>`;
+    var idx = i == matrizAumentada.length - 1 ? 'b' : i + 1;
+    thead += `<th scope="col">${idx}</th>`;
     tbody += `<tr>\n
         <th scope="row">${i}</th>\n`;
     fila.forEach(columna => {
@@ -604,10 +707,11 @@ function crearMatrizHtml(matrizAumentada) {
 }
 
 function crearMatrizHtmlCholesky(matrizAumentada) {
-  var thead = '<th scope="col">#</th><th scope="col">1</th>';
+  var thead = '<th scope="col">#</th><th scope="col">0</th>';
   var tbody = '';
   matrizAumentada.forEach((fila, i) => {
-    thead += `<th scope="col">${i}</th>`;
+    var idx = i == matrizAumentada.length - 1 ? 'b' : i + 1;
+    thead += `<th scope="col">${idx}</th>`;
     tbody += `<tr>\n
         <th scope="row">${i}</th>\n`;
     fila.forEach(columna => {
@@ -619,6 +723,30 @@ function crearMatrizHtmlCholesky(matrizAumentada) {
     tbody += `</tr>`;
   });
   var table = `<table class="table table-bordered table-responsive-md table-striped text-center ">
+  <thead>${thead}</thead>
+  <tbody>${tbody}</tbody>
+</table>`;
+  return table;
+}
+
+function crearMatrizHtmlIterativos(matrizAumentada) {
+  var thead = '<th scope="col">Iteration</th>';
+  var tbody = '';
+  matrizAumentada[0].forEach((f, i) => {
+    var idx = i == matrizAumentada[0].length - 1 ? 'err' : `X${i}`;
+    thead += `<th scope="col">${idx}</th>`;
+  });
+  matrizAumentada.forEach((fila, i) => {
+    tbody += `<tr>\n
+        <th scope="row">${i}</th>\n`;
+    fila.forEach(columna => {
+      var col = !!columna.err ? columna.err : columna;
+      tbody += `<td>${col.toFixed(4)}</td>\n`;
+    });
+    tbody += `</tr>`;
+  });
+  var table = `<h5 class="text-primary">Iterations</h5>
+  <table class="table table-bordered table-responsive-md table-striped text-center ">
   <thead>${thead}</thead>
   <tbody>${tbody}</tbody>
 </table>`;

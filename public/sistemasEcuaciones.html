@@ -27,6 +27,9 @@
   <body class="bg-dark">
     <div class="container">
       <div class="jumbotron jumbotron-fluid mt-5">
+        <button class="btn btn-link">
+          <a href="http://localhost:3000">Back</a>
+        </button>
         <!-- TARJETA -->
         <div class="card text-center">
           <div class="card-header">
@@ -139,32 +142,16 @@
                 <div class="dropdown-menu">
                   <!-- Jacobi -->
                   <button class=" dropdown-item" onclick="jacobiReq()">
-                    <!-- <button
-                    class=" dropdown-item"
-                    onclick="jacobiReq()"
-                    data-toggle="modal"
-                    data-target="#jacobiModal"
-                  > -->
                     Jacobi
                   </button>
                   <div role="separator" class="dropdown-divider"></div>
                   <!-- Gauss Seidel -->
-                  <button
-                    class=" dropdown-item"
-                    onclick="gaussSeidelReq()"
-                    data-toggle="modal"
-                    data-target="#gaussSeidelModal"
-                  >
+                  <button class=" dropdown-item" onclick="gaussSeidelReq()">
                     Gauss Seidel
                   </button>
                   <div role="separator" class="dropdown-divider"></div>
                   <!-- SOR -->
-                  <button
-                    class=" dropdown-item"
-                    onclick="SORReq()"
-                    data-toggle="modal"
-                    data-target="#SORModal"
-                  >
+                  <button class=" dropdown-item" onclick="SORReq()">
                     SOR
                   </button>
                 </div>
