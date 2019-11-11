@@ -2,6 +2,8 @@ const math = require('mathjs');
 
 let biseccion = (funcion, xInferior, xSuperior, tolerance, iterations_n) => {
   const code2 = math.parse(funcion).compile();
+  let raiz = false;
+  let errorR = false;
   let scope = {
     x: xInferior
   };
@@ -9,27 +11,16 @@ let biseccion = (funcion, xInferior, xSuperior, tolerance, iterations_n) => {
   scope.x = xSuperior;
   let fxs = code2.evaluate(scope);
   if (fxi === 0) {
-    console.log(`Root: ${xInferior}`);
-    return xInferior;
+    raiz = xInferior;
   } else if (fxs === 0) {
-    console.log(`Root: ${xSuperior}`);
-    return xSuperior;
+    raiz = xSuperior;
   } else if (fxs * fxi < 0) {
     let xMiddle = (xSuperior + xInferior) / 2;
     scope.x = xMiddle;
     let fxm = code2.evaluate(scope);
     let counter = 1;
     let error = tolerance + 1;
-    var tabla = [
-      {
-        n: 1,
-        xInf: xInferior,
-        xSup: xSuperior,
-        xMid: xMiddle,
-        'f(xMid)': fxm,
-        error: 0
-      }
-    ];
+    var tabla = [[xInferior, xSuperior, xMiddle, fxm, 0]];
     while (error > tolerance && counter <= iterations_n && fxm != 0) {
       if (fxi * fxm < 0) {
         xSuperior = xMiddle;
@@ -44,28 +35,22 @@ let biseccion = (funcion, xInferior, xSuperior, tolerance, iterations_n) => {
       fxm = code2.evaluate(scope);
       error = math.abs(xMiddle - Xaux);
       counter += 1;
-      tabla.push({
-        n: counter,
-        xInf: xInferior,
-        xSup: xSuperior,
-        xMid: xMiddle,
-        'f(xMid)': fxm,
-        error
-      });
+      tabla.push([xInferior, xSuperior, xMiddle, fxm, error]);
     }
-    console.table(tabla);
     if (fxm == 0) {
-      console.log('Root:', xMiddle);
-      return xMiddle;
-    } else if (error < tolerance) {
-      console.log(
-        `${xMiddle} is an aproximation with tolerance = ${tolerance}`
-      );
-      return xMiddle;
-    } else {
-      console.log('Fail in', iterations_n, 'iterations');
-      return false;
+      raiz = xMiddle;
+    } else if (error >= tolerance) {
+      errorR = true;
     }
+    return {
+      error: errorR,
+      cabecera: ['xInf', 'xSup', 'xMid', 'f(xMid)', 'error'],
+      raiz,
+      aproximation: xMiddle,
+      niter: iterations_n,
+      tolerance,
+      iterations: tabla
+    };
   }
 };
 

@@ -25,7 +25,6 @@ let tabla = [
   { x: 4, y: 1 }
 ];
 
-// TODO: GAUSSTOTAL ESTA DANDO LIDIA SOLO EN EL FRONT IMPRIME EN DESORDEN
 // let resp = gaussSimple(m, b);
 // let resp = gaussPivotevoParcial(m, b);
 // let resp2 = gaussPivotevoTotal(m2, b2);

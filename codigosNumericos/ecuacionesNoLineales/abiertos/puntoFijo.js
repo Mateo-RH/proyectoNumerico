@@ -3,6 +3,8 @@ const math = require('mathjs');
 let puntoFijo = (funcionF, funcionG, tolerance, Xa, niter, tipoError) => {
   const ff = math.parse(funcionF).compile();
   const fg = math.parse(funcionG).compile();
+  let errorR = false;
+  let raiz = false;
   let scope = {
     x: Xa
   };
@@ -14,7 +16,7 @@ let puntoFijo = (funcionF, funcionG, tolerance, Xa, niter, tipoError) => {
   while (fx != 0 && error > tolerance && counter <= niter) {
     scope.x = Xa;
     Xn = fg.evaluate(scope);
-    table.push({ n: counter - 1, Xo: Xa, Xn, 'f(x)': fx, error });
+    table.push([Xa, Xn, fx, error]);
     scope.x = Xn;
     fx = ff.evaluate(scope);
     tipoError == 'e'
@@ -23,18 +25,21 @@ let puntoFijo = (funcionF, funcionG, tolerance, Xa, niter, tipoError) => {
     Xa = Xn;
     counter += 1;
   }
-  table.push({ n: counter - 1, Xo: Xa, Xn, 'f(x)': fx, error });
-  console.table(table);
+  table.push([Xa, Xn, fx, error]);
   if (fx == 0) {
-    console.log(`Root: ${Xa}`);
-    return Xa;
-  } else if (error < tolerance) {
-    console.log(`${Xa} is an aproximation with tolerance = ${tolerance}`);
-    return Xa;
-  } else {
-    console.log('Fail in', niter, 'iterations');
-    return false;
+    raiz = Xa;
+  } else if (error >= tolerance) {
+    errorR = true;
   }
+  return {
+    error: errorR,
+    cabecera: ['Xo', 'Xn', 'f(x)', 'error'],
+    raiz,
+    niter,
+    aproximation: Xa,
+    tolerance,
+    iterations: table
+  };
 };
 
 module.exports = puntoFijo;

@@ -668,7 +668,6 @@ function SORReq() {
   };
 
   $.ajax(settings).done(function(response) {
-    console.log(response);
     var iteraciones = response.metodo.iteraciones;
     var aproximacion = response.metodo.aproximacion;
 

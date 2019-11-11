@@ -1,6 +1,5 @@
 const math = require('mathjs');
 
-// FIXME: no funciona raices multipls (recvisar derivadas)
 let raicesMultiples = (
   funcionF,
   funciondF,

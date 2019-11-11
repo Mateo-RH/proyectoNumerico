@@ -11,7 +11,10 @@ let newton = (funcionF, funciondF, tolerance, Xo, niter, tipoError) => {
   let counter = 1;
   let error = tolerance + 1;
   var tabla = [];
-  tabla.push({ n: 0, Xo, 'f(x)': fx, error: 0 });
+  let errorR = false;
+  let raiz = false;
+  let raizM = false;
+  tabla.push([Xo, fx, 0]);
   while (fx != 0 && error > tolerance && counter <= niter && dfx != 0) {
     var x1 = Xo - fx / dfx;
     scope.x = x1;
@@ -22,22 +25,26 @@ let newton = (funcionF, funciondF, tolerance, Xo, niter, tipoError) => {
       : (error = math.abs(x1 - Xo));
     Xo = x1;
     counter += 1;
-    tabla.push({ n: counter - 1, Xo, 'f(x)': fx, error });
+    tabla.push([Xo, fx, error]);
   }
-  console.table(tabla);
-  if (fx === 0) {
-    console.log(`Root: ${Xo}`);
-    return Xo;
-  } else if (error < tolerance) {
-    console.log(`${x1} is an aproximation with tolerance = ${tolerance}`);
-    return x1;
+
+  if (fx == 0) {
+    raiz = Xo;
   } else if (dfx === 0) {
-    console.log(`${x1} its a possible multiple root`);
-    return x1;
-  } else {
-    console.log('Fail in', niter, 'iterations');
-    return false;
+    raizM = x1;
+  } else if (error >= tolerance) {
+    errorR = true;
   }
+  return {
+    error: errorR,
+    cabecera: ['Xo', 'f(x)', 'error'],
+    raiz,
+    raizM,
+    niter,
+    aproximation: x1,
+    tolerance,
+    iterations: tabla
+  };
 };
 
 module.exports = newton;

@@ -73,7 +73,7 @@
                   </button>
                   <div role="separator" class="dropdown-divider"></div>
                   <!-- Multiple Roots -->
-                  <button class=" dropdown-item" onclick="showMultipleRoots()">
+                  <button class=" dropdown-item" onclick="showMultipleRoots()" disabled>
                     Multiple Roots
                   </button>
                 </div>
@@ -87,7 +87,7 @@
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  Closed
+                  Close
                 </button>
                 <div class="dropdown-menu">
                   <!-- Bisection -->
@@ -259,26 +259,41 @@
               <h5 class="text-primary m-5">Secant</h5>
               <div class="form-row">
                 <div class="form-group col-2">
-                  <label for="niter">Iterations</label>
-                  <input type="number" class="form-control" id="niter" />
+                  <label for="niterSecant">Iterations</label>
+                  <input type="number" class="form-control" id="niterSecant" />
                 </div>
                 <div class="form-group col-2">
-                  <label for="inputInitialX">X0</label>
+                  <label for="x0Secant">X0</label>
+                  <input type="number" class="form-control" id="x0Secant" />
+                </div>
+                <div class="form-group col-2">
+                  <label for="errorSecant">Error</label>
+                  <select id="errorSecant" class="form-control">
+                    <option selected>e</option>
+                    <option>E</option>
+                  </select>
+                </div>
+                <div class="form-group col-6">
+                  <label for="functionFSecant">Function F</label>
                   <input
-                    type="number"
+                    type="text"
                     class="form-control"
-                    id="inputInitialX"
+                    id="functionFSecant"
                   />
                 </div>
                 <div class="form-group col-2">
-                  <label for="inputDelta">Delta</label>
-                  <input type="number" class="form-control" id="inputDelta" />
+                  <label for="toleranceSecant">Tolerance</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="toleranceSecant"
+                  />
                 </div>
-                <div class="form-group col-6">
-                  <label for="inputFunction">Function</label>
-                  <input type="text" class="form-control" id="inputFunction" />
+                <div class="form-group col-2">
+                  <label for="x1Secant">X1</label>
+                  <input type="number" class="form-control" id="x1Secant" />
                 </div>
-                <div class="form-group col-12">
+                <div class="form-group col-8">
                   <button class="btn btn-primary m-5" onclick="SecantReq()">
                     Run!
                   </button>
@@ -324,24 +339,44 @@
               <h5 class="text-primary m-5">Bisection</h5>
               <div class="form-row">
                 <div class="form-group col-2">
-                  <label for="niter">Iterations</label>
-                  <input type="number" class="form-control" id="niter" />
-                </div>
-                <div class="form-group col-2">
-                  <label for="inputInitialX">X0</label>
+                  <label for="niterBisection">Iterations</label>
                   <input
                     type="number"
                     class="form-control"
-                    id="inputInitialX"
+                    id="niterBisection"
+                  />
+                </div>
+                <div class="form-group col-1">
+                  <label for="xInfBisection">X Inf.</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="xInfBisection"
+                  />
+                </div>
+                <div class="form-group col-1">
+                  <label for="xSupBisection">X Sup.</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="xSupBisection"
                   />
                 </div>
                 <div class="form-group col-2">
-                  <label for="inputDelta">Delta</label>
-                  <input type="number" class="form-control" id="inputDelta" />
+                  <label for="toleranceBisection">Tolerance</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="toleranceBisection"
+                  />
                 </div>
                 <div class="form-group col-6">
-                  <label for="inputFunction">Function</label>
-                  <input type="text" class="form-control" id="inputFunction" />
+                  <label for="functionFBisection">Function</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="functionFBisection"
+                  />
                 </div>
                 <div class="form-group col-12">
                   <button class="btn btn-primary m-5" onclick="BisectionReq()">
@@ -353,27 +388,46 @@
             <!-- Fake Rule -->
             <div class="container mt-5 px-5 d-none" id="FakeRuleForm">
               <h5 class="text-primary m-5">Fake Rule</h5>
-              <div class="form-row">
-                <div class="form-group col-2">
-                  <label for="niter">Iterations</label>
-                  <input type="number" class="form-control" id="niter" />
-                </div>
-                <div class="form-group col-2">
-                  <label for="inputInitialX">X0</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="inputInitialX"
-                  />
-                </div>
-                <div class="form-group col-2">
-                  <label for="inputDelta">Delta</label>
-                  <input type="number" class="form-control" id="inputDelta" />
-                </div>
-                <div class="form-group col-6">
-                  <label for="inputFunction">Function</label>
-                  <input type="text" class="form-control" id="inputFunction" />
-                </div>
+              <div class="form-group col-2">
+                <label for="niterFakeRule">Iterations</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="niterFakeRule"
+                />
+              </div>
+              <div class="form-group col-1">
+                <label for="xInfFakeRule">X Inf.</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="xInfFakeRule"
+                />
+              </div>
+              <div class="form-group col-1">
+                <label for="xSupFakeRule">X Sup.</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="xSupFakeRule"
+                />
+              </div>
+              <div class="form-group col-2">
+                <label for="toleranceFakeRule">Tolerance</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="toleranceFakeRule"
+                />
+              </div>
+              <div class="form-group col-6">
+                <label for="functionFFakeRule">Function</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="functionFFakeRule"
+                />
+              </div>
                 <div class="form-group col-12">
                   <button class="btn btn-primary m-5" onclick="FakeRuleReq()">
                     Run!
@@ -534,25 +588,191 @@
         </div>
       </div>
     </div>
-    <!-- Gauss Simple -->
+    <!-- Incremental Search -->
     <div
       class="modal fade"
-      id="gaussSimpleModal"
+      id="incrementalModal"
       tabindex="-1"
       aria-hidden="true"
     >
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title text-primary">Simple Gauss</h5>
+            <h5 class="modal-title text-primary">Incremental Search</h5>
             <button type="button" class="close" data-dismiss="modal">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <span id="gaussSimple-stages"> </span>
-            <hr />
-            <span id="gaussSimple-solution"> </span>
+            <span id="incrementalSearch-stages"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fixed Point -->
+    <div
+      class="modal fade"
+      id="FixedPointModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">Fixed Point</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="FixedPoint-stages"> </span>
+            <span id="FixedPoint-solution"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Newton -->
+    <div
+      class="modal fade"
+      id="NewtonModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">Newton</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="Newton-stages"> </span>
+            <span id="Newton-solution"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Secant -->
+    <div
+      class="modal fade"
+      id="SecantModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">Secant</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="Secant-stages"> </span>
+            <span id="Secant-solution"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Multiple Roots -->
+    <div
+      class="modal fade"
+      id="MultipleRootsModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">Multiple Roots</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="MultipleRoots-stages"> </span>
+            <span id="MultipleRoots-solution"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Bisection -->
+    <div
+      class="modal fade"
+      id="BisectionModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">Bisection</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="Bisection-stages"> </span>
+            <span id="Bisection-solution"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fake Rule -->
+    <div
+      class="modal fade"
+      id="FakeRuleModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">Fake Rule</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="FakeRule-stages"> </span>
+            <span id="FakeRule-solution"> </span>
           </div>
           <div class="modal-footer">
             <button class="btn btn-link">More</button>

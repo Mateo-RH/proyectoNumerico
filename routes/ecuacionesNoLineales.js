@@ -10,6 +10,7 @@ const {
   secante
 } = require('../codigosNumericos/ecuacionesNoLineales/index');
 
+// TODO: MANEJO ERROR CUANDO LA FUNCION NO ES FUNCION
 app.post('/busquedaIncremental', function(req, res) {
   let body = req.body;
 
@@ -18,28 +19,11 @@ app.post('/busquedaIncremental', function(req, res) {
   let xDelta = Number(body.xDelta) || 0;
   let iterations = Number(body.iterations) || 0;
 
-  let intervalos = busquedasIncrementales(
-    funcion,
-    xInicial,
-    xDelta,
-    iterations
-  );
+  let metodo = busquedasIncrementales(funcion, xInicial, xDelta, iterations);
 
-  if (!intervalos) {
-    res.json({
-      error: true,
-      msg: 'El metodo fallo'
-    });
-  } else {
-    res.json({
-      error: false,
-      funcion,
-      xInicial,
-      xDelta,
-      iterations,
-      intervalos
-    });
-  }
+  res.json({
+    metodo
+  });
 });
 
 app.post('/biseccion', function(req, res) {
@@ -51,24 +35,11 @@ app.post('/biseccion', function(req, res) {
   let tolerance = Number(body.tolerance) || 0;
   let iterations = Number(body.iterations) || 0;
 
-  let raiz = biseccion(funcion, xInferior, xSuperior, tolerance, iterations);
+  let metodo = biseccion(funcion, xInferior, xSuperior, tolerance, iterations);
 
-  if (!raiz) {
-    res.json({
-      error: true,
-      msg: 'El metodo fallo'
-    });
-  } else {
-    res.json({
-      error: false,
-      funcion,
-      xInferior,
-      xSuperior,
-      tolerance,
-      iterations,
-      raiz
-    });
-  }
+  res.json({
+    metodo
+  });
 });
 
 app.post('/reglaFalsa', function(req, res) {
@@ -80,23 +51,11 @@ app.post('/reglaFalsa', function(req, res) {
   let tolerance = Number(body.tolerance) || 0;
   let iterations = Number(body.iterations) || '';
 
-  let raiz = reglaFalsa(funcion, xInferior, xSuperior, tolerance, iterations);
+  let metodo = reglaFalsa(funcion, xInferior, xSuperior, tolerance, iterations);
 
-  if (!raiz) {
-    res.json({
-      error: true,
-      msg: 'El metodo fallo'
-    });
-  } else {
-    res.json({
-      error: false,
-      funcion,
-      xInferior,
-      xSuperior,
-      tolerance,
-      raiz
-    });
-  }
+  res.json({
+    metodo
+  });
 });
 
 app.post('/puntoFijo', function(req, res) {
@@ -109,25 +68,11 @@ app.post('/puntoFijo', function(req, res) {
   let niter = Number(body.niter) || 0;
   let tipoError = body.tipoError || '';
 
-  let raiz = puntoFijo(funcionF, funcionG, tolerance, Xa, niter, tipoError);
+  let metodo = puntoFijo(funcionF, funcionG, tolerance, Xa, niter, tipoError);
 
-  if (!raiz) {
-    res.json({
-      error: true,
-      msg: 'El metodo fallo'
-    });
-  } else {
-    res.json({
-      error: false,
-      funcionF,
-      funcionG,
-      tolerance,
-      Xa,
-      niter,
-      tipoError,
-      raiz
-    });
-  }
+  res.json({
+    metodo
+  });
 });
 
 app.post('/newton', function(req, res) {
@@ -140,25 +85,11 @@ app.post('/newton', function(req, res) {
   let niter = Number(body.niter) || 0;
   let tipoError = body.tipoError || '';
 
-  let raiz = newton(funcionF, funciondF, tolerance, Xo, niter, tipoError);
+  let metodo = newton(funcionF, funciondF, tolerance, Xo, niter, tipoError);
 
-  if (!raiz) {
-    res.json({
-      error: true,
-      msg: 'El metodo fallo'
-    });
-  } else {
-    res.json({
-      error: false,
-      funcionF,
-      funciondF,
-      tolerance,
-      Xo,
-      niter,
-      tipoError,
-      raiz
-    });
-  }
+  res.json({
+    metodo
+  });
 });
 
 app.post('/secante', function(req, res) {
@@ -171,25 +102,11 @@ app.post('/secante', function(req, res) {
   let niter = Number(body.niter) || 0;
   let tipoError = body.tipoError || '';
 
-  let raiz = secante(funcionF, tolerance, Xo, x1, niter, tipoError);
+  let metodo = secante(funcionF, tolerance, Xo, x1, niter, tipoError);
 
-  if (!raiz) {
-    res.json({
-      error: true,
-      msg: 'El metodo fallo'
-    });
-  } else {
-    res.json({
-      error: false,
-      funcionF,
-      tolerance,
-      Xo,
-      x1,
-      niter,
-      tipoError,
-      raiz
-    });
-  }
+  res.json({
+    metodo
+  });
 });
 
 app.post('/raicesMultiples', function(req, res) {
@@ -203,7 +120,7 @@ app.post('/raicesMultiples', function(req, res) {
   let niter = Number(body.niter) || 0;
   let tipoError = body.tipoError || '';
 
-  let raiz = raicesMultiples(
+  let metodo = raicesMultiples(
     funcionF,
     funciondF,
     funcionddF,
@@ -213,24 +130,9 @@ app.post('/raicesMultiples', function(req, res) {
     tipoError
   );
 
-  if (!raiz) {
-    res.json({
-      error: true,
-      msg: 'El metodo fallo'
-    });
-  } else {
-    res.json({
-      error: false,
-      funcionF,
-      funciondF,
-      funcionddF,
-      tolerance,
-      Xo,
-      niter,
-      tipoError,
-      raiz
-    });
-  }
+  res.json({
+    metodo
+  });
 });
 
 module.exports = app;
