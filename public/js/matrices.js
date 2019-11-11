@@ -781,3 +781,15 @@ function validarIterativos() {
 
   return true;
 }
+
+function hideIterativos() {
+  $('#formIterativos')
+    .removeClass('d-block')
+    .addClass('d-none');
+}
+
+function showIterativos() {
+  $('#formIterativos')
+    .removeClass('d-none')
+    .addClass('d-block');
+}

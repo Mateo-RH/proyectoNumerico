@@ -7,5 +7,5 @@ function sistemasDeEcuaciones() {
 }
 
 function interpolacion() {
-  // window.location.assign('/menu.html');
+  window.location.assign('/interpolacion.html');
 }

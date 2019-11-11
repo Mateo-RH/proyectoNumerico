@@ -43,6 +43,7 @@
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
+                  onclick="hideIterativos()"
                 >
                   Directs
                 </button>
@@ -136,6 +137,7 @@
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
+                  onclick="showIterativos()"
                 >
                   Iteratives
                 </button>
@@ -209,7 +211,7 @@
                 </div>
               </div>
             </div>
-            <div class="container mt-5 px-5">
+            <div class="container mt-5 px-5 d-none" id="formIterativos">
               <div class="form-row">
                 <div class="form-group col-md-2">
                   <label for="inputTolerance">Tolerance</label>

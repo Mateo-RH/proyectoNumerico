@@ -21,7 +21,7 @@
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="./css/main.css" />
-    <title>nonlinearEquations</title>
+    <title>Interpolation</title>
   </head>
 
   <body class="bg-dark">
@@ -33,19 +33,9 @@
         <!-- TARJETA -->
         <div class="card text-center">
           <div class="card-header">
-            <h5 class="card-title">NonLinear Equations</h5>
+            <h5 class="card-title">Interpolation</h5>
             <ul class="nav nav-pills card-header-pills">
-              <!-- Incremental Search -->
-              <li class="nav-item m-1">
-                <button
-                  class="btn btn-outline-secondary"
-                  type="button"
-                  onclick="showBusquedas()"
-                >
-                  Incremental Search
-                </button>
-              </li>
-              <!-- Open -->
+              <!-- Methods -->
               <li class="nav-item m-1">
                 <button
                   class="btn btn-outline-secondary dropdown-toggle"
@@ -54,330 +44,177 @@
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  Open
+                  Methods
                 </button>
                 <div class="dropdown-menu">
-                  <!-- Fixed Point -->
-                  <button class=" dropdown-item" onclick="showFixedPoint()">
-                    Fixed Point
+                  <!-- Gauss simple -->
+                  <button
+                    class=" dropdown-item"
+                    onclick="gaussSimpleReq()"
+                    data-toggle="modal"
+                    data-target="#gaussSimpleModal"
+                  >
+                    Simple Gauss
                   </button>
                   <div role="separator" class="dropdown-divider"></div>
-                  <!-- Newton -->
-                  <button class=" dropdown-item" onclick="showNewton()">
-                    Newton
+                  <!-- Partial Gauss -->
+                  <button
+                    class=" dropdown-item"
+                    onclick="gaussParcialReq()"
+                    data-toggle="modal"
+                    data-target="#gaussParcialModal"
+                  >
+                    Partial Gauss
                   </button>
                   <div role="separator" class="dropdown-divider"></div>
-                  <!-- Secant -->
-                  <button class=" dropdown-item" onclick="showSecant()">
-                    Secant
+                  <!-- Total Gauss -->
+                  <button
+                    class=" dropdown-item"
+                    onclick="gaussTotalReq()"
+                    data-toggle="modal"
+                    data-target="#gaussTotalModal"
+                  >
+                    Total Gauss
                   </button>
                   <div role="separator" class="dropdown-divider"></div>
-                  <!-- Multiple Roots -->
-                  <button class=" dropdown-item" onclick="showMultipleRoots()">
-                    Multiple Roots
-                  </button>
-                </div>
-              </li>
-              <!-- Closed -->
-              <li class="nav-item m-1">
-                <button
-                  class="btn btn-outline-secondary dropdown-toggle"
-                  type="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Closed
-                </button>
-                <div class="dropdown-menu">
-                  <!-- Bisection -->
-                  <button class=" dropdown-item" onclick="showBisection()">
-                    Bisection
+                  <!-- Simple LU -->
+                  <button
+                    class=" dropdown-item"
+                    onclick="luSimpleReq()"
+                    data-toggle="modal"
+                    data-target="#luSimpleModal"
+                  >
+                    Simple LU
                   </button>
                   <div role="separator" class="dropdown-divider"></div>
-                  <!-- Fake Rule -->
-                  <button class=" dropdown-item" onclick="showFakeRule()">
-                    Fake Rule
+                  <!-- Pivoting LU -->
+                  <button
+                    class=" dropdown-item"
+                    onclick="luPivoteoReq()"
+                    data-toggle="modal"
+                    data-target="#luPivoteoModal"
+                  >
+                    Pivoting LU
+                  </button>
+                  <div role="separator" class="dropdown-divider"></div>
+                  <!--  Crout -->
+                  <button
+                    class=" dropdown-item"
+                    onclick="croutReq()"
+                    data-toggle="modal"
+                    data-target="#croutModal"
+                  >
+                    Crout
+                  </button>
+                  <div role="separator" class="dropdown-divider"></div>
+                  <!-- Doolittle -->
+                  <button
+                    class=" dropdown-item"
+                    onclick="doolittleReq()"
+                    data-toggle="modal"
+                    data-target="#doolittleModal"
+                  >
+                    Doolittle
+                  </button>
+                  <div role="separator" class="dropdown-divider"></div>
+                  <!-- Cholesky -->
+                  <button
+                    class=" dropdown-item"
+                    onclick="choleskyReq()"
+                    data-toggle="modal"
+                    data-target="#choleskyModal"
+                  >
+                    Cholesky
                   </button>
                 </div>
               </li>
             </ul>
           </div>
           <div class="card-body">
-            <!-- Incremental Search -->
-            <div class="container mt-5 px-5 d-block" id="incrementalSearchForm">
-              <h5 class="text-primary m-5">Incremental Search</h5>
-              <div class="form-row">
-                <div class="form-group col-2">
-                  <label for="niterIncremental">Iterations</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="niterIncremental"
-                  />
-                </div>
-                <div class="form-group col-2">
-                  <label for="x0Incremental">X0</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="x0Incremental"
-                  />
-                </div>
-                <div class="form-group col-2">
-                  <label for="deltaIncremental">Delta</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="deltaIncremental"
-                  />
-                </div>
-                <div class="form-group col-6">
-                  <label for="functionFincremental">Function</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="functionFincremental"
-                  />
-                </div>
-                <div class="form-group col-12">
+            <div class="row">
+              <div class="col-1">
+                <div class="container mt-5">
                   <button
-                    class="btn btn-primary m-5"
-                    onclick="incrementalReq()"
+                    class="btn btn-primary m-2 rounded-circle"
+                    onclick="aumentar()"
                   >
-                    Run!
+                    <i class="fas fa-plus"></i>
+                  </button>
+                  <button
+                    class="btn btn-primary m-2 rounded-circle"
+                    onclick="reducir()"
+                  >
+                    <i class="fas fa-minus"></i>
                   </button>
                 </div>
               </div>
+
+              <div class="col-9">
+                <div class="container mt-5 border border-primary">
+                  <form>
+                    <table
+                      class="table table-bordered table-responsive-md table-striped text-center "
+                    >
+                      <thead>
+                        <tr id="m-header"></tr>
+                      </thead>
+                      <tbody id="m-body"></tbody>
+                    </table>
+                  </form>
+                </div>
+              </div>
+
+              <div class="col-2">
+                <div class="container mt-5 border border-primary">
+                  <form>
+                    <table
+                      class="table table-bordered table-responsive-md table-striped text-center "
+                    >
+                      <thead>
+                        <tr id="v-header">
+                          <th scope="col">b</th>
+                        </tr>
+                      </thead>
+                      <tbody id="v-body"></tbody>
+                    </table>
+                  </form>
+                </div>
+              </div>
             </div>
-            <!-- Fixed Point -->
-            <div class="container mt-5 px-5 d-none" id="FixedPointForm">
-              <h5 class="text-primary m-5">Fixed Point</h5>
+            <div class="container mt-5 px-5">
               <div class="form-row">
-                <div class="form-group col-2">
-                  <label for="niterFixedPoint">Iterations</label>
+                <div class="form-group col-md-2">
+                  <label for="inputTolerance">Tolerance</label>
                   <input
                     type="number"
                     class="form-control"
-                    id="niterFixedPoint"
+                    id="inputTolerance"
                   />
                 </div>
-                <div class="form-group col-2">
-                  <label for="x0FixedPoint">X0</label>
-                  <input type="number" class="form-control" id="x0FixedPoint" />
+                <div class="form-group col-md-1">
+                  <label for="niter">Iterations</label>
+                  <input type="number" class="form-control" id="niter" />
                 </div>
-                <div class="form-group col-2">
-                  <label for="errorFixedPoint">Error</label>
-                  <select id="errorFixedPoint" class="form-control">
-                    <option selected>e</option>
-                    <option>E</option>
+                <div class="form-group col-md-1">
+                  <label for="w">W</label>
+                  <input type="number" class="form-control" id="w" value="1" />
+                </div>
+                <div class="form-group col-md-1">
+                  <label for="norma">Norm</label>
+                  <select id="norma" class="form-control">
+                    <option selected>1</option>
+                    <option>2</option>
+                    <option>3</option>
                   </select>
                 </div>
-                <div class="form-group col-6">
-                  <label for="functionFFixedPoint">Function F</label>
+                <div class="form-group col-md-7">
+                  <label for="inputInitialVector">Initial Vector</label>
                   <input
                     type="text"
                     class="form-control"
-                    id="functionFFixedPoint"
+                    placeholder="1,2,3,4,5,6,7,8"
+                    id="inputInitialVector"
                   />
-                </div>
-                <div class="form-group col-2">
-                  <label for="toleranceFixedPoint">Tolerance</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="toleranceFixedPoint"
-                  />
-                </div>
-                <div class="form-group col-6">
-                  <label for="functionGFixedPoint">Function G</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="functionGFixedPoint"
-                  />
-                </div>
-                <div class="form-group col-4">
-                  <button class="btn btn-primary m-5" onclick="FixedPointReq()">
-                    Run!
-                  </button>
-                </div>
-              </div>
-            </div>
-            <!-- Newton -->
-            <div class="container mt-5 px-5 d-none" id="NewtonForm">
-              <h5 class="text-primary m-5">Newton</h5>
-              <div class="form-row">
-                <div class="form-group col-2">
-                  <label for="niterNewton">Iterations</label>
-                  <input type="number" class="form-control" id="niterNewton" />
-                </div>
-                <div class="form-group col-2">
-                  <label for="x0Newton">X0</label>
-                  <input type="number" class="form-control" id="x0Newton" />
-                </div>
-                <div class="form-group col-2">
-                  <label for="errorNewton">Error</label>
-                  <select id="errorNewton" class="form-control">
-                    <option selected>e</option>
-                    <option>E</option>
-                  </select>
-                </div>
-                <div class="form-group col-6">
-                  <label for="functionFNewton">Function F</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="functionFNewton"
-                  />
-                </div>
-                <div class="form-group col-2">
-                  <label for="toleranceNewton">Tolerance</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="toleranceNewton"
-                  />
-                </div>
-                <div class="form-group col-6">
-                  <label for="functionDNewton">Function F Derivate</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="functionDNewton"
-                  />
-                </div>
-                <div class="form-group col-4">
-                  <button class="btn btn-primary m-5" onclick="NewtonReq()">
-                    Run!
-                  </button>
-                </div>
-              </div>
-            </div>
-            <!-- Secant -->
-            <div class="container mt-5 px-5 d-none" id="SecantForm">
-              <h5 class="text-primary m-5">Secant</h5>
-              <div class="form-row">
-                <div class="form-group col-2">
-                  <label for="niter">Iterations</label>
-                  <input type="number" class="form-control" id="niter" />
-                </div>
-                <div class="form-group col-2">
-                  <label for="inputInitialX">X0</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="inputInitialX"
-                  />
-                </div>
-                <div class="form-group col-2">
-                  <label for="inputDelta">Delta</label>
-                  <input type="number" class="form-control" id="inputDelta" />
-                </div>
-                <div class="form-group col-6">
-                  <label for="inputFunction">Function</label>
-                  <input type="text" class="form-control" id="inputFunction" />
-                </div>
-                <div class="form-group col-12">
-                  <button class="btn btn-primary m-5" onclick="SecantReq()">
-                    Run!
-                  </button>
-                </div>
-              </div>
-            </div>
-            <!-- Multiple Roots -->
-            <div class="container mt-5 px-5 d-none" id="MultipleRootsForm">
-              <h5 class="text-primary m-5">Multiple Roots</h5>
-              <div class="form-row">
-                <div class="form-group col-2">
-                  <label for="niter">Iterations</label>
-                  <input type="number" class="form-control" id="niter" />
-                </div>
-                <div class="form-group col-2">
-                  <label for="inputInitialX">X0</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="inputInitialX"
-                  />
-                </div>
-                <div class="form-group col-2">
-                  <label for="inputDelta">Delta</label>
-                  <input type="number" class="form-control" id="inputDelta" />
-                </div>
-                <div class="form-group col-6">
-                  <label for="inputFunction">Function</label>
-                  <input type="text" class="form-control" id="inputFunction" />
-                </div>
-                <div class="form-group col-12">
-                  <button
-                    class="btn btn-primary m-5"
-                    onclick="MultipleRootsReq()"
-                  >
-                    Run!
-                  </button>
-                </div>
-              </div>
-            </div>
-            <!-- Bisection -->
-            <div class="container mt-5 px-5 d-none" id="BisectionForm">
-              <h5 class="text-primary m-5">Bisection</h5>
-              <div class="form-row">
-                <div class="form-group col-2">
-                  <label for="niter">Iterations</label>
-                  <input type="number" class="form-control" id="niter" />
-                </div>
-                <div class="form-group col-2">
-                  <label for="inputInitialX">X0</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="inputInitialX"
-                  />
-                </div>
-                <div class="form-group col-2">
-                  <label for="inputDelta">Delta</label>
-                  <input type="number" class="form-control" id="inputDelta" />
-                </div>
-                <div class="form-group col-6">
-                  <label for="inputFunction">Function</label>
-                  <input type="text" class="form-control" id="inputFunction" />
-                </div>
-                <div class="form-group col-12">
-                  <button class="btn btn-primary m-5" onclick="BisectionReq()">
-                    Run!
-                  </button>
-                </div>
-              </div>
-            </div>
-            <!-- Fake Rule -->
-            <div class="container mt-5 px-5 d-none" id="FakeRuleForm">
-              <h5 class="text-primary m-5">Fake Rule</h5>
-              <div class="form-row">
-                <div class="form-group col-2">
-                  <label for="niter">Iterations</label>
-                  <input type="number" class="form-control" id="niter" />
-                </div>
-                <div class="form-group col-2">
-                  <label for="inputInitialX">X0</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="inputInitialX"
-                  />
-                </div>
-                <div class="form-group col-2">
-                  <label for="inputDelta">Delta</label>
-                  <input type="number" class="form-control" id="inputDelta" />
-                </div>
-                <div class="form-group col-6">
-                  <label for="inputFunction">Function</label>
-                  <input type="text" class="form-control" id="inputFunction" />
-                </div>
-                <div class="form-group col-12">
-                  <button class="btn btn-primary m-5" onclick="FakeRuleReq()">
-                    Run!
-                  </button>
                 </div>
               </div>
             </div>
@@ -563,6 +400,271 @@
         </div>
       </div>
     </div>
+    <!-- Gauss Parcial -->
+    <div
+      class="modal fade"
+      id="gaussParcialModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">Partial Gauss</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="gaussParcial-stages"> </span>
+            <hr />
+            <span id="gaussParcial-solution"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Gauss Total -->
+    <div
+      class="modal fade"
+      id="gaussTotalModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">Total Gauss</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="gaussTotal-stages"> </span>
+            <hr />
+            <span id="gaussTotal-solution"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- LU Simple -->
+    <div class="modal fade" id="luSimpleModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">Simple LU</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="luSimple-stages"> </span>
+            <hr />
+            <span id="luSimple-solution"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- LU Total -->
+    <div
+      class="modal fade"
+      id="luPivoteoModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">Pivoting LU</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="luPivoteo-stages"> </span>
+            <hr />
+            <span id="luPivoteo-solution"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Crout -->
+    <div class="modal fade" id="croutModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">Crout</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="crout-stages"> </span>
+            <hr />
+            <span id="crout-solution"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Doolittle -->
+    <div
+      class="modal fade"
+      id="doolittleModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">Doolittle</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="doolittle-stages"> </span>
+            <hr />
+            <span id="doolittle-solution"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Cholesky -->
+    <div class="modal fade" id="choleskyModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">Cholesky</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="cholesky-stages"> </span>
+            <hr />
+            <span id="cholesky-solution"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Jacobi-->
+    <div class="modal fade" id="jacobiModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">Jacobi</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="jacobi-stages"> </span>
+            <hr />
+            <span id="jacobi-solution"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Gauss Seidel-->
+    <div
+      class="modal fade"
+      id="gaussSeidelModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">Gauss Seidel</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="gaussSeidel-stages"> </span>
+            <hr />
+            <span id="gaussSeidel-solution"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- SOR-->
+    <div class="modal fade" id="SORModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">SOR</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="SOR-stages"> </span>
+            <hr />
+            <span id="SOR-solution"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -577,6 +679,6 @@
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
     ></script>
-    <script src="./js/noLineales.js"></script>
+    <script src="./js/matrices.js"></script>
   </body>
 </html>
