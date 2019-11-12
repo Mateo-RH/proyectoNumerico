@@ -1,9 +1,9 @@
-const math = require('mathjs');
+const math = require("mathjs");
 const {
   gaussPivotevoTotal,
   gaussPivotevoParcial
-} = require('../sistemasDeEcuaciones/index');
-const { correccionSignos, crearPuntos } = require('./auxiliares');
+} = require("../sistemasDeEcuaciones/index");
+const { correccionSignos, crearPuntos } = require("./auxiliares");
 
 const matrizVandermonde = puntos => {
   let matrix = puntos.map((punto, index) => {
@@ -19,17 +19,26 @@ const ecuacionVandermonde = matrix => {
   let componentes = gaussPivotevoParcial(matrix).solution;
   if (componentes.includes(NaN)) return false;
 
-  let ecuacion = '';
+  let ecuacion = "";
   let componentesObj = componentes.map((item, idx) => {
     var x =
       componentes.length - 1 - idx != 0
         ? `x^${componentes.length - 1 - idx}`
-        : '';
-    ecuacion += '+' + item + x;
+        : "";
+    ecuacion += "+" + item + x;
     return { number: item, variable: x };
   });
   ecuacion = correccionSignos(ecuacion);
   return { ecuacion, componentes: componentesObj };
+};
+
+const matrizVandermonde2 = puntos => {
+  let matrix = puntos.map((item, idx) => {
+    let fila = [];
+    for (let k = 0; k < puntos.length; k++) fila.push(item.x ** k);
+    return fila;
+  });
+  return matrix;
 };
 
 const vandermonde = points => {
@@ -37,6 +46,7 @@ const vandermonde = points => {
   let matrix = matrizVandermonde(puntos);
   let { ecuacion, componentes } = ecuacionVandermonde(matrix);
   let error = !ecuacion && !componentes ? true : false;
+  matrix = matrizVandermonde2(puntos);
   return { error, matrix, ecuacion, componentes };
 };
 

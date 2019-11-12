@@ -1,8 +1,8 @@
-const { correccionSignos, crearPuntos } = require('./auxiliares');
+const { correccionSignos, crearPuntos } = require("./auxiliares");
 
 const matrizNewton = puntos => {
   let matrix = puntos.map((punto, index) => {
-    let fila = new Array(puntos.length).fill(0);
+    let fila = new Array(puntos.length + 1).fill(0);
     fila[0] = punto.x;
     fila[1] = punto.y;
     return fila;
@@ -20,10 +20,10 @@ const matrizNewton = puntos => {
 
 const ecuacionNewton = matrix => {
   let componentes = matrix.map((fila, idxF) => fila[idxF + 1]);
-  let ecuacion = '';
+  let ecuacion = "";
   let n = componentes.length - 1;
   for (let i = 0; i <= n; i++) {
-    var producto = '';
+    var producto = "";
     for (let j = 0; j < i; j++) {
       producto += `(x-${matrix[j][0]})`;
     }

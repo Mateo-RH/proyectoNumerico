@@ -11,13 +11,21 @@ let points = [
   [3, 8],
   [4, 1]
 ];
-// let resp = vandermonde(puntos);
-// let resp = newton(puntos);
+
+let p2 = [
+  [1, 4.31],
+  [3, 1.5],
+  [4, 3.2],
+  [5, 2.6],
+  [7, 1.8]
+];
+// let resp = vandermonde(points);
+let resp = newton(p2);
 // let resp = lagrange(points);
 // let resp = splineLineal(points);
 // let resp = splineCuadratico(points);
 // let resp = splineCubico(points);
-// console.log(resp);
+console.table(resp.matrix);
 
 module.exports = {
   vandermonde,

@@ -155,7 +155,7 @@ function dividedDifferencesReq() {
     var matrix = response.metodo.matrix;
     var ecuacion = response.metodo.ecuacion;
 
-    var stageHtml = `<h5 class="text-primary">Matrix</h5>${crearMatrizHtml(
+    var stageHtml = `<h5 class="text-primary">Matrix</h5>${crearMatrizHtmlNewton(
       matrix
     )}<hr />`;
     var solutionHtml = `<h5 class="text-primary">Polynomial</h5><ul class="list-group"><li class="list-group-item">${ecuacion}</li></ul>`;
@@ -305,11 +305,29 @@ function cubicReq() {
 }
 
 function crearMatrizHtml(matrizAumentada) {
+  var thead = '<th scope="col">#</th>';
+  var tbody = "";
+  matrizAumentada.forEach((fila, i) => {
+    thead += `<th scope="col">${i}</th>`;
+    tbody += `<tr>\n
+        <th scope="row">${i}</th>\n`;
+    fila.forEach(columna => {
+      tbody += `<td>${columna.toFixed(4)}</td>\n`;
+    });
+    tbody += `</tr>`;
+  });
+  var table = `<table class="table table-bordered table-responsive-md table-striped text-center ">
+  <thead>${thead}</thead>
+  <tbody>${tbody}</tbody>
+</table>`;
+  return table;
+}
+
+function crearMatrizHtmlNewton(matrizAumentada) {
   var thead = '<th scope="col">#</th><th scope="col">0</th>';
   var tbody = "";
   matrizAumentada.forEach((fila, i) => {
-    var idx = i == matrizAumentada.length - 1 ? "b" : i + 1;
-    thead += `<th scope="col">${idx}</th>`;
+    thead += `<th scope="col">${i + 1}</th>`;
     tbody += `<tr>\n
         <th scope="row">${i}</th>\n`;
     fila.forEach(columna => {
