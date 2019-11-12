@@ -20,12 +20,12 @@ let p2 = [
   [7, 1.8]
 ];
 // let resp = vandermonde(points);
-let resp = newton(p2);
+// let resp = newton(p2);
 // let resp = lagrange(points);
 // let resp = splineLineal(points);
 // let resp = splineCuadratico(points);
 // let resp = splineCubico(points);
-console.table(resp.matrix);
+// console.table(resp.matrix);
 
 module.exports = {
   vandermonde,

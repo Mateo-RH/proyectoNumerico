@@ -136,6 +136,7 @@ function vandermondeReq() {
 function dividedDifferencesReq() {
   guardarMatriz();
   var matrix = obtenerMatriz().map(filas => filas.join(","));
+  console.log(matrix);
 
   var settings = {
     async: true,
@@ -312,7 +313,7 @@ function crearMatrizHtml(matrizAumentada) {
     tbody += `<tr>\n
         <th scope="row">${i}</th>\n`;
     fila.forEach(columna => {
-      tbody += `<td>${columna.toFixed(4)}</td>\n`;
+      tbody += `<td>${parseFloat(columna).toFixed(4)}</td>\n`;
     });
     tbody += `</tr>`;
   });
@@ -331,7 +332,7 @@ function crearMatrizHtmlNewton(matrizAumentada) {
     tbody += `<tr>\n
         <th scope="row">${i}</th>\n`;
     fila.forEach(columna => {
-      tbody += `<td>${columna.toFixed(4)}</td>\n`;
+      tbody += `<td>${parseFloat(columna).toFixed(4)}</td>\n`;
     });
     tbody += `</tr>`;
   });
