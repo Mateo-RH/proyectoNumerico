@@ -7,7 +7,7 @@ const {
 // Matriz aumentada
 // TODO: las marcas estan fallando
 let gaussPivotevoTotal = (matrix, vector) => {
-  matrix = ampliarMatriz(matrix, vector);
+  if (vector) matrix = ampliarMatriz(matrix, vector);
   let augmentedMatrix = matrix.map(item => item.slice());
   let stages = [];
   let n = matrix.length;

@@ -1,9 +1,4 @@
-const math = require('mathjs');
-const {
-  simplificaExpr,
-  correccionSignos,
-  crearPuntos
-} = require('./auxiliares');
+const { correccionSignos, crearPuntos } = require('./auxiliares');
 
 const matrizNewton = puntos => {
   let matrix = puntos.map((punto, index) => {
@@ -20,8 +15,6 @@ const matrizNewton = puntos => {
     }
   }
 
-  console.log('Matrix');
-  console.table(matrix);
   return matrix;
 };
 
@@ -34,35 +27,18 @@ const ecuacionNewton = matrix => {
     for (let j = 0; j < i; j++) {
       producto += `(x-${matrix[j][0]})`;
     }
-    ecuacion += correccionSignos(`+${componentes[i]}${producto}`);
+    if (i == 0) ecuacion += `${componentes[i]}${producto}`;
+    else ecuacion += `+${componentes[i]}${producto}`;
   }
-  console.log('Polynomial');
-  console.log(ecuacion);
+  ecuacion = correccionSignos(ecuacion);
   return ecuacion;
 };
 
-const newton = (funcion, puntosX, punto) => {
-  // let puntos = crearPuntos(funcion, puntosX);
-  let puntos = [
-    { x: -1, y: 15.5 },
-    { x: 0, y: 3 },
-    { x: 3, y: 8 },
-    { x: 4, y: 1 }
-  ];
-  console.log('Points');
-  console.table(puntos);
+const newton = points => {
+  let puntos = crearPuntos(points);
   let matrix = matrizNewton(puntos);
   let ecuacion = ecuacionNewton(matrix);
-  ecuacion = simplificaExpr(ecuacion);
-  console.log('Simplified polynomial');
-  console.log(ecuacion);
-
-  let px = math.parse(ecuacion).compile();
-  let scope = { x: punto };
-  let solucion = px.evaluate(scope);
-
-  // console.log('Solucion');
-  // console.log(solucion);
+  return { error: false, matrix, ecuacion };
 };
 
 module.exports = { newton };

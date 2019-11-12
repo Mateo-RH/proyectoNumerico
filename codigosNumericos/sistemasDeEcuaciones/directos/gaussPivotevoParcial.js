@@ -6,7 +6,7 @@ const {
 
 // Matriz aumentada
 let gaussPivotevoParcial = (matrix, vector) => {
-  matrix = ampliarMatriz(matrix, vector);
+  if (vector) matrix = ampliarMatriz(matrix, vector);
   let augmentedMatrix = matrix.map(item => item.slice());
   let stages = [];
   let n = matrix.length;

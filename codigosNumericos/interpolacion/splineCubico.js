@@ -1,6 +1,10 @@
-const { gaussSimple } = require('../sistemasDeEcuaciones/index');
-const { correccionSignos } = require('./auxiliares');
-const math = require('mathjs');
+const { gaussSimple } = require("../sistemasDeEcuaciones/index");
+const {
+  correccionSignos,
+  crearPuntos,
+  crearEcuacion
+} = require("./auxiliares");
+const math = require("mathjs");
 
 const splineCubicoMatrix = puntos => {
   const numeroPolinomios = puntos.length - 1;
@@ -41,22 +45,20 @@ const splineCubicoMatrix = puntos => {
 
   // Frontera
   frontera(numeroPolinomios, matrix);
-  console.log('Matrix');
-  console.table(matrix);
   return matrix;
 };
 
 const splineCubicoPolinomios = componentes => {
   let polinomios = [];
   for (let i = 0; i < componentes.length; i += 4) {
-    var polinomio = `${componentes[i]}x^3 +${componentes[i + 1]}x^2 +${
-      componentes[i + 2]
-    }x +${componentes[i + 3]}`;
+    var polinomio = `${componentes[i].toFixed(4)}x^3 +${componentes[
+      i + 1
+    ].toFixed(4)}x^2 +${componentes[i + 2].toFixed(4)}x +${componentes[
+      i + 3
+    ].toFixed(4)}`;
     polinomio = correccionSignos(polinomio);
     polinomios.push(polinomio);
   }
-  console.log('Polynomials');
-  console.table(polinomios);
   return polinomios;
 };
 
@@ -107,19 +109,14 @@ const frontera = (numeroPolinomios, matrix) => {
   matrix.push(frontera);
 };
 
-const splineCubico = puntos => {
-  console.log('Points');
-  console.table(puntos);
+const splineCubico = points => {
+  let puntos = crearPuntos(points);
   let matrix = splineCubicoMatrix(puntos);
-  let componentes = gaussSimple(matrix);
+  let componentes = gaussSimple(matrix).solution;
   let polinomios = splineCubicoPolinomios(componentes);
+  let ecuacion = crearEcuacion(polinomios);
+
+  return { error: false, polinomios, ecuacion };
 };
 
-const puntos = [
-  { x: -1, y: 15.5 },
-  { x: 0, y: 3 },
-  { x: 3, y: 8 },
-  { x: 4, y: 1 }
-];
-
-splineCubico(puntos);
+module.exports = { splineCubico };

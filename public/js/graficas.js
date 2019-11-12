@@ -1,8 +1,8 @@
 window.d3 = d3;
 
-const root = document.querySelector('#root');
-const funcion = document.querySelector('#funcion');
-const funcionesList = document.querySelector('#funcionesList');
+const root = document.querySelector("#root");
+const funcion = document.querySelector("#funcion");
+const funcionesList = document.querySelector("#funcionesList");
 
 $(document).ready(function() {
   graficar();
@@ -17,15 +17,15 @@ function graficar() {
     };
   });
   functionPlot({
-    target: '#root',
+    target: "#root",
     grid: true,
     width: 680,
     height: 500,
     xAxis: {
-      label: 'x - axis'
+      label: "x - axis"
     },
     yAxis: {
-      label: 'y - axis'
+      label: "y - axis"
     },
     data: funcionesObj
   });
@@ -38,22 +38,22 @@ function crearListaHtml() {
     lista += `<li class="list-group-item">F${idx +
       1}:   ${element} <button class="btn btn-danger float-right" onclick="remove(${idx})" >Delete</button></li>`;
   });
-  lista += '</ul>';
+  lista += "</ul>";
   funcionesList.innerHTML = lista;
 }
 
 function remove(idx) {
   var funciones = obtenerFunciones();
   funciones.splice(idx, 1);
-  localStorage.setItem('funciones', JSON.stringify(funciones));
+  localStorage.setItem("funciones", JSON.stringify(funciones));
   graficar();
   crearListaHtml();
-  // window.location.assign('http://localhost:3000/graficador.html');
+  window.location.assign("http://localhost:3000/graficador.html");
 }
 
 function add() {
   if (!funcion.value) {
-    alert('Please enter a function');
+    alert("Please enter a function");
     return;
   }
   var funcionF = funcion.value;
@@ -63,14 +63,14 @@ function add() {
 }
 
 function obtenerFunciones() {
-  var funciones = !localStorage.getItem('funciones')
+  var funciones = !localStorage.getItem("funciones")
     ? []
-    : JSON.parse(localStorage.getItem('funciones'));
+    : JSON.parse(localStorage.getItem("funciones"));
   return funciones;
 }
 
 function guardarFuncion(funcionF) {
   var funcion = obtenerFunciones();
   funcion.push(funcionF);
-  localStorage.setItem('funciones', JSON.stringify(funcion));
+  localStorage.setItem("funciones", JSON.stringify(funcion));
 }

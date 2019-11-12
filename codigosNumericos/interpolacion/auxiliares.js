@@ -1,20 +1,19 @@
-const math = require('mathjs');
-const algebra = require('algebra.js');
+const algebra = require("algebra.js");
 
 const correccionSignos = ecuacion => {
-  ecuacion = ecuacion.split(' ').join('');
-  ecuacion = ecuacion.split('++').join('+');
-  ecuacion = ecuacion.split('+-').join('-');
-  ecuacion = ecuacion.split('-+').join('-');
-  ecuacion = ecuacion.split('--').join('+');
+  ecuacion = ecuacion.split(" ").join("");
+  ecuacion = ecuacion.split("++").join("+");
+  ecuacion = ecuacion.split("+-").join("-");
+  ecuacion = ecuacion.split("-+").join("-");
+  ecuacion = ecuacion.split("--").join("+");
   return ecuacion;
 };
 
 const simplificaExpr = expr => {
-  if (expr[0] == '+') expr = expr.substring(1);
+  if (expr[0] == "+") expr = expr.substring(1);
   expr = algebra.parse(expr);
   let constante = expr.constants[0].numer / expr.constants[0].denom;
-  let numTemp = '';
+  let numTemp = "";
 
   expr.terms.forEach(termino => {
     var coeficiente =
@@ -28,4 +27,26 @@ const simplificaExpr = expr => {
   return correccionSignos(numTemp);
 };
 
-module.exports = { correccionSignos, simplificaExpr };
+const crearPuntos = puntos => {
+  let points = puntos.map(item => {
+    return { x: item[0], y: item[1] };
+  });
+  return points;
+};
+
+const crearEcuacion = puntos => {
+  let ecuacion = "";
+  puntos.forEach((item, idx) => {
+    if (idx == 0) ecuacion += item;
+    else ecuacion += `+${item}`;
+  });
+  ecuacion = correccionSignos(ecuacion);
+  return ecuacion;
+};
+
+module.exports = {
+  correccionSignos,
+  simplificaExpr,
+  crearPuntos,
+  crearEcuacion
+};

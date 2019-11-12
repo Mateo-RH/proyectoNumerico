@@ -1,5 +1,9 @@
-const { gaussSimple } = require('../sistemasDeEcuaciones/index');
-const { correccionSignos } = require('./auxiliares');
+const { gaussSimple } = require("../sistemasDeEcuaciones/index");
+const {
+  correccionSignos,
+  crearPuntos,
+  crearEcuacion
+} = require("./auxiliares");
 
 const splineCuadraticoMatrix = puntos => {
   let matrix = [];
@@ -34,23 +38,18 @@ const splineCuadraticoMatrix = puntos => {
   matrixD.forEach(fila => matrix.push(fila));
 
   frontera(matrix, numeroPolinomios);
-
-  console.log('Matrix');
-  console.table(matrix);
   return matrix;
 };
 
 const splineCuadraticoPolinomios = componentes => {
   let polinomios = [];
   for (let i = 0; i < componentes.length; i += 3) {
-    var polinomio = `${componentes[i]}x^2 +${componentes[i + 1]}x +${
-      componentes[i + 2]
-    }`;
+    var polinomio = `${componentes[i].toFixed(4)}x^2 +${componentes[
+      i + 1
+    ].toFixed(2)}x +${componentes[i + 2].toFixed(2)}`;
     polinomio = correccionSignos(polinomio);
     polinomios.push(polinomio);
   }
-  console.log('Polynomials');
-  console.table(polinomios);
   return polinomios;
 };
 
@@ -78,19 +77,13 @@ const frontera = (matrix, numeroPolinomios) => {
   matrix.push(frontera);
 };
 
-const splineCuadratico = puntos => {
-  console.log('Points');
-  console.table(puntos);
+const splineCuadratico = points => {
+  let puntos = crearPuntos(points);
   let matrix = splineCuadraticoMatrix(puntos);
-  let componentes = gaussSimple(matrix);
+  let componentes = gaussSimple(matrix).solution;
   let polinomios = splineCuadraticoPolinomios(componentes);
+  let ecuacion = crearEcuacion(polinomios);
+  return { error: false, polinomios, ecuacion };
 };
 
-const puntos = [
-  { x: -1, y: 15.5 },
-  { x: 0, y: 3 },
-  { x: 3, y: 8 },
-  { x: 4, y: 1 }
-];
-
-splineCuadratico(puntos);
+module.exports = { splineCuadratico };

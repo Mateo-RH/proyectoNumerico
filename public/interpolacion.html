@@ -47,84 +47,77 @@
                   Methods
                 </button>
                 <div class="dropdown-menu">
-                  <!-- Gauss simple -->
+                  <!-- Vandermonde -->
                   <button
                     class=" dropdown-item"
-                    onclick="gaussSimpleReq()"
+                    onclick="vandermondeReq()"
                     data-toggle="modal"
-                    data-target="#gaussSimpleModal"
+                    data-target="#vandermondeModal"
                   >
-                    Simple Gauss
+                    Vandermonde
                   </button>
                   <div role="separator" class="dropdown-divider"></div>
-                  <!-- Partial Gauss -->
+                  <!-- Divided Differences -->
                   <button
                     class=" dropdown-item"
-                    onclick="gaussParcialReq()"
+                    onclick="dividedDifferencesReq()"
                     data-toggle="modal"
-                    data-target="#gaussParcialModal"
+                    data-target="#dividedDifferencesModal"
                   >
-                    Partial Gauss
+                    Divided Differences
                   </button>
                   <div role="separator" class="dropdown-divider"></div>
-                  <!-- Total Gauss -->
+                  <!-- Lagrange -->
                   <button
                     class=" dropdown-item"
-                    onclick="gaussTotalReq()"
+                    onclick="lagrangeReq()"
                     data-toggle="modal"
-                    data-target="#gaussTotalModal"
+                    data-target="#lagrangeModal"
                   >
-                    Total Gauss
+                    Lagrange
+                  </button>
+                </div>
+              </li>
+              <!-- Splines -->
+              <li class="nav-item m-1">
+                <button
+                  class="btn btn-outline-secondary dropdown-toggle"
+                  type="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Splines
+                </button>
+                <div class="dropdown-menu">
+                  <!-- Lineal -->
+                  <button
+                    class=" dropdown-item"
+                    onclick="linealReq()"
+                    data-toggle="modal"
+                    data-target="#linealModal"
+                  >
+                    Lineal
                   </button>
                   <div role="separator" class="dropdown-divider"></div>
-                  <!-- Simple LU -->
+                  <!-- Quadratic -->
                   <button
                     class=" dropdown-item"
-                    onclick="luSimpleReq()"
+                    onclick="quadraticReq()"
                     data-toggle="modal"
-                    data-target="#luSimpleModal"
+                    data-target="#quadraticModal"
                   >
-                    Simple LU
+                    Quadratic
                   </button>
                   <div role="separator" class="dropdown-divider"></div>
-                  <!-- Pivoting LU -->
+                  <!-- Cubic -->
                   <button
                     class=" dropdown-item"
-                    onclick="luPivoteoReq()"
+                    onclick="cubicReq()"
                     data-toggle="modal"
-                    data-target="#luPivoteoModal"
+                    data-target="#cubicModal"
                   >
-                    Pivoting LU
-                  </button>
-                  <div role="separator" class="dropdown-divider"></div>
-                  <!--  Crout -->
-                  <button
-                    class=" dropdown-item"
-                    onclick="croutReq()"
-                    data-toggle="modal"
-                    data-target="#croutModal"
-                  >
-                    Crout
-                  </button>
-                  <div role="separator" class="dropdown-divider"></div>
-                  <!-- Doolittle -->
-                  <button
-                    class=" dropdown-item"
-                    onclick="doolittleReq()"
-                    data-toggle="modal"
-                    data-target="#doolittleModal"
-                  >
-                    Doolittle
-                  </button>
-                  <div role="separator" class="dropdown-divider"></div>
-                  <!-- Cholesky -->
-                  <button
-                    class=" dropdown-item"
-                    onclick="choleskyReq()"
-                    data-toggle="modal"
-                    data-target="#choleskyModal"
-                  >
-                    Cholesky
+                    Cubic
                   </button>
                 </div>
               </li>
@@ -317,27 +310,171 @@
         </div>
       </div>
     </div>
-    <!-- Gauss Simple -->
+    <!-- Vandermonde -->
     <div
       class="modal fade"
-      id="gaussSimpleModal"
+      id="vandermondeModal"
       tabindex="-1"
       aria-hidden="true"
     >
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title text-primary">Simple Gauss</h5>
+            <h5 class="modal-title text-primary">Vandermonde</h5>
             <button type="button" class="close" data-dismiss="modal">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <span id="gaussSimple-stages"> </span>
+            <span id="vandermonde-stages"> </span>
             <hr />
-            <span id="gaussSimple-solution"> </span>
+            <span id="vandermonde-solution"> </span>
           </div>
           <div class="modal-footer">
+            <button class="btn btn-link" onclick="guardarFuncion()">
+              Graph
+            </button>
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Divided Differences -->
+    <div
+      class="modal fade"
+      id="dividedDifferencesModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">Divided Differences</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="dividedDifferences-stages"> </span>
+            <hr />
+            <span id="dividedDifferences-solution"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link" onclick="guardarFuncion()">
+              Graph
+            </button>
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Lagrange -->
+    <div class="modal fade" id="lagrangeModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">Lagrange</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="lagrange-solution"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link" onclick="guardarFuncion()">
+              Graph
+            </button>
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Lineal -->
+    <div class="modal fade" id="linealModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">Lineal Spline</h5>
+            <button
+              type="button"
+              class="close float-right"
+              data-dismiss="modal"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="lineal-solution"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link" onclick="guardarFuncion()">
+              Graph
+            </button>
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Quadratic -->
+    <div
+      class="modal fade"
+      id="quadraticModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">Quadratic Spline</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="quadratic-solution"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link" onclick="guardarFuncion()">
+              Graph
+            </button>
+            <button class="btn btn-link">More</button>
+            <button class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Cubic -->
+    <div class="modal fade" id="cubicModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary">Cubic Spline</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="cubic-solution"> </span>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link" onclick="guardarFuncion()">
+              Graph
+            </button>
             <button class="btn btn-link">More</button>
             <button class="btn btn-secondary" data-dismiss="modal">
               Close
