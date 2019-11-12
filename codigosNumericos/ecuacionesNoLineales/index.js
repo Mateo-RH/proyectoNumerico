@@ -1,13 +1,13 @@
-const busquedasIncrementales = require('./cerrados/busquedasIncrementales');
-const biseccion = require('./cerrados/biseccion');
-const reglaFalsa = require('./cerrados/reglaFalsa');
-const newton = require('./abiertos/newton');
-const puntoFijo = require('./abiertos/puntoFijo');
-const raicesMultiples = require('./abiertos/raicesMultiples');
-const secante = require('./abiertos/secante');
+const busquedasIncrementales = require("./cerrados/busquedasIncrementales");
+const biseccion = require("./cerrados/biseccion");
+const reglaFalsa = require("./cerrados/reglaFalsa");
+const newton = require("./abiertos/newton");
+const puntoFijo = require("./abiertos/puntoFijo");
+const raicesMultiples = require("./abiertos/raicesMultiples");
+const secante = require("./abiertos/secante");
 
 // Cerrados
-// const funcion = 'log(sin(x)^2 + 1) - 1/2';
+// const funcion = "log(sin(x)^2 + 1) - 1/2";
 // let resp = busquedasIncrementales(funcion, -3, 0.5, 100);
 // let resp = biseccion(funcion, 0, 1, 0.0000001, 100);
 // let resp = reglaFalsa(funcion, 2, 3, 0.0005, 11);
@@ -21,9 +21,9 @@ const secante = require('./abiertos/secante');
 // const h = '(e^x) - x - 1';
 // const hd = '(e^x) - 1';
 // const hdd = 'e^x';
-// let resp = puntoFijo(funcionf, funciong, 0.0000001, -0.5, 100, 'E');
-// let resp = newton(funcion, funcionD, 0.0000001, 0.5, 100, 'E');
-// let resp = secante(funcion, 0.0000001, 0.5, 1, 100, 'E');
+// let resp = puntoFijo(funcionf, funciong, 0.0000001, -0.5, 100, "E");
+// let resp = newton(funcion, funcionD, 0.0000001, 0.5, 100, "E");
+// let resp = secante(funcion, 0.0000001, 0.5, 1, 100, "E");
 // multipleRoots(h, hd, hdd, 0.0000001, 1, 100, 'E');
 // multipleRoots2(h, hd, hdd, 0.0000001, 1, 100, 'E');
 // console.log(resp);

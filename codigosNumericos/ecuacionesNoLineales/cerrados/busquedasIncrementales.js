@@ -8,9 +8,14 @@ let busquedasIncrementales = (funcion, initial_x, delta_x, iterations_n) => {
   let scope = {
     x: initial_x
   };
-  let fx0 = code2.evaluate(scope);
-
-  if (fx0 === 0) raiz = scope.x;
+  var fx0;
+  try {
+    fx0 = code2.evaluate(scope);
+  } catch (err) {
+    fx0 = false;
+  }
+  if (!fx0) return false;
+  else if (fx0 === 0) raiz = scope.x;
   else {
     var fx1;
     let counter = 0;

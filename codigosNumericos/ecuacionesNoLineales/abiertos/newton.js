@@ -1,4 +1,4 @@
-const math = require('mathjs');
+const math = require("mathjs");
 
 let newton = (funcionF, funciondF, tolerance, Xo, niter, tipoError) => {
   const ff = math.parse(funcionF).compile();
@@ -6,8 +6,16 @@ let newton = (funcionF, funciondF, tolerance, Xo, niter, tipoError) => {
   let scope = {
     x: Xo
   };
-  let fx = ff.evaluate(scope);
-  let dfx = df.evaluate(scope);
+  var fx;
+  var dfx;
+  try {
+    fx = ff.evaluate(scope);
+    dfx = df.evaluate(scope);
+  } catch (err) {
+    fx = false;
+    dfx = false;
+  }
+  if (!fx || !dfx) return false;
   let counter = 1;
   let error = tolerance + 1;
   var tabla = [];
@@ -20,7 +28,7 @@ let newton = (funcionF, funciondF, tolerance, Xo, niter, tipoError) => {
     scope.x = x1;
     fx = ff.evaluate(scope);
     dfx = df.evaluate(scope);
-    tipoError == 'e'
+    tipoError == "e"
       ? (error = math.abs((x1 - Xo) / x1))
       : (error = math.abs(x1 - Xo));
     Xo = x1;
@@ -37,7 +45,7 @@ let newton = (funcionF, funciondF, tolerance, Xo, niter, tipoError) => {
   }
   return {
     error: errorR,
-    cabecera: ['Xo', 'f(x)', 'error'],
+    cabecera: ["Xo", "f(x)", "error"],
     raiz,
     raizM,
     niter,

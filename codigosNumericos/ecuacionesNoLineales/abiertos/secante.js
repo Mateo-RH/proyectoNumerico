@@ -1,10 +1,17 @@
-const math = require('mathjs');
+const math = require("mathjs");
 
 let secante = (funcionF, tolerance, Xo, x1, niter, tipoError) => {
   const ff = math.parse(funcionF).compile();
   let scope = {
     x: Xo
   };
+  var fx;
+  try {
+    fx = ff.evaluate(scope);
+  } catch (err) {
+    fx = false;
+  }
+  if (!fx) return false;
   let fx0 = ff.evaluate(scope);
   let raiz = false;
   let errorR = false;
@@ -21,7 +28,7 @@ let secante = (funcionF, tolerance, Xo, x1, niter, tipoError) => {
     table.push([x1, fx1, 0]);
     while (fx1 != 0 && error > tolerance && counter <= niter && den != 0) {
       x2 = x1 - (fx1 * (x1 - Xo)) / den;
-      tipoError == 'e'
+      tipoError == "e"
         ? (error = math.abs((x2 - x1) / x2))
         : (error = math.abs(x2 - x1));
       Xo = x1;
@@ -42,7 +49,7 @@ let secante = (funcionF, tolerance, Xo, x1, niter, tipoError) => {
     }
     return {
       error: errorR,
-      cabecera: ['X', 'f(x)', 'error'],
+      cabecera: ["X", "f(x)", "error"],
       raiz,
       raizM,
       niter,

@@ -5,7 +5,13 @@ let reglaFalsa = (funcion, xInferior, xSuperior, tolerance, iterations_n) => {
   let scope = {
     x: xInferior
   };
-  let fxi = code2.evaluate(scope);
+  var fxi;
+  try {
+    fxi = code2.evaluate(scope);
+  } catch (err) {
+    fxi = false;
+  }
+  if (!fxi) return false;
   scope.x = xSuperior;
   let fxs = code2.evaluate(scope);
   let errorR = false;
