@@ -18,20 +18,30 @@
       <div class="jumbotron jumbotron-fluid mt-5">
         <div class="container">
           <h1 class="display-4 text-center mb-4">Numerical Methods</h1>
+          <button class="btn btn-link">
+            <a href="http://localhost:3000">Home</a>
+          </button>
 
-          <form>
-            <div class="form-group">
-              <label for="funcion">Function</label>
-              <input
-                type="text"
-                class="form-control"
-                id="funcion"
-                placeholder="e^(3x - 12) + x*cos(3x) - x^2 + 4"
-              />
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title">Graph</h5>
             </div>
-          </form>
-          <button class="btn btn-primary" id="update">Update</button>
-          <div id="root"></div>
+            <div class="card-body">
+              <form>
+                <div class="form-group">
+                  <label for="funcion">Function</label>
+                  <input type="text" class="form-control" id="funcion" />
+                </div>
+              </form>
+              <button class="btn btn-primary" onclick="add()">Add</button>
+              <div class="container ml-5 pl-5">
+                <div id="root"></div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="container mt-5" id="funcionesList"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -49,6 +59,6 @@
     ></script>
     <script src="https://unpkg.com/d3@3/d3.min.js"></script>
     <script src="https://unpkg.com/function-plot@1/dist/function-plot.js"></script>
-    <script src="./js/graficador.js"></script>
+    <script src="./js/graficas.js"></script>
   </body>
 </html>

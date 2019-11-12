@@ -52,6 +52,10 @@ const BisectionSolution = document.querySelector('#Bisection-solution');
 const FakeRuleStages = document.querySelector('#FakeRule-stages');
 const FakeRuleSolution = document.querySelector('#FakeRule-solution');
 
+var f1 = '';
+var f2 = '';
+var f3 = '';
+
 function crearTablaHtml(cabecera, matrizAumentada) {
   var thead = '<th scope="col">Iteration</th>';
   var tbody = '';
@@ -82,6 +86,8 @@ function incrementalReq() {
   } else {
     $('#incrementalModal').modal();
     var { funcion, xInicial, xDelta, iterations } = verificar;
+    limpiarFunciones();
+    f1 = funcion;
   }
   var settings = {
     async: true,
@@ -119,6 +125,9 @@ function FixedPointReq() {
   } else {
     $('#FixedPointModal').modal();
     var { funcionF, funcionG, tolerance, Xa, niter, tipoError } = verificar;
+    limpiarFunciones();
+    f1 = funcionF;
+    f2 = funcionG;
   }
   var settings = {
     async: true,
@@ -159,6 +168,9 @@ function NewtonReq() {
   } else {
     $('#NewtonModal').modal();
     var { funcionF, funciondF, tolerance, Xo, niter, tipoError } = verificar;
+    limpiarFunciones();
+    f1 = funcionF;
+    f2 = funciondF;
   }
   var settings = {
     async: true,
@@ -199,6 +211,8 @@ function SecantReq() {
   } else {
     $('#SecantModal').modal();
     var { funcionF, tolerance, Xo, x1, niter, tipoError } = verificar;
+    limpiarFunciones();
+    f1 = funcionF;
   }
   var settings = {
     async: true,
@@ -280,6 +294,8 @@ function BisectionReq() {
   } else {
     $('#BisectionModal').modal();
     var { funcion, xInferior, xSuperior, tolerance, iterations } = verificar;
+    limpiarFunciones();
+    f1 = funcion;
   }
   var settings = {
     async: true,
@@ -319,6 +335,8 @@ function FakeRuleReq() {
   } else {
     $('#FakeRuleModal').modal();
     var { funcion, xInferior, xSuperior, tolerance, iterations } = verificar;
+    limpiarFunciones();
+    f1 = funcion;
   }
   var settings = {
     async: true,
@@ -413,7 +431,7 @@ function BusquedasVerificacion() {
     parseInt(deltaIncremental.value) == NaN
   )
     return false;
-  else if (parseInt(deltaIncremental.value) <= 0) return false;
+  else if (parseInt(deltaIncremental.value) < 0) return false;
 
   return {
     funcion: functionFincremental.value,
@@ -599,4 +617,36 @@ function hideAll() {
   $('#FakeRuleForm')
     .removeClass('d-block')
     .addClass('d-none');
+}
+
+function limpiarFunciones() {
+  f1 = '';
+  f2 = '';
+}
+
+function obtenerFunciones() {
+  var funciones = !localStorage.getItem('funciones')
+    ? []
+    : JSON.parse(localStorage.getItem('funciones'));
+  return funciones;
+}
+
+function guardarFuncion() {
+  var funcion = obtenerFunciones();
+  if (!!f1) {
+    f1 = f1.replace('e^', 'exp');
+    f1 = f1.replace(' e ', 'exp(x)');
+    f1 = f1.replace('e ', 'exp(x)');
+    f1 = f1.replace(' e', 'exp(x)');
+    funcion.push(f1);
+  }
+  if (!!f2) {
+    f2 = f2.replace('e^', 'exp');
+    f2 = f2.replace(' e ', 'exp(x)');
+    f2 = f2.replace('e ', 'exp(x)');
+    f2 = f2.replace(' e', 'exp(x)');
+    funcion.push(f2);
+  }
+  localStorage.setItem('funciones', JSON.stringify(funcion));
+  window.location.assign('http://localhost:3000/graficador.html');
 }

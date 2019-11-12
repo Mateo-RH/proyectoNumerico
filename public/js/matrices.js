@@ -70,7 +70,9 @@ function aumentarMatriz() {
 
 function reducirMatriz() {
   guardarMatriz();
-  var matriz = obtenerMatriz().map(fila => {
+  var storedMatriz = obtenerMatriz();
+  if (storedMatriz.length == 2) return;
+  var matriz = storedMatriz.map(fila => {
     fila.pop();
     return fila;
   });
@@ -126,6 +128,7 @@ function aumentarVector() {
 function reducirVector() {
   guardarVector();
   var vector = obtenerVector();
+  if (vector.length == 2) return;
   vector.pop();
   localStorage.setItem('vector', JSON.stringify(vector));
   crearVector();
@@ -584,6 +587,7 @@ function jacobiReq() {
     jacobiSolution.innerHTML = aproxHtml;
   });
 }
+
 function gaussSeidelReq() {
   if (validarIterativos()) $('#gaussSeidelModal').modal();
   else return;
@@ -631,6 +635,7 @@ function gaussSeidelReq() {
     gaussSeidelSolution.innerHTML = aproxHtml;
   });
 }
+
 function SORReq() {
   var w = i_w.value;
   if (!w) {
