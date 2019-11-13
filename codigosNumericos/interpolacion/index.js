@@ -1,9 +1,9 @@
-const { vandermonde } = require("./vandermonde");
-const { newton } = require("./newton");
-const { lagrange } = require("./lagrange");
-const { splineLineal } = require("./splineLineal");
-const { splineCuadratico } = require("./splineCuadratico");
-const { splineCubico } = require("./splineCubico");
+const { vandermonde } = require('./vandermonde');
+const { newton } = require('./newton');
+const { lagrange } = require('./lagrange');
+const { splineLineal } = require('./splineLineal');
+const { splineCuadratico } = require('./splineCuadratico');
+const { splineCubico } = require('./splineCubico');
 
 let points = [
   [-1, 15.5],
