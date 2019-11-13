@@ -185,7 +185,8 @@ function gaussSimpleReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/sistemasDeEcuaciones/gaussSimple',
+    url:
+      'https://numerical-methods-rh.herokuapp.com/sistemasDeEcuaciones/gaussSimple',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -241,7 +242,8 @@ function gaussParcialReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/sistemasDeEcuaciones/gaussPivoteoParcial',
+    url:
+      'https://numerical-methods-rh.herokuapp.com/sistemasDeEcuaciones/gaussPivoteoParcial',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -298,7 +300,8 @@ function gaussTotalReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/sistemasDeEcuaciones/gaussPivoteoTotal',
+    url:
+      'https://numerical-methods-rh.herokuapp.com/sistemasDeEcuaciones/gaussPivoteoTotal',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -355,7 +358,8 @@ function luSimpleReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/sistemasDeEcuaciones/factorizacionMatrices',
+    url:
+      'https://numerical-methods-rh.herokuapp.com/sistemasDeEcuaciones/factorizacionMatrices',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -415,7 +419,7 @@ function luPivoteoReq() {
     async: true,
     crossDomain: true,
     url:
-      'http://localhost:3000/sistemasDeEcuaciones/factorizacionMatricesPivoteo',
+      'https://numerical-methods-rh.herokuapp.com/sistemasDeEcuaciones/factorizacionMatricesPivoteo',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -474,7 +478,8 @@ function croutReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/sistemasDeEcuaciones/factorizacionCrout',
+    url:
+      'https://numerical-methods-rh.herokuapp.com/sistemasDeEcuaciones/factorizacionCrout',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -534,7 +539,8 @@ function doolittleReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/sistemasDeEcuaciones/factorizacionDoolittle',
+    url:
+      'https://numerical-methods-rh.herokuapp.com/sistemasDeEcuaciones/factorizacionDoolittle',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -594,7 +600,8 @@ function choleskyReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/sistemasDeEcuaciones/factorizacionCholesky',
+    url:
+      'https://numerical-methods-rh.herokuapp.com/sistemasDeEcuaciones/factorizacionCholesky',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -666,7 +673,8 @@ function jacobiReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/sistemasDeEcuaciones/jacobi',
+    url:
+      'https://numerical-methods-rh.herokuapp.com/sistemasDeEcuaciones/jacobi',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -772,7 +780,8 @@ function gaussSeidelReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/sistemasDeEcuaciones/gaussSeidel',
+    url:
+      'https://numerical-methods-rh.herokuapp.com/sistemasDeEcuaciones/gaussSeidel',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -847,7 +856,7 @@ function SORReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/sistemasDeEcuaciones/SOR',
+    url: 'https://numerical-methods-rh.herokuapp.com/sistemasDeEcuaciones/SOR',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'

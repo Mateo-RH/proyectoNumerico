@@ -91,7 +91,7 @@ function incrementalReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/busquedaIncremental',
+    url: 'https://numerical-methods-rh.herokuapp.com/busquedaIncremental',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -140,7 +140,7 @@ function FixedPointReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/puntoFijo',
+    url: 'https://numerical-methods-rh.herokuapp.com/puntoFijo',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -198,7 +198,7 @@ function NewtonReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/newton',
+    url: 'https://numerical-methods-rh.herokuapp.com/newton',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -254,7 +254,7 @@ function SecantReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/secante',
+    url: 'https://numerical-methods-rh.herokuapp.com/secante',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -310,7 +310,7 @@ function MultipleRootsReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/raicesMultiples',
+    url: 'https://numerical-methods-rh.herokuapp.com/raicesMultiples',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -356,7 +356,7 @@ function BisectionReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/biseccion',
+    url: 'https://numerical-methods-rh.herokuapp.com/biseccion',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -411,7 +411,7 @@ function FakeRuleReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/reglaFalsa',
+    url: 'https://numerical-methods-rh.herokuapp.com/reglaFalsa',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -775,5 +775,7 @@ function guardarFuncion() {
     funcion.push(f2);
   }
   localStorage.setItem('funciones', JSON.stringify(funcion));
-  window.location.assign('http://localhost:3000/graficador.html');
+  window.location.assign(
+    'https://numerical-methods-rh.herokuapp.com/graficador.html'
+  );
 }

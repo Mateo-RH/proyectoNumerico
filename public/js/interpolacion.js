@@ -115,7 +115,7 @@ function vandermondeReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/interpolacion/vandermonde',
+    url: 'https://numerical-methods-rh.herokuapp.com/interpolacion/vandermonde',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -159,7 +159,7 @@ function dividedDifferencesReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/interpolacion/newton',
+    url: 'https://numerical-methods-rh.herokuapp.com/interpolacion/newton',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -202,7 +202,7 @@ function lagrangeReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/interpolacion/lagrange',
+    url: 'https://numerical-methods-rh.herokuapp.com/interpolacion/lagrange',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -240,7 +240,8 @@ function linealReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/interpolacion/splineLineal',
+    url:
+      'https://numerical-methods-rh.herokuapp.com/interpolacion/splineLineal',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -285,7 +286,8 @@ function quadraticReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/interpolacion/splineCuadratico',
+    url:
+      'https://numerical-methods-rh.herokuapp.com/interpolacion/splineCuadratico',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -330,7 +332,8 @@ function cubicReq() {
   var settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:3000/interpolacion/splineCubico',
+    url:
+      'https://numerical-methods-rh.herokuapp.com/interpolacion/splineCubico',
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -414,7 +417,9 @@ function guardarFuncion() {
     funcion.push(funcionG);
   }
   localStorage.setItem('funciones', JSON.stringify(funcion));
-  window.location.assign('http://localhost:3000/graficador.html');
+  window.location.assign(
+    'https://numerical-methods-rh.herokuapp.com/graficador.html'
+  );
 }
 
 function verificaMatriz(matriz) {
