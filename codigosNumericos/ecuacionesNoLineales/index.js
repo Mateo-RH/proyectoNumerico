@@ -14,19 +14,19 @@ const secante = require('./abiertos/secante');
 
 // Abiertos
 // const funcionD = '2*(sin(x)^2 + 1)^-1 * sin(x) * cos(x)';
-const funcionf = 'log(sin(x)^2 + 1) - 1/2 - x';
-const funciong = 'log(sin(x)^2 + 1) - 1/2';
+// const funcionf = 'log(sin(x)^2 + 1) - 1/2 - x';
+// const funciong = 'log(sin(x)^2 + 1) - 1/2';
 // const funciondf = 'x*e^x';
 // const funcionddf = 'x*e^x + e^x';
 // const h = '(e^x) - x - 1';
 // const hd = '(e^x) - 1';
 // const hdd = 'e^x';
-let resp = puntoFijo(funcionf, funciong, 0.0000001, -0.5, 100, 'E');
+// let resp = puntoFijo(funcionf, funciong, 0.0000001, -0.5, 100, 'E');
 // let resp = newton(funcion, funcionD, 0.0000001, 0.5, 100, "E");
 // let resp = secante(funcion, 0.0000001, 0.5, 1, 100, "E");
 // multipleRoots(h, hd, hdd, 0.0000001, 1, 100, 'E');
 // multipleRoots2(h, hd, hdd, 0.0000001, 1, 100, 'E');
-console.table(resp.iterations);
+// console.table(resp.iterations);
 
 module.exports = {
   busquedasIncrementales,

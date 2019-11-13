@@ -73,7 +73,11 @@
                   </button>
                   <div role="separator" class="dropdown-divider"></div>
                   <!-- Multiple Roots -->
-                  <button class=" dropdown-item" onclick="showMultipleRoots()" disabled>
+                  <button
+                    class=" dropdown-item"
+                    onclick="showMultipleRoots()"
+                    disabled
+                  >
                     Multiple Roots
                   </button>
                 </div>
@@ -388,46 +392,39 @@
             <!-- regula falsi -->
             <div class="container mt-5 px-5 d-none" id="FakeRuleForm">
               <h5 class="text-primary m-5">Regula falsi</h5>
-              <div class="form-group col-2">
-                <label for="niterFakeRule">Iterations</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="niterFakeRule"
-                />
-              </div>
-              <div class="form-group col-1">
-                <label for="xInfFakeRule">X Inf.</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="xInfFakeRule"
-                />
-              </div>
-              <div class="form-group col-1">
-                <label for="xSupFakeRule">X Sup.</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="xSupFakeRule"
-                />
-              </div>
-              <div class="form-group col-2">
-                <label for="toleranceFakeRule">Tolerance</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="toleranceFakeRule"
-                />
-              </div>
-              <div class="form-group col-6">
-                <label for="functionFFakeRule">Function</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="functionFFakeRule"
-                />
-              </div>
+              <div class="form-row">
+                <div class="form-group col-2">
+                  <label for="niterFakeRule">Iterations</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="niterFakeRule"
+                  />
+                </div>
+                <div class="form-group col-1">
+                  <label for="xInfFakeRule">X Inf.</label>
+                  <input type="number" class="form-control" id="xInfFakeRule" />
+                </div>
+                <div class="form-group col-1">
+                  <label for="xSupFakeRule">X Sup.</label>
+                  <input type="number" class="form-control" id="xSupFakeRule" />
+                </div>
+                <div class="form-group col-2">
+                  <label for="toleranceFakeRule">Tolerance</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="toleranceFakeRule"
+                  />
+                </div>
+                <div class="form-group col-6">
+                  <label for="functionFFakeRule">Function</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="functionFFakeRule"
+                  />
+                </div>
                 <div class="form-group col-12">
                   <button class="btn btn-primary m-5" onclick="FakeRuleReq()">
                     Run!
@@ -461,10 +458,16 @@
             </button>
           </div>
           <div class="modal-body">
-              For a function f and an equation f (x) = 0, it is intended to define methods to find the set of values x that make equality true.
+            For a function f and an equation f (x) = 0, it is intended to define
+            methods to find the set of values x that make equality true.
           </div>
           <div class="modal-footer">
-            <button class="btn btn-link"><a href="https://sites.google.com/view/analisis-numerico-2019/nonlinear-equations?authuser=0">More</a></button>
+            <button class="btn btn-link">
+              <a
+                href="https://sites.google.com/view/analisis-numerico-2019/nonlinear-equations?authuser=0"
+                >More</a
+              >
+            </button>
             <button class="btn btn-secondary" data-dismiss="modal">
               Close
             </button>
@@ -491,8 +494,15 @@
             <span id="incrementalSearch-stages"> </span>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-link" onclick="guardarFuncion()">Graph</button>
-            <button class="btn btn-link"><a href="https://sites.google.com/view/analisis-numerico-2019/nonlinear-equations/incremental-search?authuser=0">More</a></button>
+            <button class="btn btn-link" onclick="guardarFuncion()">
+              Graph
+            </button>
+            <button class="btn btn-link">
+              <a
+                href="https://sites.google.com/view/analisis-numerico-2019/nonlinear-equations/incremental-search?authuser=0"
+                >More</a
+              >
+            </button>
             <button class="btn btn-secondary" data-dismiss="modal">
               Close
             </button>
@@ -520,8 +530,15 @@
             <span id="FixedPoint-solution"> </span>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-link" onclick="guardarFuncion()">Graph</button>
-            <button class="btn btn-link"><a href="https://sites.google.com/view/analisis-numerico-2019/nonlinear-equations/open-methods/fixed-point">More</a></button>
+            <button class="btn btn-link" onclick="guardarFuncion()">
+              Graph
+            </button>
+            <button class="btn btn-link">
+              <a
+                href="https://sites.google.com/view/analisis-numerico-2019/nonlinear-equations/open-methods/fixed-point"
+                >More</a
+              >
+            </button>
             <button class="btn btn-secondary" data-dismiss="modal">
               Close
             </button>
@@ -530,12 +547,7 @@
       </div>
     </div>
     <!-- Newton -->
-    <div
-      class="modal fade"
-      id="NewtonModal"
-      tabindex="-1"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="NewtonModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -549,8 +561,15 @@
             <span id="Newton-solution"> </span>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-link" onclick="guardarFuncion()">Graph</button>
-            <button class="btn btn-link"><a href="https://sites.google.com/view/analisis-numerico-2019/nonlinear-equations/open-methods/newton-raphson">More</a></button>
+            <button class="btn btn-link" onclick="guardarFuncion()">
+              Graph
+            </button>
+            <button class="btn btn-link">
+              <a
+                href="https://sites.google.com/view/analisis-numerico-2019/nonlinear-equations/open-methods/newton-raphson"
+                >More</a
+              >
+            </button>
             <button class="btn btn-secondary" data-dismiss="modal">
               Close
             </button>
@@ -559,12 +578,7 @@
       </div>
     </div>
     <!-- Secant -->
-    <div
-      class="modal fade"
-      id="SecantModal"
-      tabindex="-1"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="SecantModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -578,8 +592,15 @@
             <span id="Secant-solution"> </span>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-link" onclick="guardarFuncion()">Graph</button>
-            <button class="btn btn-link"><a href="https://sites.google.com/view/analisis-numerico-2019/nonlinear-equations/open-methods/secant">More</a></button>
+            <button class="btn btn-link" onclick="guardarFuncion()">
+              Graph
+            </button>
+            <button class="btn btn-link">
+              <a
+                href="https://sites.google.com/view/analisis-numerico-2019/nonlinear-equations/open-methods/secant"
+                >More</a
+              >
+            </button>
             <button class="btn btn-secondary" data-dismiss="modal">
               Close
             </button>
@@ -607,7 +628,9 @@
             <span id="MultipleRoots-solution"> </span>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-link" onclick="guardarFuncion()">Graph</button>
+            <button class="btn btn-link" onclick="guardarFuncion()">
+              Graph
+            </button>
             <button class="btn btn-link">More</button>
             <button class="btn btn-secondary" data-dismiss="modal">
               Close
@@ -636,8 +659,15 @@
             <span id="Bisection-solution"> </span>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-link" onclick="guardarFuncion()">Graph</button>
-            <button class="btn btn-link"><a href="https://sites.google.com/view/analisis-numerico-2019/nonlinear-equations/closed-methods/bisection">More</a></button>
+            <button class="btn btn-link" onclick="guardarFuncion()">
+              Graph
+            </button>
+            <button class="btn btn-link">
+              <a
+                href="https://sites.google.com/view/analisis-numerico-2019/nonlinear-equations/closed-methods/bisection"
+                >More</a
+              >
+            </button>
             <button class="btn btn-secondary" data-dismiss="modal">
               Close
             </button>
@@ -646,12 +676,7 @@
       </div>
     </div>
     <!-- regula falsi -->
-    <div
-      class="modal fade"
-      id="FakeRuleModal"
-      tabindex="-1"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="FakeRuleModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -665,8 +690,15 @@
             <span id="FakeRule-solution"> </span>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-link" onclick="guardarFuncion()">Graph</button>
-            <button class="btn btn-link"><a href="https://sites.google.com/view/analisis-numerico-2019/nonlinear-equations/closed-methods/regula-falsi">More</a></button>
+            <button class="btn btn-link" onclick="guardarFuncion()">
+              Graph
+            </button>
+            <button class="btn btn-link">
+              <a
+                href="https://sites.google.com/view/analisis-numerico-2019/nonlinear-equations/closed-methods/regula-falsi"
+                >More</a
+              >
+            </button>
             <button class="btn btn-secondary" data-dismiss="modal">
               Close
             </button>
