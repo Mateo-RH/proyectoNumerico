@@ -59,6 +59,7 @@ function add() {
     alert('Please enter a function');
     return;
   }
+  funcionF = ' ' + funcionF;
   funcionF = funcionF.replace('e^', 'exp');
   funcionF = funcionF.replace(' e ', 'exp(x)');
   funcionF = funcionF.replace('e ', 'exp(x)');
