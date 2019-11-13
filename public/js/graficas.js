@@ -54,11 +54,16 @@ function remove(idx) {
 }
 
 function add() {
-  if (!funcion.value) {
+  var funcionF = funcion.value;
+  if (!funcionF) {
     alert('Please enter a function');
     return;
   }
-  var funcionF = funcion.value;
+  funcionF = funcionF.replace('e^', 'exp');
+  funcionF = funcionF.replace(' e ', 'exp(x)');
+  funcionF = funcionF.replace('e ', 'exp(x)');
+  funcionF = funcionF.replace(' e', 'exp(x)');
+
   guardarFuncion(funcionF);
   graficar();
   crearListaHtml();
