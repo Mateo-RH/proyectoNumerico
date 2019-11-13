@@ -1,4 +1,4 @@
-const math = require("mathjs");
+const math = require('mathjs');
 
 let puntoFijo = (funcionF, funcionG, tolerance, Xa, niter, tipoError) => {
   const ff = math.parse(funcionF).compile();
@@ -23,14 +23,13 @@ let puntoFijo = (funcionF, funcionG, tolerance, Xa, niter, tipoError) => {
   var Xn;
   var table = [];
   while (fx != 0 && error > tolerance && counter <= niter) {
+    if (counter == 1) error = 0;
     scope.x = Xa;
     Xn = fg.evaluate(scope);
     table.push([Xa, Xn, fx, error]);
     scope.x = Xn;
     fx = ff.evaluate(scope);
-    tipoError == "e"
-      ? (error = math.abs((Xn - Xa) / Xn))
-      : (error = math.abs(Xn - Xa));
+    error = tipoError == 'e' ? math.abs((Xn - Xa) / Xn) : math.abs(Xn - Xa);
     Xa = Xn;
     counter += 1;
   }
@@ -42,7 +41,7 @@ let puntoFijo = (funcionF, funcionG, tolerance, Xa, niter, tipoError) => {
   }
   return {
     error: errorR,
-    cabecera: ["Xo", "Xn", "f(x)", "error"],
+    cabecera: ['Xo', 'Xn', 'f(x)', 'error'],
     raiz,
     niter,
     aproximation: Xa,
