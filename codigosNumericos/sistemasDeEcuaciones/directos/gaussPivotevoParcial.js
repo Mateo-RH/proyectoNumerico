@@ -14,6 +14,7 @@ let gaussPivotevoParcial = (matrix, vector) => {
 
   for (let k = 0; k < n - 1; k++) {
     matrix = pivoteoParcial(matrix, k);
+    if (!matrix) return { error: true };
     for (let i = k + 1; i < n; i++) {
       let multiplicador = matrix[i][k] / matrix[k][k];
       for (let j = k; j < n + 1; j++) {

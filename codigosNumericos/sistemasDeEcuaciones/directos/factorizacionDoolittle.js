@@ -1,5 +1,9 @@
 const math = require('mathjs');
-const { sustitucionProgresiva, sustitucionRegresiva } = require('./auxiliares');
+const {
+  sustitucionProgresiva,
+  sustitucionRegresiva,
+  verificated_matrix
+} = require('./auxiliares');
 
 let factorizacionDirectaDoolittle = matrix => {
   let n = matrix.length;
@@ -35,12 +39,20 @@ let factorizacionDirectaDoolittle = matrix => {
 };
 
 let factorizacionDoolittle = (matrix, b) => {
+  let msg = verificated_matrix(matrix, 'LU');
+  if (msg) return { error: true, msg };
+
   let error = false;
   let { L, U, stages } = factorizacionDirectaDoolittle(matrix);
+
+  msg = verificated_matrix(matrix, 'Direct factorization', L, U);
+  if (msg) return { error: true, msg };
+
   L.map((item, index) => item.push(b[index]));
   let z = sustitucionProgresiva(L);
   U.map((item, index) => item.push(z[index]));
   let x = sustitucionRegresiva(U);
+  if (x.includes(NaN)) error = true;
   return { error, L, U, stages, solution: x };
 };
 

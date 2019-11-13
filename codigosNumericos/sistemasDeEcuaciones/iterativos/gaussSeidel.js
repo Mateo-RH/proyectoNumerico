@@ -1,5 +1,9 @@
 const math = require('mathjs');
 const { norma1, norma2, normaUniforme } = require('./normas');
+const {
+  spectral_radius,
+  verificated_matrix
+} = require('../directos/auxiliares');
 
 let getLDU = matrix => {
   let L = matrix.map((fila, filIdx) =>
@@ -24,13 +28,26 @@ let getLDU = matrix => {
 // 0<w<1, subrelajacion (para converger subsistemas que no convergen por gauss seidel)
 // 1<w<2, sobre-relajacion(aceleran convergencia en gauss seidel convergente lento)
 let gaussSeidel = (tolerancia, x0, niter, matrix, b, norma, w = 1) => {
-  let { L, D, U } = getLDU(matrix);
+  let warning = false;
+  let msg = [];
+  let msgTemp = verificated_matrix(matrix);
+  if (msgTemp) {
+    warning = true;
+    msg.push(msgTemp);
+  }
 
+  let { L, D, U } = getLDU(matrix);
   let temp = math.subtract(D, math.multiply(L, w));
   let temp2 = math.add(math.multiply(1 - w, D), math.multiply(w, U));
   let T = math.multiply(math.inv(temp), temp2);
-  let C = math.multiply(w, math.multiply(math.inv(temp), b));
 
+  msgTemp = spectral_radius(T);
+  if (msgTemp) {
+    warning = true;
+    msg.push(msgTemp);
+  }
+
+  let C = math.multiply(w, math.multiply(math.inv(temp), b));
   var err = tolerancia + 1;
   var counter = 0;
   var tabla = [];
@@ -48,7 +65,7 @@ let gaussSeidel = (tolerancia, x0, niter, matrix, b, norma, w = 1) => {
   }
 
   let error = err < tolerancia ? false : true;
-  return { error, aproximacion: x1, iteraciones: tabla, niter };
+  return { error, warning, msg, aproximacion: x1, iteraciones: tabla, niter };
 };
 
 module.exports = gaussSeidel;

@@ -1,4 +1,5 @@
 const math = require('mathjs');
+const matrixEig = require('matrix-eig');
 
 let ampliarMatriz = (matrix, vector) => {
   matrix.forEach((fila, idx) => fila.push(vector[idx]));
@@ -20,6 +21,40 @@ let intercambioColumnas = (matrix, columnaNueva, columnaVieja) => {
   }
   return matrix;
 };
+
+function verificated_matrix(A, type = undefined, L = undefined, U = undefined) {
+  if (math.det(A) == 0) {
+    return 'The determinant equals zero therefore has infinite solutions or no solution';
+  }
+  if (type == 'LU') {
+    let count = 0;
+    const diagonal = math.diag(A);
+    for (let i = 0; i < diagonal.length; i++) {
+      if (diagonal[i] == 0) {
+        count = count + 1;
+      }
+    }
+
+    if (count == diagonal.length) {
+      return 'Diagonal is zero';
+    }
+  }
+  if ((type = 'Direct factorization')) {
+    if (math.det(L) * math.det(U) == 0) {
+      return 'The determinant equals zero therefore has infinite solutions or no solution';
+    }
+  }
+  return false;
+}
+
+function spectral_radius(T) {
+  var result = matrixEig.eig(T);
+  var radius = math.max(math.abs(Array.from(result.eigenvalues.real)));
+  if (radius >= 1) {
+    return 'The method may not converge the spectral radius is greater than 1';
+  }
+  return false;
+}
 
 let intercambioMarcas = (marcas, columnaMayor, k) => {
   let temp = marcas[columnaMayor];
@@ -57,7 +92,6 @@ let pivoteoParcial = (matrix, k) => {
     }
   }
   if (mayor == 0) {
-    console.log('The system doesnt have an unique solution');
     return false;
   } else {
     if (filaMayor != k) {
@@ -217,5 +251,7 @@ module.exports = {
   sustitucionRegresiva,
   sustitucionProgresiva,
   factorizacionLU,
-  factorizacionLUPivoteo
+  factorizacionLUPivoteo,
+  verificated_matrix,
+  spectral_radius
 };

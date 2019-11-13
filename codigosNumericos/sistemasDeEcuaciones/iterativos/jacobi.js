@@ -1,5 +1,9 @@
-const math = require("mathjs");
-const { norma1, norma2, normaUniforme } = require("./normas");
+const math = require('mathjs');
+const { norma1, norma2, normaUniforme } = require('./normas');
+const {
+  spectral_radius,
+  verificated_matrix
+} = require('../directos/auxiliares');
 
 let getLDU = matrix => {
   let L = matrix.map((fila, filIdx) =>
@@ -21,8 +25,23 @@ let getLDU = matrix => {
 };
 
 let jacobi = (tolerancia, x0, niter, matrix, b, norma) => {
+  let warning = false;
+  let msg = [];
+  let msgTemp = verificated_matrix(matrix);
+  if (msgTemp) {
+    warning = true;
+    msg.push(msgTemp);
+  }
+
   let { L, D, U } = getLDU(matrix);
   let T = math.multiply(math.inv(D), math.add(L, U));
+
+  msgTemp = spectral_radius(T);
+  if (msgTemp) {
+    warning = true;
+    msg.push(msgTemp);
+  }
+
   let C = math.multiply(math.inv(D), b);
   var err = tolerancia + 1;
   var counter = 1;
@@ -42,7 +61,7 @@ let jacobi = (tolerancia, x0, niter, matrix, b, norma) => {
   }
 
   let error = err < tolerancia ? false : true;
-  return { error, aproximacion: x1, iteraciones: tabla, niter };
+  return { error, warning, msg, aproximacion: x1, iteraciones: tabla, niter };
 };
 
 module.exports = jacobi;

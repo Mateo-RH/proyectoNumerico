@@ -1,13 +1,13 @@
-const gaussSimple = require("./directos/gaussSimple");
-const gaussPivotevoParcial = require("./directos/gaussPivotevoParcial");
-const gaussPivotevoTotal = require("./directos/gaussPivotevoTotal");
-const factorizacionMatrices = require("./directos/factorizacionMatrices");
-const factorizacionMatricesPivoteo = require("./directos/factorizacionMatricesPivoteo");
-const factorizacionCrout = require("./directos/factorizacionCrout");
-const factorizacionDoolittle = require("./directos/factorizacionDoolittle");
-const factorizacionCholesky = require("./directos/factorizacionCholesky");
-const jacobi = require("./iterativos/jacobi");
-const gaussSeidel = require("./iterativos/gaussSeidel");
+const gaussSimple = require('./directos/gaussSimple');
+const gaussPivotevoParcial = require('./directos/gaussPivotevoParcial');
+const gaussPivotevoTotal = require('./directos/gaussPivotevoTotal');
+const factorizacionMatrices = require('./directos/factorizacionMatrices');
+const factorizacionMatricesPivoteo = require('./directos/factorizacionMatricesPivoteo');
+const factorizacionCrout = require('./directos/factorizacionCrout');
+const factorizacionDoolittle = require('./directos/factorizacionDoolittle');
+const factorizacionCholesky = require('./directos/factorizacionCholesky');
+const jacobi = require('./iterativos/jacobi');
+const gaussSeidel = require('./iterativos/gaussSeidel');
 
 let m = [
   [1, 12, 13],
