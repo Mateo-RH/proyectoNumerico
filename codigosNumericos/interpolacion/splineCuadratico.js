@@ -1,9 +1,9 @@
-const { gaussSimple } = require("../sistemasDeEcuaciones/index");
+const { gaussSimple } = require('../sistemasDeEcuaciones/index');
 const {
   correccionSignos,
   crearPuntos,
   crearEcuacion
-} = require("./auxiliares");
+} = require('./auxiliares');
 
 const splineCuadraticoMatrix = puntos => {
   let matrix = [];
@@ -44,9 +44,9 @@ const splineCuadraticoMatrix = puntos => {
 const splineCuadraticoPolinomios = componentes => {
   let polinomios = [];
   for (let i = 0; i < componentes.length; i += 3) {
-    var polinomio = `${componentes[i].toFixed(4)}x^2 +${componentes[
-      i + 1
-    ].toFixed(2)}x +${componentes[i + 2].toFixed(2)}`;
+    var polinomio = `${parseFloat(componentes[i]).toFixed(4)}x^2 +${parseFloat(
+      componentes[i + 1]
+    ).toFixed(2)}x +${parseFloat(componentes[i + 2]).toFixed(2)}`;
     polinomio = correccionSignos(polinomio);
     polinomios.push(polinomio);
   }

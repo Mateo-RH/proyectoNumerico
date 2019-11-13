@@ -2,7 +2,7 @@ const {
   correccionSignos,
   crearPuntos,
   crearEcuacion
-} = require("./auxiliares");
+} = require('./auxiliares');
 
 const splineLineal = points => {
   let puntos = crearPuntos(points);
@@ -11,7 +11,9 @@ const splineLineal = points => {
       var x = puntos[idx + 1].x;
       var y = puntos[idx + 1].y;
       var m = (y - punto.y) / (x - punto.x);
-      var ecuacion = correccionSignos(`${y}+(${m.toFixed(7)}*(x - ${x}))`);
+      var ecuacion = correccionSignos(
+        `${y}+(${parseFloat(m).toFixed(7)}*(x - ${x}))`
+      );
       return ecuacion;
     }
   });

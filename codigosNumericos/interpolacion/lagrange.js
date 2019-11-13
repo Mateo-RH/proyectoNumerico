@@ -1,5 +1,5 @@
-const { correccionSignos, crearPuntos } = require("./auxiliares");
-const algebra = require("algebra.js");
+const { correccionSignos, crearPuntos } = require('./auxiliares');
+const algebra = require('algebra.js');
 
 const matrizLagrange = puntos => {
   let puntosY = [];
@@ -10,9 +10,9 @@ const matrizLagrange = puntos => {
   let n = puntosX.length;
 
   let matrix = [];
-  let ecuacion = "";
+  let ecuacion = '';
   for (let i = 0; i < n; i++) {
-    var num = "";
+    var num = '';
     var den = 1;
     for (let j = 0; j < n; j++) {
       if (j != i) {
@@ -20,9 +20,15 @@ const matrizLagrange = puntos => {
         den *= puntosX[i] - puntosX[j];
       }
     }
-    if (i == 0)
-      ecuacion += `((${num})/${den.toFixed(5)})(${puntosY[i].toFixed(5)})`;
-    else ecuacion += `+((${num})/${den.toFixed(5)})(${puntosY[i].toFixed(5)})`;
+    if (i == 0) {
+      console.log(puntosY);
+      ecuacion += `((${num})/${parseFloat(den).toFixed(5)})(${parseFloat(
+        puntosY[i]
+      ).toFixed(5)})`;
+    } else
+      ecuacion += `+((${num})/${parseFloat(den).toFixed(5)})(${parseFloat(
+        puntosY[i]
+      ).toFixed(5)})`;
     num = simplificaExprLagrange(num, den, n);
     if (!num) return false;
     matrix.push(num);
@@ -31,7 +37,7 @@ const matrizLagrange = puntos => {
 };
 
 const simplificaExprLagrange = (expr, den, cantidadPuntos) => {
-  if (expr[0] == "+") expr = expr.substring(1);
+  if (expr[0] == '+') expr = expr.substring(1);
   expr = algebra.parse(expr);
   let maximoExponente = cantidadPuntos - 1;
   let variables = new Array(maximoExponente).fill(0);
