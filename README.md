@@ -15,14 +15,18 @@ Metodos numericos en JS
 npm install
 ```
 
-Ejecutar la app
+#### Ejecutar la app
 
 ```
 npm run dev
 ```
 
-o tambien
+#### o tambien
 
 ```
 node server.js
 ```
+
+## Atencion:
+
+La version del ultimo commit es la que se encuentra corriendo en heroku, para testing y desarrollo se debe de descargar la version de desarrollo en los _releases_, de lo contrario no funcionara.
